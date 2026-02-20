@@ -21,7 +21,7 @@ spring:
 app:
   ui:
     base: http://localhost:5173
-    home: ${app.ui.base}/dashboard
+    home: ${app.ui.base}
   security:
     cors:
       allowed-origins:

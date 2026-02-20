@@ -16,17 +16,18 @@ import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
  * @author Priyak Dey
  */
 @RestController
-@RequestMapping(path = "/api/v1/profile", produces = APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/v1/profile",produces = APPLICATION_JSON_VALUE)
 public class ProfileController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(
             ProfileController.class);
 
+
     @GetMapping
     public ResponseEntity<ProfileDetailsResponse> getProfile(Principal principal) {
         String profileId = principal.getName();
-
-        ProfileDetailsResponse response = new ProfileDetailsResponse("PRIYAK DEY", "EMAIL@EMAIL.COM", null, null, null, true);
+        LOGGER.info("Get Profile Details: {}", profileId);
+        ProfileDetailsResponse response = new ProfileDetailsResponse("PRIYAK DEY", "EMAIL@EMAIL.COM", null, null, null, false);
 
 
         return ResponseEntity.ok(response);
@@ -35,8 +36,10 @@ public class ProfileController {
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> getProfile(
             @RequestBody ProfileSettingsRequest profileSettingsRequest) {
-        LOGGER.info(profileSettingsRequest.toString());
-        return ResponseEntity.created(URI.create("https://localhost:8080/hello")).build();
+        LOGGER.info("Profile details received: {}",
+                profileSettingsRequest.toString());
+        return ResponseEntity.created(URI.create("https://localhost:8080/hello"))
+                .build();
     }
 
 }

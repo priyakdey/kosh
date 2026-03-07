@@ -1,0 +1,56 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="saffron" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF9933" />
+      <stop offset="100%" stop-color="#FFB366" />
+    </linearGradient>
+  </defs>
+
+  <!-- Lotus Mandala Icon — centered at (100, 100) -->
+  <g transform="translate(100, 100)">
+    <!-- Outer mandala circles -->
+    <circle cx="0" cy="0" r="80" fill="none" stroke="#FF9933" stroke-width="0.7" opacity="0.25" />
+    <circle cx="0" cy="0" r="68" fill="none" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+
+    <!-- Geometric radial lines -->
+    <line x1="60" y1="0" x2="-60" y2="0" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+    <line x1="0" y1="60" x2="0" y2="-60" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+    <line x1="42.43" y1="42.43" x2="-42.43" y2="-42.43" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+    <line x1="-42.43" y1="42.43" x2="42.43" y2="-42.43" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+    <line x1="51.96" y1="30" x2="-51.96" y2="-30" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+    <line x1="30" y1="51.96" x2="-30" y2="-51.96" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+    <line x1="-51.96" y1="30" x2="51.96" y2="-30" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+    <line x1="-30" y1="51.96" x2="30" y2="-51.96" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
+
+    <!-- Lotus petals — 8 directions (scaled up) -->
+    <g transform="rotate(0)">
+      <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.6" />
+    </g>
+    <g transform="rotate(45)">
+      <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.9" />
+    </g>
+    <g transform="rotate(90)">
+      <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.6" />
+    </g>
+    <g transform="rotate(135)">
+      <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.9" />
+    </g>
+    <g transform="rotate(180)">
+      <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.6" />
+    </g>
+    <g transform="rotate(225)">
+      <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.9" />
+    </g>
+    <g transform="rotate(270)">
+      <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.6" />
+    </g>
+    <g transform="rotate(315)">
+      <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.9" />
+    </g>
+
+    <!-- Center dot -->
+    <circle cx="0" cy="0" r="7" fill="url(#saffron)" opacity="0.8" />
+    <circle cx="0" cy="0" r="3" fill="#0D0D12" />
+  </g>
+</svg>
+

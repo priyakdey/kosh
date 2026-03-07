@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Income — Kosh</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="favico/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favico/favicon-16x16.png">
+  <link rel="manifest" href="favico/site.webmanifest">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Fraunces"', 'Georgia', 'serif'],
+            body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            kosh: {
+              gold: '#C9A84C', 'gold-light': '#E4CC7A', 'gold-dark': '#A68A3E',
+              cream: '#F5F0E8', charcoal: '#1A1A1A', slate: '#0F0F0F',
+              'dark-card': '#161616', 'dark-border': '#2A2A2A',
+              'light-bg': '#FAFAF7', 'light-card': '#FFFFFF',
+              'light-border': '#E8E4DC', 'light-muted': '#8A8578', muted: '#6B6B6B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    * { transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    .dark ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .light ::-webkit-scrollbar-thumb { background: #D4D0C8; border-radius: 3px; }
+
+    /* ====== Sidebar ====== */
+    .sidebar { width: 260px; transition: width 0.3s cubic-bezier(0.16,1,0.3,1), transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .sidebar.collapsed { width: 68px; }
+    .sidebar.collapsed .sb-hide { display: none; }
+    .sidebar.collapsed .sidebar-profile { justify-content: center; }
+    .sidebar.collapsed .nav-link { justify-content: center; padding-left: 0; padding-right: 0; }
+    .main-content { margin-left: 260px; transition: margin-left 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .sidebar.collapsed ~ .main-content { margin-left: 68px; }
+    @media (max-width: 768px) {
+      .sidebar { position: fixed; transform: translateX(-100%); width: 280px; z-index: 40; }
+      .sidebar.mobile-open { transform: translateX(0); }
+      .main-content { margin-left: 0 !important; }
+      .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 35; }
+      .sidebar-overlay.active { display: block; }
+    }
+    .nav-link { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.15s ease; position: relative; }
+    .dark .nav-link { color: #6B6B6B; } .light .nav-link { color: #8A8578; }
+    .dark .nav-link:hover { color: #fff; background: rgba(201,168,76,0.06); }
+    .light .nav-link:hover { color: #1A1A1A; background: rgba(201,168,76,0.06); }
+    .nav-link.active { color: #C9A84C !important; background: rgba(201,168,76,0.08) !important; }
+    .nav-link.active::before { content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; border-radius: 0 3px 3px 0; background: #C9A84C; }
+    .topbar { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .dark .topbar { background: rgba(15,15,15,0.85); border-bottom: 1px solid #2A2A2A; }
+    .light .topbar { background: rgba(250,250,247,0.9); border-bottom: 1px solid #E8E4DC; }
+
+    /* ====== Form Controls ====== */
+    .kosh-input { width: 100%; padding: 10px 14px; border-radius: 10px; font-size: 14px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .dark .kosh-input { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
+    .light .kosh-input { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
+    .kosh-input:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+    .kosh-input::placeholder { color: #6B6B6B; } .light .kosh-input::placeholder { color: #8A8578; }
+    .kosh-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .kosh-checkbox { width: 18px; height: 18px; border-radius: 5px; appearance: none; cursor: pointer; position: relative; flex-shrink: 0; }
+    .dark .kosh-checkbox { background: #0F0F0F; border: 1.5px solid #2A2A2A; }
+    .light .kosh-checkbox { background: #FAFAF7; border: 1.5px solid #E8E4DC; }
+    .kosh-checkbox:checked { background: #C9A84C; border-color: #C9A84C; }
+    .kosh-checkbox:checked::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #0F0F0F; }
+
+    /* ====== CUSTOM DROPDOWN ====== */
+    .kd { position: relative; display: inline-block; }
+    .kd-trigger {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 10px 14px; border-radius: 10px; font-size: 14px; cursor: pointer;
+      outline: none; width: 100%; text-align: left;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .dark .kd-trigger { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
+    .light .kd-trigger { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
+    .kd.open .kd-trigger, .kd-trigger:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+    .kd-trigger .kd-placeholder { color: #6B6B6B; }
+    .light .kd-trigger .kd-placeholder { color: #8A8578; }
+    .kd-caret {
+      width: 16px; height: 16px; flex-shrink: 0;
+      transition: transform 0.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .kd.open .kd-caret { transform: rotate(180deg); }
+    .dark .kd-caret { color: #6B6B6B; } .light .kd-caret { color: #8A8578; }
+
+    .kd-menu {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 50;
+      border-radius: 12px; padding: 4px; max-height: 240px; overflow-y: auto;
+      opacity: 0; visibility: hidden;
+      transform: translateY(-8px) scale(0.98);
+      transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 12px 40px -8px rgba(0,0,0,0.3);
+    }
+    .dark .kd-menu { background: #1A1A1A; border: 1px solid #2A2A2A; }
+    .light .kd-menu { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 12px 40px -8px rgba(0,0,0,0.1); }
+    .kd.open .kd-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+    .kd-option {
+      padding: 9px 12px; border-radius: 8px; font-size: 13px; cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+    .dark .kd-option:hover { background: rgba(201,168,76,0.08); color: #fff; }
+    .light .kd-option:hover { background: rgba(201,168,76,0.06); color: #1A1A1A; }
+    .kd-option.selected { color: #C9A84C !important; font-weight: 600; }
+    .dark .kd-option.selected { background: rgba(201,168,76,0.08); }
+    .light .kd-option.selected { background: rgba(201,168,76,0.06); }
+
+    /* Small variant */
+    .kd-sm .kd-trigger { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
+    .kd-sm .kd-menu { padding: 3px; }
+    .kd-sm .kd-option { padding: 7px 10px; font-size: 12px; border-radius: 6px; }
+    .kd-sm .kd-caret { width: 14px; height: 14px; }
+
+    /* Width auto for inline dropdowns */
+    .kd-auto { display: inline-block; }
+    .kd-auto .kd-menu { min-width: 100%; white-space: nowrap; }
+
+    /* ====== CUSTOM DATE PICKER ====== */
+    .kdp { position: relative; display: inline-block; width: 100%; }
+    .kdp-trigger {
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      padding: 10px 14px; border-radius: 10px; font-size: 14px; cursor: pointer;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .dark .kdp-trigger { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
+    .light .kdp-trigger { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
+    .kdp.open .kdp-trigger, .kdp-trigger:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+    .kdp-icon { width: 16px; height: 16px; flex-shrink: 0; }
+    .dark .kdp-icon { color: #6B6B6B; } .light .kdp-icon { color: #8A8578; }
+    .kdp-caret { margin-left: auto; width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.2s; }
+    .kdp.open .kdp-caret { transform: rotate(180deg); }
+    .dark .kdp-caret { color: #6B6B6B; } .light .kdp-caret { color: #8A8578; }
+
+    .kdp-popup {
+      position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+      width: 300px; border-radius: 14px; padding: 16px;
+      opacity: 0; visibility: hidden;
+      transform: translateY(-8px) scale(0.98);
+      transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 16px 50px -10px rgba(0,0,0,0.3);
+    }
+    .dark .kdp-popup { background: #1A1A1A; border: 1px solid #2A2A2A; }
+    .light .kdp-popup { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 16px 50px -10px rgba(0,0,0,0.1); }
+    .kdp.open .kdp-popup { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+    .kdp-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .kdp-nav button { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; background: transparent; }
+    .dark .kdp-nav button { color: #6B6B6B; } .dark .kdp-nav button:hover { background: #2A2A2A; color: #fff; }
+    .light .kdp-nav button { color: #8A8578; } .light .kdp-nav button:hover { background: #E8E4DC; color: #1A1A1A; }
+    .kdp-nav span { font-size: 13px; font-weight: 600; }
+
+    .kdp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+    .kdp-grid .kdp-hdr { font-size: 10px; font-weight: 600; padding: 6px 0; text-transform: uppercase; letter-spacing: 0.05em; }
+    .dark .kdp-hdr { color: #6B6B6B; } .light .kdp-hdr { color: #8A8578; }
+    .kdp-day {
+      font-size: 12px; padding: 7px 0; border-radius: 8px; cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+    .dark .kdp-day:hover { background: rgba(201,168,76,0.1); color: #fff; }
+    .light .kdp-day:hover { background: rgba(201,168,76,0.08); }
+    .kdp-day.selected { background: #C9A84C !important; color: #0F0F0F !important; font-weight: 700; }
+    .kdp-day.today { font-weight: 700; color: #C9A84C; }
+    .kdp-day.other-month { opacity: 0.25; }
+
+    /* Small date picker variant */
+    .kdp-sm .kdp-trigger { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
+
+    /* ====== Modal ====== */
+    .modal-overlay { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    .modal-backdrop { position: absolute; inset: 0; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .dark .modal-backdrop { background: rgba(10,10,10,0.7); }
+    .light .modal-backdrop { background: rgba(250,250,247,0.8); }
+    .modal-panel { position: relative; z-index: 1; transform: scale(0.95) translateY(12px); opacity: 0; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s; }
+    .modal-overlay.open .modal-panel { transform: scale(1) translateY(0); opacity: 1; }
+
+    /* ====== Misc ====== */
+    .stat-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .stat-card:hover { transform: translateY(-2px); }
+    .dark .stat-card:hover { box-shadow: 0 8px 30px -10px rgba(201,168,76,0.06); }
+    .light .stat-card:hover { box-shadow: 0 8px 30px -10px rgba(0,0,0,0.06); }
+    .income-row { transition: background 0.1s; }
+    .dark .income-row:hover { background: rgba(201,168,76,0.03); }
+    .light .income-row:hover { background: rgba(201,168,76,0.03); }
+    .tab-btn { position: relative; padding: 12px 16px; font-weight: 600; font-size: 13px; transition: color 0.2s; }
+    .tab-btn::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; border-radius: 2px; background: transparent; transition: background 0.2s; }
+    .tab-btn.active { color: #C9A84C; } .tab-btn.active::after { background: #C9A84C; }
+    .dark .tab-btn:not(.active) { color: #6B6B6B; } .dark .tab-btn:not(.active):hover { color: #999; }
+    .light .tab-btn:not(.active) { color: #8A8578; } .light .tab-btn:not(.active):hover { color: #5A5548; }
+    .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+    /* ====== Interactive Chart ====== */
+    #trendChart { position: relative; cursor: crosshair; user-select: none; -webkit-user-select: none; }
+    #trendChart svg { display: block; }
+    #sourceChart { user-select: none; -webkit-user-select: none; }
+    #sourceChart svg { display: block; }
+    .chart-tooltip {
+      position: absolute; pointer-events: none; z-index: 10;
+      padding: 10px 14px; border-radius: 10px;
+      font-size: 12px; white-space: nowrap;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    .chart-tooltip.visible { opacity: 1; transform: translateY(0); }
+    .dark .chart-tooltip { background: #1A1A1A; border: 1px solid #2A2A2A; box-shadow: 0 10px 30px -6px rgba(0,0,0,0.6); }
+    .light .chart-tooltip { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 10px 30px -6px rgba(0,0,0,0.12); }
+
+    /* Donut chart */
+    .donut-segment { transition: opacity 0.15s ease, filter 0.15s ease; cursor: pointer; }
+    .donut-segment.dimmed { opacity: 0.25; }
+    .donut-segment.active { filter: brightness(1.12) drop-shadow(0 2px 8px rgba(0,0,0,0.25)); }
+
+    /* ====== Delete Popover ====== */
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95) translateY(4px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    /* Action buttons in table */
+    .action-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 500;
+      transition: all 0.15s ease; cursor: pointer; border: none; background: transparent;
+    }
+    .action-btn-edit { }
+    .dark .action-btn-edit { color: #6B6B6B; }
+    .light .action-btn-edit { color: #8A8578; }
+    .dark .action-btn-edit:hover { color: #C9A84C; background: rgba(201,168,76,0.08); }
+    .light .action-btn-edit:hover { color: #C9A84C; background: rgba(201,168,76,0.06); }
+    .action-btn-delete { }
+    .dark .action-btn-delete { color: #6B6B6B; }
+    .light .action-btn-delete { color: #8A8578; }
+    .dark .action-btn-delete:hover { color: #F87171; background: rgba(248,113,113,0.08); }
+    .light .action-btn-delete:hover { color: #EF4444; background: rgba(239,68,68,0.06); }
+    .action-btn-pause { }
+    .dark .action-btn-pause { color: #6B6B6B; }
+    .light .action-btn-pause { color: #8A8578; }
+    .dark .action-btn-pause:hover { color: #FBBF24; background: rgba(251,191,36,0.08); }
+    .light .action-btn-pause:hover { color: #F59E0B; background: rgba(245,158,11,0.06); }
+
+    .income-banner { background: linear-gradient(135deg, #132a1c 0%, #0a1f12 50%, #0d1a0f 100%); position: relative; overflow: hidden; }
+    .income-banner::before { content: ''; position: absolute; inset: 0; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23C9A84C'/%3E%3C/svg%3E"); }
+    .light .income-banner { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #dcedc8 100%); }
+    .light .income-banner .b-title { color: #2e7d32; } .light .income-banner .b-amount { color: #1b5e20; }
+    .light .income-banner .b-chip { background: rgba(46,125,50,0.12); } .light .income-banner .b-chip span { color: #2e7d32; }
+    .light .income-banner .b-pill { background: rgba(46,125,50,0.06); border-color: rgba(46,125,50,0.12); }
+    .light .income-banner .b-pill-label { color: #558b2f; } .light .income-banner .b-pill-value { color: #1b5e20; }
+  </style>
+</head>
+
+<body class="dark:bg-kosh-slate dark:text-white bg-kosh-light-bg text-kosh-charcoal">
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- ====== SIDEBAR ====== -->
+  <aside id="sidebar" class="sidebar fixed left-0 top-0 h-full z-30 dark:bg-kosh-dark-card bg-white border-r dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+    <div class="flex items-center justify-between px-4 h-[60px] border-b dark:border-kosh-dark-border border-kosh-light-border flex-shrink-0">
+      <a href="dashboard.html" class="flex items-center gap-2.5">
+        <img src="logo.png" width="30" height="30" alt="Kosh" class="flex-shrink-0">
+        <span class="sb-hide font-display text-lg tracking-tight" style="font-variation-settings:'opsz' 40;">Kosh</span>
+      </a>
+      <button id="sidebarToggle" class="w-7 h-7 rounded-md flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
+        <svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+      <a href="dashboard.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg><span class="sb-hide">Dashboard</span></a>
+      <a href="income.html" class="nav-link active"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg><span class="sb-hide">Income</span></a>
+      <a href="expense.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg><span class="sb-hide">Expense</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Assets</p></div>
+      <a href="assets-mutual-fund.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span class="sb-hide">Mutual Funds</span></a>
+      <a href="assets-stocks.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span><span class="sb-hide">Stocks</span></a>
+      <a href="assets-fixed-deposit.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></span><span class="sb-hide">Fixed Deposits</span></a>
+      <a href="assets-recurring-deposit.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0"></span><span class="sb-hide">Recurring Deposits</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Liabilities</p></div>
+      <a href="liabilities-credit-cards.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span><span class="sb-hide">Credit Cards</span></a>
+      <a href="liabilities-loans.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span><span class="sb-hide">Loans</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Protection</p></div>
+      <a href="protection-term-insurance.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0"></span><span class="sb-hide">Term Insurance</span></a>
+      <a href="protection-health-insurance.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span><span class="sb-hide">Health Insurance</span></a>
+      <a href="protection-others.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0"></span><span class="sb-hide">Others</span></a>
+      <div class="pt-5 pb-1"></div>
+      <a href="goals.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg><span class="sb-hide">Goals</span></a>
+    </nav>
+    <div class="border-t dark:border-kosh-dark-border border-kosh-light-border p-3 flex-shrink-0">
+      <a href="settings.html" class="sidebar-profile flex items-center gap-3 px-2 py-2 rounded-lg dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
+        <div class="w-8 h-8 rounded-full bg-kosh-gold/20 flex items-center justify-center text-xs font-bold text-kosh-gold flex-shrink-0">PD</div>
+        <div class="sb-hide flex-1 min-w-0"><p class="text-sm font-semibold truncate">Priyak Dey</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted truncate">Settings</p></div>
+        <svg class="sb-hide w-4 h-4 dark:text-kosh-muted text-kosh-light-muted flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ====== MAIN ====== -->
+  <div class="main-content min-h-screen flex flex-col">
+    <header class="topbar sticky top-0 z-20 h-[60px] flex items-center justify-between px-6 gap-4 flex-shrink-0">
+      <button id="mobileMenuBtn" class="md:hidden w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
+      <div class="flex-1 max-w-md"><div class="relative"><svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-kosh-muted text-kosh-light-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg><input type="text" placeholder="Search income, sources..." class="kosh-input pl-10 !py-2 !text-sm !rounded-lg" /></div></div>
+      <div class="flex items-center gap-1.5">
+        <button class="relative w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-[18px] h-[18px] dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 dark:ring-kosh-slate ring-kosh-light-bg"></span></button>
+        <button id="themeToggle" class="w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-[18px] h-[18px] dark:block hidden text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="w-[18px] h-[18px] dark:hidden block text-kosh-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+        <button class="ml-1 px-4 py-2 rounded-lg text-sm font-medium dark:text-red-400 text-red-600 dark:bg-red-500/8 bg-red-50 dark:hover:bg-red-500/15 hover:bg-red-100 transition-colors">Logout</button>
+      </div>
+    </header>
+
+    <main class="flex-1 p-6 max-w-[1440px]">
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <h1 class="font-display text-2xl sm:text-3xl tracking-tight" style="font-variation-settings:'opsz' 72;">Income</h1>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-1">Track and manage your income sources</p>
+        </div>
+        <div class="flex items-center gap-3 flex-wrap">
+          <!-- Month Selector (custom dropdown) -->
+          <div class="kd kd-auto" id="monthSelector">
+            <button class="kd-trigger" type="button">
+              <span class="kd-value">Feb 2026</span>
+              <svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+            </button>
+            <div class="kd-menu">
+              <div class="kd-option selected" data-value="Feb 2026">Feb 2026</div>
+              <div class="kd-option" data-value="Jan 2026">Jan 2026</div>
+              <div class="kd-option" data-value="Dec 2025">Dec 2025</div>
+              <div class="kd-option" data-value="Nov 2025">Nov 2025</div>
+              <div class="kd-option" data-value="Oct 2025">Oct 2025</div>
+              <div class="kd-option" data-value="Sep 2025">Sep 2025</div>
+              <div class="kd-option" data-value="Aug 2025">Aug 2025</div>
+              <div class="kd-option" data-value="Jul 2025">Jul 2025</div>
+              <div class="kd-option" data-value="Jun 2025">Jun 2025</div>
+            </div>
+          </div>
+          <button id="addIncomeBtn" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-all whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 4.5v15m7.5-7.5h-15"/></svg>Add Income
+          </button>
+        </div>
+      </div>
+
+      <!-- Summary Banner -->
+      <div class="income-banner rounded-2xl p-6 mb-6">
+        <div class="relative z-10 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="b-title text-emerald-300/80 text-sm font-medium mb-1">Total Income · Feb 2026</p>
+            <div class="flex items-end gap-3 flex-wrap">
+              <h2 class="b-amount font-display text-4xl sm:text-5xl text-white" style="font-variation-settings:'opsz' 144;">₹85,000</h2>
+              <div class="b-chip flex items-center gap-1.5 mb-1.5 bg-emerald-500/15 px-2.5 py-1 rounded-full">
+                <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M4.5 19.5l15-15M19.5 4.5v11.25m0-11.25H8.25"/></svg>
+                <span class="text-emerald-300 text-xs font-semibold">+5.2%</span><span class="text-emerald-300/60 text-xs">vs last month</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <div class="b-pill bg-white/[0.06] rounded-xl px-5 py-3 text-center min-w-[90px] backdrop-blur-sm border border-white/[0.04]"><p class="b-pill-label text-emerald-300/60 text-[11px] uppercase tracking-wider font-medium">Entries</p><p class="b-pill-value text-white text-xl font-bold mt-0.5">4</p></div>
+            <div class="b-pill bg-white/[0.06] rounded-xl px-5 py-3 text-center min-w-[90px] backdrop-blur-sm border border-white/[0.04]"><p class="b-pill-label text-emerald-300/60 text-[11px] uppercase tracking-wider font-medium">Recurring</p><p class="b-pill-value text-white text-xl font-bold mt-0.5">₹72.3K</p></div>
+            <div class="b-pill bg-white/[0.06] rounded-xl px-5 py-3 text-center min-w-[90px] backdrop-blur-sm border border-white/[0.04]"><p class="b-pill-label text-emerald-300/60 text-[11px] uppercase tracking-wider font-medium">One-time</p><p class="b-pill-value text-white text-xl font-bold mt-0.5">₹12.8K</p></div>
+            <div class="b-pill bg-white/[0.06] rounded-xl px-5 py-3 text-center min-w-[90px] backdrop-blur-sm border border-white/[0.04]"><p class="b-pill-label text-emerald-300/60 text-[11px] uppercase tracking-wider font-medium">Sources</p><p class="b-pill-value text-white text-xl font-bold mt-0.5">3</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Analytics Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-6">
+        <div class="lg:col-span-2 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+          <div class="p-5 pb-0">
+            <h3 class="text-sm font-semibold">Income Trend</h3>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Last 6 months</p>
+          </div>
+          <div class="flex-1 px-5 pt-4">
+            <div id="trendChart" class="relative" style="height:140px;"></div>
+          </div>
+          <!-- Card footer — Income Trend insights -->
+          <div id="trendFooter" class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center gap-1.5 text-sm font-medium">
+              <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+              <span id="trendInsight">↑ ₹4,000 vs last month (+4.9%)</span>
+            </div>
+            <p id="trendInsightSub" class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">3-month consecutive growth</p>
+          </div>
+        </div>
+        <div class="lg:col-span-2 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+          <div class="p-5 pb-0">
+            <h3 class="text-sm font-semibold">By Source</h3>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Feb 2026 distribution</p>
+          </div>
+          <div class="flex-1 px-2 pt-2">
+            <div id="sourceChart" class="relative" style="height:180px;"></div>
+          </div>
+          <!-- Card footer — By Source insights -->
+          <div id="sourceFooter" class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center gap-1.5 text-sm font-medium">
+              <span>3 active income sources</span>
+            </div>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Salary dominates at 75% of total</p>
+          </div>
+        </div>
+        <!-- ===== Highlights ===== -->
+        <div class="lg:col-span-1 stat-card rounded-xl p-5 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col gap-3">
+          <h3 class="text-sm font-semibold">Highlights</h3>
+          <div class="p-3 rounded-lg bg-emerald-500/5 border dark:border-emerald-500/10 border-emerald-200/50"><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Top Source</p><p class="text-sm font-semibold text-emerald-500 mt-0.5">Salary</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">₹63,750 · 75%</p></div>
+          <div class="p-3 rounded-lg bg-kosh-gold/5 border dark:border-kosh-gold/10 border-kosh-gold/20"><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Best Month</p><p class="text-sm font-semibold text-kosh-gold mt-0.5">Feb 2026</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">₹85,000</p></div>
+          <div class="p-3 rounded-lg bg-blue-500/5 border dark:border-blue-500/10 border-blue-200/50"><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">6M Average</p><p class="text-sm font-semibold text-blue-500 mt-0.5">₹79,833</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Per month</p></div>
+        </div>
+      </div>
+
+      <!-- ===== Table ===== -->
+      <div class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+        <div class="flex items-center border-b dark:border-kosh-dark-border border-kosh-light-border px-5">
+          <button class="tab-btn active" data-tab="entries">All Entries</button>
+          <button class="tab-btn" data-tab="recurring">Recurring <span class="ml-1 text-[10px] w-5 h-5 inline-flex items-center justify-center rounded-full bg-kosh-gold/10 text-kosh-gold">3</span></button>
+        </div>
+
+        <!-- Entries tab -->
+        <div id="tab-entries">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead><tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Date</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Source</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Description</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Amount</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Type</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Actions</th>
+              </tr></thead>
+              <tbody id="entriesBody" class="divide-y dark:divide-kosh-dark-border divide-kosh-light-border"></tbody>
+            </table>
+          </div>
+          <!-- Footer: rows-per-page left, pagination right -->
+          <div class="px-5 py-3 border-t dark:border-kosh-dark-border border-kosh-light-border flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Rows per page</span>
+              <div class="kd kd-sm kd-auto" id="rowsPerPageDropdown">
+                <button class="kd-trigger" type="button">
+                  <span class="kd-value">5</span>
+                  <svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                </button>
+                <div class="kd-menu" style="min-width:60px;">
+                  <div class="kd-option selected" data-value="5">5</div>
+                  <div class="kd-option" data-value="10">10</div>
+                  <div class="kd-option" data-value="20">20</div>
+                </div>
+              </div>
+              <span id="paginationInfo" class="text-[11px] dark:text-kosh-muted text-kosh-light-muted ml-2"></span>
+            </div>
+            <div id="paginationBtns" class="flex items-center gap-1"></div>
+          </div>
+        </div>
+
+        <!-- Recurring tab -->
+        <div id="tab-recurring" class="hidden">
+          <div class="px-5 py-4"><p class="text-sm dark:text-kosh-muted text-kosh-light-muted">Active recurring income rules. These auto-generate entries each period.</p></div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead><tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Source</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Description</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Amount</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Frequency</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Next Date</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Status</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Actions</th>
+              </tr></thead>
+              <tbody id="recurringBody" class="divide-y dark:divide-kosh-dark-border divide-kosh-light-border"></tbody>
+            </table>
+          </div>
+          <div class="px-5 py-3 border-t dark:border-kosh-dark-border border-kosh-light-border flex items-center justify-between">
+            <span id="recPaginationInfo" class="text-xs dark:text-kosh-muted text-kosh-light-muted"></span>
+            <div id="recPaginationBtns" class="flex items-center gap-1"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ====== ADD INCOME MODAL ====== -->
+  <div id="addIncomeModal" class="modal-overlay">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-panel w-[92vw] max-w-[540px]">
+      <div class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
+          <div><h2 id="modalTitle" class="font-display text-xl tracking-tight" style="font-variation-settings:'opsz' 40;">Add Income</h2><p id="modalSubtitle" class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Record a new income entry</p></div>
+          <button id="modalClose" class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+        <div class="px-6 py-5 space-y-5">
+          <!-- Source -->
+          <div>
+            <label class="kosh-label">Source <span class="text-red-400">*</span></label>
+            <div class="kd" id="sourceDropdown" style="width:100%;">
+              <button class="kd-trigger" type="button">
+                <span class="kd-value kd-placeholder">Select source...</span>
+                <svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+              </button>
+              <div class="kd-menu">
+                <div class="kd-option" data-value="Salary">Salary</div>
+                <div class="kd-option" data-value="Dividend">Dividend</div>
+                <div class="kd-option" data-value="Rental Income">Rental Income</div>
+                <div class="kd-option" data-value="Interest">Interest</div>
+                <div class="kd-option" data-value="Freelance">Freelance</div>
+                <div class="kd-option" data-value="Bonus">Bonus</div>
+                <div class="kd-option" data-value="Gift">Gift</div>
+                <div class="kd-option" data-value="Other">Other</div>
+              </div>
+            </div>
+          </div>
+          <!-- Amount + Currency -->
+          <div class="grid grid-cols-3 gap-3">
+            <div class="col-span-2"><label class="kosh-label">Amount <span class="text-red-400">*</span></label><input id="amountInput" type="number" placeholder="0.00" step="0.01" class="kosh-input" /></div>
+            <div>
+              <label class="kosh-label">Currency</label>
+              <div class="kd" id="currencyDropdown" style="width:100%;">
+                <button class="kd-trigger" type="button">
+                  <span class="kd-value">INR (₹)</span>
+                  <svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                </button>
+                <div class="kd-menu">
+                  <div class="kd-option selected" data-value="INR">INR (₹)</div>
+                  <div class="kd-option" data-value="USD">USD ($)</div>
+                  <div class="kd-option" data-value="EUR">EUR (€)</div>
+                  <div class="kd-option" data-value="GBP">GBP (£)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Description -->
+          <div><label class="kosh-label">Description <span class="text-xs font-normal dark:text-kosh-muted text-kosh-light-muted">(optional)</span></label><input id="descInput" type="text" placeholder="e.g., Monthly salary from Visa" class="kosh-input" /></div>
+          <!-- Date (custom) -->
+          <div>
+            <label class="kosh-label">Date <span id="dateRequired" class="text-red-400">*</span></label>
+            <div class="kdp" id="datePicker">
+              <button class="kdp-trigger" type="button">
+                <svg class="kdp-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+                <span class="kdp-value">Feb 28, 2026</span>
+                <svg class="kdp-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+              </button>
+              <div class="kdp-popup">
+                <div class="kdp-nav">
+                  <button type="button" id="dpPrev"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.75 19.5L8.25 12l7.5-7.5"/></svg></button>
+                  <span id="dpMonthYear"></span>
+                  <button type="button" id="dpNext"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button>
+                </div>
+                <div class="kdp-grid" id="dpGrid"></div>
+              </div>
+            </div>
+          </div>
+          <!-- Recurring -->
+          <div class="flex items-center gap-2.5"><input id="recurringCheck" type="checkbox" class="kosh-checkbox" /><label for="recurringCheck" class="text-sm font-medium cursor-pointer">This is a recurring income</label></div>
+          <div id="recurrenceSection" class="hidden p-4 rounded-xl dark:bg-kosh-slate bg-kosh-cream/50 border dark:border-kosh-dark-border border-kosh-light-border space-y-4">
+            <p class="text-xs font-semibold dark:text-kosh-muted/80 text-kosh-light-muted uppercase tracking-wider">Recurrence Pattern</p>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="kosh-label">Repeat every</label>
+                <div class="kd" id="recFreqDropdown" style="width:100%;">
+                  <button class="kd-trigger" type="button"><span class="kd-value">Month</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
+                  <div class="kd-menu">
+                    <div class="kd-option" data-value="Day">Day</div>
+                    <div class="kd-option" data-value="Week">Week</div>
+                    <div class="kd-option selected" data-value="Month">Month</div>
+                    <div class="kd-option" data-value="Quarter">Quarter</div>
+                    <div class="kd-option" data-value="Year">Year</div>
+                  </div>
+                </div>
+              </div>
+              <div>
+                <label class="kosh-label">Starting from</label>
+                <div class="kdp kdp-sm" id="recDatePicker">
+                  <button class="kdp-trigger" type="button">
+                    <svg class="kdp-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+                    <span class="kdp-value">Feb 28, 2026</span>
+                    <svg class="kdp-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                  </button>
+                  <div class="kdp-popup" style="left:auto;right:0;">
+                    <div class="kdp-nav"><button type="button" class="dp-prev"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M15.75 19.5L8.25 12l7.5-7.5"/></svg></button><span class="dp-month-year"></span><button type="button" class="dp-next"><svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M8.25 4.5l7.5 7.5-7.5 7.5"/></svg></button></div>
+                    <div class="kdp-grid dp-grid"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted">Preview: Every month starting Feb 28, 2026</p>
+          </div>
+        </div>
+        <div class="px-6 py-4 border-t dark:border-kosh-dark-border border-kosh-light-border flex gap-3">
+          <button id="modalCancel" class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
+          <button id="modalSave" class="flex-1 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-colors">Save Income</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== DELETE CONFIRMATION POPOVER ====== -->
+  <div id="deletePopover" class="fixed z-[110] hidden">
+    <div class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.6)] p-4 w-[280px]" style="animation: popIn 0.2s cubic-bezier(0.16,1,0.3,1);">
+      <div class="flex items-start gap-3">
+        <div class="w-9 h-9 rounded-lg bg-red-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <svg class="w-4 h-4 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold">Delete entry?</p>
+          <p id="deleteDesc" class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5 truncate">This action cannot be undone.</p>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-3.5">
+        <button id="deleteCancelBtn" class="flex-1 py-2 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-xs font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
+        <button id="deleteConfirmBtn" class="flex-1 py-2 rounded-lg bg-red-500 text-white text-xs font-semibold hover:bg-red-600 transition-colors">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== PAUSE CONFIRMATION POPOVER ====== -->
+  <div id="pausePopover" class="fixed z-[110] hidden">
+    <div class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.6)] p-4 w-[280px]" style="animation: popIn 0.2s cubic-bezier(0.16,1,0.3,1);">
+      <div class="flex items-start gap-3">
+        <div id="pauseIconWrap" class="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg>
+        </div>
+        <div class="flex-1 min-w-0">
+          <p id="pauseTitle" class="text-sm font-semibold">Pause rule?</p>
+          <p id="pauseDesc" class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5 truncate">Entries won't be auto-generated.</p>
+        </div>
+      </div>
+      <div class="flex gap-2 mt-3.5">
+        <button id="pauseCancelBtn" class="flex-1 py-2 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-xs font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
+        <button id="pauseConfirmBtn" class="flex-1 py-2 rounded-lg bg-amber-500 text-white text-xs font-semibold hover:bg-amber-600 transition-colors">Pause</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script>
+    // ===== CUSTOM DROPDOWN COMPONENT =====
+    function initDropdowns() {
+      document.querySelectorAll('.kd').forEach(dd => {
+        const trigger = dd.querySelector('.kd-trigger');
+        const menu = dd.querySelector('.kd-menu');
+        const valueEl = dd.querySelector('.kd-value');
+
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Close all other dropdowns and datepickers
+          document.querySelectorAll('.kd.open, .kdp.open').forEach(d => { if (d !== dd) d.classList.remove('open'); });
+          dd.classList.toggle('open');
+        });
+
+        dd.querySelectorAll('.kd-option').forEach(opt => {
+          opt.addEventListener('click', () => {
+            dd.querySelectorAll('.kd-option').forEach(o => o.classList.remove('selected'));
+            opt.classList.add('selected');
+            valueEl.textContent = opt.textContent;
+            valueEl.classList.remove('kd-placeholder');
+            dd.classList.remove('open');
+            dd.dispatchEvent(new CustomEvent('change', { detail: { value: opt.dataset.value }}));
+          });
+        });
+      });
+    }
+
+    // ===== CUSTOM DATE PICKER COMPONENT =====
+    const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const DAYS_SHORT = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+
+    function initDatePickers() {
+      document.querySelectorAll('.kdp').forEach(dp => {
+        const trigger = dp.querySelector('.kdp-trigger');
+        const popup = dp.querySelector('.kdp-popup');
+        const valueEl = dp.querySelector('.kdp-value');
+        const grid = dp.querySelector('.kdp-grid, .dp-grid');
+        const monthYearEl = dp.querySelector('#dpMonthYear, .dp-month-year');
+        const prevBtn = dp.querySelector('#dpPrev, .dp-prev');
+        const nextBtn = dp.querySelector('#dpNext, .dp-next');
+
+        let viewYear = 2026, viewMonth = 1; // Feb = 1 (0-indexed)
+        let selectedDate = new Date(2026, 1, 28);
+        const today = new Date();
+
+        function render() {
+          monthYearEl.textContent = `${MONTHS[viewMonth]} ${viewYear}`;
+          const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+          const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+          const prevMonthDays = new Date(viewYear, viewMonth, 0).getDate();
+
+          let html = DAYS_SHORT.map(d => `<div class="kdp-hdr">${d}</div>`).join('');
+          // Prev month padding
+          for (let i = firstDay - 1; i >= 0; i--) {
+            html += `<div class="kdp-day other-month" data-d="${prevMonthDays - i}" data-m="${viewMonth-1}" data-y="${viewYear}">${prevMonthDays - i}</div>`;
+          }
+          // Current month
+          for (let d = 1; d <= daysInMonth; d++) {
+            const isSelected = selectedDate && selectedDate.getDate() === d && selectedDate.getMonth() === viewMonth && selectedDate.getFullYear() === viewYear;
+            const isToday = today.getDate() === d && today.getMonth() === viewMonth && today.getFullYear() === viewYear;
+            html += `<div class="kdp-day${isSelected ? ' selected' : ''}${isToday ? ' today' : ''}" data-d="${d}" data-m="${viewMonth}" data-y="${viewYear}">${d}</div>`;
+          }
+          // Next month padding
+          const totalCells = firstDay + daysInMonth;
+          const remaining = (7 - (totalCells % 7)) % 7;
+          for (let d = 1; d <= remaining; d++) {
+            html += `<div class="kdp-day other-month" data-d="${d}" data-m="${viewMonth+1}" data-y="${viewYear}">${d}</div>`;
+          }
+          grid.innerHTML = html;
+
+          // Day click handlers
+          grid.querySelectorAll('.kdp-day').forEach(dayEl => {
+            dayEl.addEventListener('click', () => {
+              const y = parseInt(dayEl.dataset.y), m = parseInt(dayEl.dataset.m), d = parseInt(dayEl.dataset.d);
+              selectedDate = new Date(y, m, d);
+              viewYear = y; viewMonth = m;
+              const label = `${MONTHS[m].slice(0,3)} ${d}, ${y}`;
+              valueEl.textContent = label;
+              render();
+              dp.classList.remove('open');
+            });
+          });
+        }
+
+        trigger.addEventListener('click', (e) => {
+          e.stopPropagation();
+          document.querySelectorAll('.kd.open, .kdp.open').forEach(d => { if (d !== dp) d.classList.remove('open'); });
+          dp.classList.toggle('open');
+          if (dp.classList.contains('open')) render();
+        });
+
+        prevBtn.addEventListener('click', (e) => { e.stopPropagation(); viewMonth--; if (viewMonth < 0) { viewMonth = 11; viewYear--; } render(); });
+        nextBtn.addEventListener('click', (e) => { e.stopPropagation(); viewMonth++; if (viewMonth > 11) { viewMonth = 0; viewYear++; } render(); });
+
+        render();
+      });
+    }
+
+    // ===== Close all on outside click =====
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.kd.open, .kdp.open').forEach(d => d.classList.remove('open'));
+    });
+    // Prevent popup clicks from closing
+    document.querySelectorAll('.kd-menu, .kdp-popup').forEach(el => {
+      el.addEventListener('click', e => e.stopPropagation());
+    });
+
+    // ===== Theme =====
+    const html = document.documentElement;
+    const saved = localStorage.getItem('kosh-theme');
+    if (saved) { html.classList.remove('dark','light'); html.classList.add(saved); }
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      html.classList.remove('dark','light'); html.classList.add(isDark ? 'light' : 'dark');
+      localStorage.setItem('kosh-theme', isDark ? 'light' : 'dark');
+      if (typeof initTrendChart === 'function') initTrendChart();
+      if (typeof initSourceChart === 'function') initSourceChart();
+    });
+
+    // ===== Sidebar =====
+    const sidebar = document.getElementById('sidebar');
+    const sOverlay = document.getElementById('sidebarOverlay');
+    const isMobile = () => window.innerWidth < 768;
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      if (isMobile()) { sidebar.classList.toggle('mobile-open'); sOverlay.classList.toggle('active'); }
+      else { sidebar.classList.toggle('collapsed'); }
+    });
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => { sidebar.classList.add('mobile-open'); sOverlay.classList.add('active'); });
+    sOverlay.addEventListener('click', () => { sidebar.classList.remove('mobile-open'); sOverlay.classList.remove('active'); });
+
+    // ===== Tabs =====
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const t = btn.dataset.tab;
+        document.getElementById('tab-entries').classList.toggle('hidden', t !== 'entries');
+        document.getElementById('tab-recurring').classList.toggle('hidden', t !== 'recurring');
+      });
+    });
+
+    // ===== Modal =====
+    const modal = document.getElementById('addIncomeModal');
+    let editingIndex = -1; // -1 = add mode, >=0 = edit mode
+    let editingType = 'entries'; // 'entries' or 'recurring'
+
+    function openModal(mode, type, idx) {
+      editingType = type || 'entries';
+      editingIndex = (mode === 'edit' && idx !== undefined) ? idx : -1;
+
+      const titleEl = document.getElementById('modalTitle');
+      const subtitleEl = document.getElementById('modalSubtitle');
+      const saveBtn = document.getElementById('modalSave');
+      const sourceDD = document.getElementById('sourceDropdown');
+      const amountIn = document.getElementById('amountInput');
+      const descIn = document.getElementById('descInput');
+      const recurCheck = document.getElementById('recurringCheck');
+
+      if (editingIndex >= 0) {
+        // Edit mode — pre-fill
+        const data = editingType === 'entries' ? incomeData[editingIndex] : recurringData[editingIndex];
+        titleEl.textContent = 'Edit Income';
+        subtitleEl.textContent = 'Update this income entry';
+        saveBtn.textContent = 'Save Changes';
+
+        // Pre-fill source dropdown
+        const srcVal = sourceDD.querySelector('.kd-value');
+        srcVal.textContent = data.source;
+        srcVal.classList.remove('kd-placeholder');
+        sourceDD.querySelectorAll('.kd-option').forEach(o => {
+          o.classList.toggle('selected', o.dataset.value === data.source || o.textContent === data.source);
+        });
+
+        // Pre-fill amount (strip ₹ and commas)
+        amountIn.value = data.amount.replace(/[₹,]/g, '');
+        descIn.value = data.desc;
+
+        // Recurring state
+        if (data.recurring || data.freq) {
+          recurCheck.checked = true;
+          recurCheck.dispatchEvent(new Event('change'));
+        } else {
+          recurCheck.checked = false;
+          recurCheck.dispatchEvent(new Event('change'));
+        }
+      } else {
+        // Add mode — reset
+        titleEl.textContent = 'Add Income';
+        subtitleEl.textContent = 'Record a new income entry';
+        saveBtn.textContent = 'Save Income';
+        const srcVal = sourceDD.querySelector('.kd-value');
+        srcVal.textContent = 'Select source...';
+        srcVal.classList.add('kd-placeholder');
+        sourceDD.querySelectorAll('.kd-option').forEach(o => o.classList.remove('selected'));
+        amountIn.value = '';
+        descIn.value = '';
+        recurCheck.checked = false;
+        recurCheck.dispatchEvent(new Event('change'));
+      }
+
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; editingIndex = -1; }
+    document.getElementById('addIncomeBtn').addEventListener('click', () => openModal('add'));
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalCancel').addEventListener('click', closeModal);
+    document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeDeletePopover(); closePausePopover(); document.querySelectorAll('.kd.open, .kdp.open').forEach(d => d.classList.remove('open')); }});
+
+    // ===== Delete Popover =====
+    const delPopover = document.getElementById('deletePopover');
+    let deleteTarget = { type: null, idx: -1 };
+
+    function showDeletePopover(btnEl, type, idx) {
+      closePausePopover();
+      deleteTarget = { type, idx };
+      const data = type === 'entries' ? incomeData[idx] : recurringData[idx];
+      document.getElementById('deleteDesc').textContent = data.desc || data.source;
+
+      // Position near the button
+      const rect = btnEl.getBoundingClientRect();
+      delPopover.classList.remove('hidden');
+      const popW = 280;
+      const popH = delPopover.offsetHeight || 120;
+      let left = rect.right - popW;
+      let top = rect.bottom + 6;
+      // Clamp to viewport
+      if (left < 8) left = 8;
+      if (top + popH > window.innerHeight - 8) top = rect.top - popH - 6;
+      delPopover.style.left = left + 'px';
+      delPopover.style.top = top + 'px';
+    }
+
+    function closeDeletePopover() {
+      delPopover.classList.add('hidden');
+      deleteTarget = { type: null, idx: -1 };
+    }
+
+    document.getElementById('deleteCancelBtn').addEventListener('click', closeDeletePopover);
+    document.getElementById('deleteConfirmBtn').addEventListener('click', () => {
+      if (deleteTarget.type === 'entries' && deleteTarget.idx >= 0) {
+        incomeData.splice(deleteTarget.idx, 1);
+        renderEntries();
+      } else if (deleteTarget.type === 'recurring' && deleteTarget.idx >= 0) {
+        recurringData.splice(deleteTarget.idx, 1);
+        renderRecurring();
+      }
+      closeDeletePopover();
+    });
+
+    // Close popover on outside click
+    document.addEventListener('click', (e) => {
+      if (!delPopover.contains(e.target) && !e.target.closest('.action-btn-delete')) {
+        closeDeletePopover();
+      }
+      if (!pausePopover.contains(e.target) && !e.target.closest('.action-btn-pause')) {
+        closePausePopover();
+      }
+    });
+
+    // ===== Pause Popover =====
+    const pausePopover = document.getElementById('pausePopover');
+    let pauseTarget = { idx: -1 };
+
+    function showPausePopover(btnEl, idx) {
+      closePausePopover();
+      closeDeletePopover();
+      pauseTarget = { idx };
+      const data = recurringData[idx];
+      const isPaused = data.status === 'Paused';
+
+      document.getElementById('pauseTitle').textContent = isPaused ? 'Resume rule?' : 'Pause rule?';
+      document.getElementById('pauseDesc').textContent = isPaused ? data.desc + ' will auto-generate again.' : 'Entries won\'t be auto-generated.';
+      const confirmBtn = document.getElementById('pauseConfirmBtn');
+      confirmBtn.textContent = isPaused ? 'Resume' : 'Pause';
+      if (isPaused) {
+        confirmBtn.className = 'flex-1 py-2 rounded-lg bg-emerald-500 text-white text-xs font-semibold hover:bg-emerald-600 transition-colors';
+        document.getElementById('pauseIconWrap').className = 'w-9 h-9 rounded-lg bg-emerald-500/10 flex items-center justify-center flex-shrink-0 mt-0.5';
+        document.getElementById('pauseIconWrap').innerHTML = '<svg class="w-4 h-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>';
+      } else {
+        confirmBtn.className = 'flex-1 py-2 rounded-lg bg-amber-500 text-white text-xs font-semibold hover:bg-amber-600 transition-colors';
+        document.getElementById('pauseIconWrap').className = 'w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0 mt-0.5';
+        document.getElementById('pauseIconWrap').innerHTML = '<svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg>';
+      }
+
+      const rect = btnEl.getBoundingClientRect();
+      pausePopover.classList.remove('hidden');
+      const popW = 280;
+      const popH = pausePopover.offsetHeight || 120;
+      let left = rect.right - popW;
+      let top = rect.bottom + 6;
+      if (left < 8) left = 8;
+      if (top + popH > window.innerHeight - 8) top = rect.top - popH - 6;
+      pausePopover.style.left = left + 'px';
+      pausePopover.style.top = top + 'px';
+    }
+
+    function closePausePopover() {
+      pausePopover.classList.add('hidden');
+      pauseTarget = { idx: -1 };
+    }
+
+    document.getElementById('pauseCancelBtn').addEventListener('click', closePausePopover);
+    document.getElementById('pauseConfirmBtn').addEventListener('click', () => {
+      if (pauseTarget.idx >= 0) {
+        recurringData[pauseTarget.idx].status = recurringData[pauseTarget.idx].status === 'Active' ? 'Paused' : 'Active';
+        renderRecurring();
+      }
+      closePausePopover();
+    });
+
+    // ===== Recurring toggle =====
+    document.getElementById('recurringCheck').addEventListener('change', function() {
+      document.getElementById('recurrenceSection').classList.toggle('hidden', !this.checked);
+      const dp = document.getElementById('datePicker');
+      const trigger = dp.querySelector('.kdp-trigger');
+      const asterisk = document.getElementById('dateRequired');
+      if (this.checked) {
+        dp.classList.remove('open');
+        dp.classList.add('disabled');
+        trigger.setAttribute('disabled', '');
+        trigger.style.opacity = '0.4';
+        trigger.style.pointerEvents = 'none';
+        asterisk.style.display = 'none';
+      } else {
+        dp.classList.remove('disabled');
+        trigger.removeAttribute('disabled');
+        trigger.style.opacity = '';
+        trigger.style.pointerEvents = '';
+        asterisk.style.display = '';
+      }
+    });
+
+    // ===== ENTRIES TABLE =====
+    const incomeData = [
+      { date:'Feb 15, 2026', source:'Freelance', color:'amber',   desc:'Consulting — Acme Corp',      amount:'₹5,000',  recurring:null },
+      { date:'Feb 10, 2026', source:'Salary',    color:'emerald', desc:'Monthly Salary — Visa',        amount:'₹63,750', recurring:'Monthly' },
+      { date:'Feb 05, 2026', source:'Dividend',  color:'blue',    desc:'Quarterly Dividend — Axis MF', amount:'₹12,750', recurring:'Quarterly' },
+      { date:'Feb 01, 2026', source:'Rental',    color:'violet',  desc:'House Rent — Koramangala',     amount:'₹8,500',  recurring:'Monthly' },
+    ];
+    let page = 1, perPage = 5;
+
+    function renderEntries() {
+      const tbody = document.getElementById('entriesBody');
+      const total = incomeData.length, totalPages = Math.max(1, Math.ceil(total / perPage));
+      page = Math.min(page, totalPages);
+      const start = (page - 1) * perPage;
+      tbody.innerHTML = incomeData.slice(start, start + perPage).map((r, localI) => {
+        const globalI = start + localI;
+        return `
+        <tr class="income-row">
+          <td class="px-5 py-4 text-sm font-medium whitespace-nowrap">${r.date}</td>
+          <td class="px-5 py-4 whitespace-nowrap"><span class="badge bg-${r.color}-500/10 text-${r.color}-500">${r.source}</span></td>
+          <td class="px-5 py-4 text-sm dark:text-kosh-muted text-kosh-light-muted">${r.desc}</td>
+          <td class="px-5 py-4 text-sm font-semibold text-right whitespace-nowrap">${r.amount}</td>
+          <td class="px-5 py-4 whitespace-nowrap">${r.recurring ? `<span class="badge bg-kosh-gold/10 text-kosh-gold">🔁 ${r.recurring}</span>` : `<span class="text-xs dark:text-kosh-muted text-kosh-light-muted">One-time</span>`}</td>
+          <td class="px-5 py-4 text-right whitespace-nowrap">
+            <button class="action-btn action-btn-edit" data-type="entries" data-idx="${globalI}">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>Edit
+            </button>
+            <button class="action-btn action-btn-delete" data-type="entries" data-idx="${globalI}">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>Delete
+            </button>
+          </td>
+        </tr>`;
+      }).join('');
+
+      // Wire action buttons via event delegation
+      tbody.querySelectorAll('.action-btn-edit').forEach(btn => {
+        btn.addEventListener('click', () => openModal('edit', 'entries', parseInt(btn.dataset.idx)));
+      });
+      tbody.querySelectorAll('.action-btn-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.stopPropagation(); showDeletePopover(btn, 'entries', parseInt(btn.dataset.idx)); });
+      });
+
+      document.getElementById('paginationInfo').textContent = `Showing ${start+1}–${Math.min(start+perPage, total)} of ${total}`;
+      const btns = document.getElementById('paginationBtns'); btns.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const b = document.createElement('button'); b.textContent = i;
+        b.className = i === page ? 'w-7 h-7 rounded-md text-xs font-bold bg-kosh-gold text-kosh-slate' : 'w-7 h-7 rounded-md text-xs font-medium dark:text-kosh-muted text-kosh-light-muted dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors';
+        b.onclick = () => { page = i; renderEntries(); }; btns.appendChild(b);
+      }
+    }
+
+    // Wire rows-per-page dropdown
+    document.getElementById('rowsPerPageDropdown').addEventListener('change', (e) => {
+      perPage = parseInt(e.detail.value); page = 1; renderEntries();
+    });
+
+    // ===== RECURRING TABLE =====
+    const recurringData = [
+      { source:'Salary',   color:'emerald', desc:'Monthly Salary — Visa',        amount:'₹63,750', freq:'Every month · 10th', next:'Mar 10, 2026', status:'Active' },
+      { source:'Dividend', color:'blue',    desc:'Quarterly Dividend — Axis MF',  amount:'₹12,750', freq:'Every quarter',      next:'May 05, 2026', status:'Active' },
+      { source:'Rental',   color:'violet',  desc:'House Rent — Koramangala',      amount:'₹8,500',  freq:'Every month · 1st',  next:'Mar 01, 2026', status:'Active' },
+    ];
+
+    function renderRecurring() {
+      const tbody = document.getElementById('recurringBody');
+      const total = recurringData.length;
+      tbody.innerHTML = recurringData.map((r, i) => `
+        <tr class="income-row">
+          <td class="px-5 py-4"><span class="badge bg-${r.color}-500/10 text-${r.color}-500">${r.source}</span></td>
+          <td class="px-5 py-4 text-sm dark:text-kosh-muted text-kosh-light-muted">${r.desc}</td>
+          <td class="px-5 py-4 text-sm font-semibold text-right">${r.amount}</td>
+          <td class="px-5 py-4 text-sm">${r.freq}</td>
+          <td class="px-5 py-4 text-sm">${r.next}</td>
+          <td class="px-5 py-4">${r.status === 'Active' ? '<span class="badge bg-emerald-500/10 text-emerald-500">Active</span>' : '<span class="badge bg-amber-500/10 text-amber-500">Paused</span>'}</td>
+          <td class="px-5 py-4 text-right whitespace-nowrap">
+            <button class="action-btn action-btn-edit" data-type="recurring" data-idx="${i}">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>Edit
+            </button>
+            <button class="action-btn action-btn-pause" data-type="recurring" data-idx="${i}">
+              ${r.status === 'Active' ? '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg>Pause' : '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>Resume'}
+            </button>
+            <button class="action-btn action-btn-delete" data-type="recurring" data-idx="${i}">
+              <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"/></svg>Delete
+            </button>
+          </td>
+        </tr>`).join('');
+
+      // Wire buttons
+      tbody.querySelectorAll('.action-btn-edit').forEach(btn => {
+        btn.addEventListener('click', () => openModal('edit', 'recurring', parseInt(btn.dataset.idx)));
+      });
+      tbody.querySelectorAll('.action-btn-delete').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.stopPropagation(); showDeletePopover(btn, 'recurring', parseInt(btn.dataset.idx)); });
+      });
+      tbody.querySelectorAll('.action-btn-pause').forEach(btn => {
+        btn.addEventListener('click', (e) => { e.stopPropagation(); showPausePopover(btn, parseInt(btn.dataset.idx)); });
+      });
+
+      document.getElementById('recPaginationInfo').textContent = `Showing 1–${total} of ${total}`;
+    }
+
+    // ===== INTERACTIVE TREND CHART =====
+    function initTrendChart() {
+      const container = document.getElementById('trendChart');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const data = [
+        { label: "Sep '25", value: 75000 },
+        { label: "Oct '25", value: 78000 },
+        { label: "Nov '25", value: 80000 },
+        { label: "Dec '25", value: 80000 },
+        { label: "Jan '26", value: 81000 },
+        { label: "Feb '26", value: 85000 },
+      ];
+
+      const GOLD = '#C9A84C';
+      const isDark = document.documentElement.classList.contains('dark');
+      const muted = isDark ? '#6B6B6B' : '#8A8578';
+      const gridClr = isDark ? '#2A2A2A' : '#E8E4DC';
+      const cardBg = isDark ? '#161616' : '#ffffff';
+
+      const W = container.offsetWidth;
+      const H = container.offsetHeight;
+      const pad = { top: 16, right: 16, bottom: 32, left: 16 };
+      const cW = W - pad.left - pad.right;
+      const cH = H - pad.top - pad.bottom;
+
+      const minV = Math.min(...data.map(d => d.value)) * 0.96;
+      const maxV = Math.max(...data.map(d => d.value)) * 1.02;
+      const range = maxV - minV || 1;
+
+      const pts = data.map((d, i) => ({
+        x: pad.left + (i / (data.length - 1)) * cW,
+        y: pad.top + cH - ((d.value - minV) / range) * cH,
+        ...d,
+      }));
+
+      // Monotone cubic interpolation (Catmull-Rom → cubic bezier path)
+      function monotonePath(points) {
+        if (points.length < 2) return '';
+        if (points.length === 2) return `M${points[0].x},${points[0].y}L${points[1].x},${points[1].y}`;
+        let path = `M${points[0].x},${points[0].y}`;
+        for (let i = 0; i < points.length - 1; i++) {
+          const p0 = points[Math.max(i - 1, 0)];
+          const p1 = points[i];
+          const p2 = points[i + 1];
+          const p3 = points[Math.min(i + 2, points.length - 1)];
+          const cp1x = p1.x + (p2.x - p0.x) / 6;
+          const cp1y = p1.y + (p2.y - p0.y) / 6;
+          const cp2x = p2.x - (p3.x - p1.x) / 6;
+          const cp2y = p2.y - (p3.y - p1.y) / 6;
+          path += `C${cp1x},${cp1y},${cp2x},${cp2y},${p2.x},${p2.y}`;
+        }
+        return path;
+      }
+
+      const curvePath = monotonePath(pts);
+      // Area: same curve, then close along bottom
+      const areaPath = curvePath + `L${pts[pts.length-1].x},${pad.top+cH}L${pts[0].x},${pad.top+cH}Z`;
+
+      // Grid lines (3 horizontal, dashed)
+      let gridLines = '';
+      for (let i = 0; i <= 3; i++) {
+        const gy = pad.top + (cH / 3) * i;
+        gridLines += `<line x1="${pad.left}" y1="${gy}" x2="${W-pad.right}" y2="${gy}" stroke="${gridClr}" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>`;
+      }
+
+      // Static dots
+      const dots = pts.map((p, i) =>
+        `<circle cx="${p.x}" cy="${p.y}" r="3" fill="${GOLD}" opacity="0.4" class="chart-dot" data-i="${i}"/>`
+      ).join('');
+
+      // X-axis labels
+      const labels = pts.map(p =>
+        `<text x="${p.x}" y="${H - 6}" text-anchor="middle" fill="${muted}" font-size="11" font-family="Plus Jakarta Sans, sans-serif">${p.label}</text>`
+      ).join('');
+
+      const svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
+        <defs>
+          <linearGradient id="aFill" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="${GOLD}" stop-opacity="0.18"/>
+            <stop offset="100%" stop-color="${GOLD}" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        ${gridLines}
+        <path d="${areaPath}" fill="url(#aFill)"/>
+        <path d="${curvePath}" fill="none" stroke="${GOLD}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        ${dots}
+        <line id="cursorLine" x1="0" y1="${pad.top}" x2="0" y2="${pad.top+cH}" stroke="${GOLD}" stroke-width="1" stroke-dasharray="4,4" opacity="0"/>
+        <circle id="glowDot" cx="0" cy="0" r="12" fill="${GOLD}" opacity="0"/>
+        <circle id="activeDot" cx="0" cy="0" r="5.5" fill="${GOLD}" stroke="${cardBg}" stroke-width="2.5" opacity="0"/>
+        ${labels}
+        <rect class="chart-hit" x="${pad.left}" y="0" width="${cW}" height="${H}" fill="transparent"/>
+      </svg>`;
+
+      container.innerHTML = svg;
+
+      // Tooltip element
+      const tip = document.createElement('div');
+      tip.className = 'chart-tooltip';
+      container.appendChild(tip);
+
+      const cursorEl = container.querySelector('#cursorLine');
+      const activeEl = container.querySelector('#activeDot');
+      const glowEl = container.querySelector('#glowDot');
+      const hitEl = container.querySelector('.chart-hit');
+      const allDots = container.querySelectorAll('.chart-dot');
+
+      let activeIdx = -1;
+
+      function show(idx) {
+        if (idx === activeIdx) return;
+        activeIdx = idx;
+        const p = pts[idx];
+
+        cursorEl.setAttribute('x1', p.x);
+        cursorEl.setAttribute('x2', p.x);
+        cursorEl.setAttribute('opacity', '0.3');
+
+        activeEl.setAttribute('cx', p.x);
+        activeEl.setAttribute('cy', p.y);
+        activeEl.setAttribute('opacity', '1');
+        glowEl.setAttribute('cx', p.x);
+        glowEl.setAttribute('cy', p.y);
+        glowEl.setAttribute('opacity', '0.1');
+
+        allDots.forEach((d, i) => d.setAttribute('opacity', i === idx ? '0' : '0.15'));
+
+        // Tooltip content
+        tip.innerHTML = `
+          <div style="font-weight:600;margin-bottom:3px;">${p.label}</div>
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:${GOLD};"></div>
+            <span style="font-size:15px;font-weight:700;color:${GOLD};">₹${p.value.toLocaleString('en-IN')}</span>
+          </div>`;
+
+        // Position: above the dot, centered, clamped to edges
+        const tipW = tip.offsetWidth || 130;
+        const tipH = tip.offsetHeight || 52;
+        let tx = p.x - tipW / 2;
+        if (tx < 4) tx = 4;
+        if (tx + tipW > W - 4) tx = W - tipW - 4;
+        let ty = p.y - tipH - 16;
+        if (ty < 0) ty = p.y + 16;
+        tip.style.left = tx + 'px';
+        tip.style.top = ty + 'px';
+        tip.classList.add('visible');
+      }
+
+      function hide() {
+        activeIdx = -1;
+        cursorEl.setAttribute('opacity', '0');
+        activeEl.setAttribute('opacity', '0');
+        glowEl.setAttribute('opacity', '0');
+        tip.classList.remove('visible');
+        allDots.forEach(d => d.setAttribute('opacity', '0.4'));
+      }
+
+      function findClosest(clientX) {
+        const rect = container.getBoundingClientRect();
+        const mx = clientX - rect.left;
+        let best = 0, bestD = Infinity;
+        pts.forEach((p, i) => { const d = Math.abs(mx - p.x); if (d < bestD) { bestD = d; best = i; } });
+        return best;
+      }
+
+      hitEl.addEventListener('mousemove', e => show(findClosest(e.clientX)));
+      hitEl.addEventListener('mouseleave', hide);
+      hitEl.addEventListener('touchmove', e => { e.preventDefault(); show(findClosest(e.touches[0].clientX)); }, { passive: false });
+      hitEl.addEventListener('touchend', hide);
+    }
+
+    // Resize handler
+    let _chartTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(_chartTimer);
+      _chartTimer = setTimeout(() => { initTrendChart(); initSourceChart(); }, 150);
+    });
+
+    // ===== INTERACTIVE DONUT CHART =====
+    function initSourceChart() {
+      const container = document.getElementById('sourceChart');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const sources = [
+        { name: 'Salary',   value: 63750, color: '#10B981' },
+        { name: 'Dividend', value: 12750, color: '#3B82F6' },
+        { name: 'Rental',   value: 8500,  color: '#8B5CF6' },
+      ];
+
+      const total = sources.reduce((s, d) => s + d.value, 0);
+      const isDark = document.documentElement.classList.contains('dark');
+      const textClr = isDark ? '#fff' : '#1A1A1A';
+      const muted = isDark ? '#6B6B6B' : '#8A8578';
+
+      const W = container.offsetWidth;
+      const H = container.offsetHeight;
+      const cx = W / 2;
+      const cy = H / 2;
+      const R = Math.min(cx, cy) - 36;    // outer radius — leave room for labels
+      const innerR = R * 0.55;             // donut hole
+      const hoverR = R + 4;
+      const labelR = R + 14;               // where label line starts
+      const labelOuterR = R + 32;          // where label line ends
+      const GAP = 0.025;
+
+      function segmentPath(startAngle, endAngle, outerR, ir) {
+        const sA = startAngle + GAP / 2;
+        const eA = endAngle - GAP / 2;
+        if (eA <= sA) return '';
+        const sO = sA - Math.PI / 2, eO = eA - Math.PI / 2;
+        const sI = eA - Math.PI / 2, eI = sA - Math.PI / 2;
+        const ox1 = cx + outerR * Math.cos(sO), oy1 = cy + outerR * Math.sin(sO);
+        const ox2 = cx + outerR * Math.cos(eO), oy2 = cy + outerR * Math.sin(eO);
+        const ix1 = cx + ir * Math.cos(sI), iy1 = cy + ir * Math.sin(sI);
+        const ix2 = cx + ir * Math.cos(eI), iy2 = cy + ir * Math.sin(eI);
+        const large = (eA - sA) > Math.PI ? 1 : 0;
+        return `M${ox1},${oy1} A${outerR},${outerR} 0 ${large} 1 ${ox2},${oy2} L${ix1},${iy1} A${ir},${ir} 0 ${large} 0 ${ix2},${iy2} Z`;
+      }
+
+      // Calculate angles
+      let angleStart = 0;
+      const segments = sources.map(d => {
+        const angle = (d.value / total) * Math.PI * 2;
+        const seg = { ...d, start: angleStart, end: angleStart + angle, pct: Math.round((d.value / total) * 100) };
+        angleStart += angle;
+        return seg;
+      });
+
+      // Build segment paths
+      let segPaths = segments.map((seg, i) => {
+        const normalPath = segmentPath(seg.start, seg.end, R, innerR);
+        const hoverPath = segmentPath(seg.start, seg.end, hoverR, innerR);
+        return `<path class="donut-segment" data-i="${i}" d="${normalPath}" fill="${seg.color}" data-normal="${normalPath}" data-hover="${hoverPath}" style="transition: d 0.2s ease, opacity 0.15s ease, filter 0.15s ease;"/>`;
+      }).join('');
+
+      // Label lines + text (shadcn style)
+      let labelsSvg = segments.map(seg => {
+        const midA = (seg.start + seg.end) / 2 - Math.PI / 2;
+        const lx1 = cx + labelR * Math.cos(midA);
+        const ly1 = cy + labelR * Math.sin(midA);
+        const lx2 = cx + labelOuterR * Math.cos(midA);
+        const ly2 = cy + labelOuterR * Math.sin(midA);
+
+        // Horizontal tail — extend further left or right
+        const isRight = Math.cos(midA) >= 0;
+        const tailLen = 14;
+        const tx = isRight ? lx2 + tailLen : lx2 - tailLen;
+        const ty = ly2;
+        const anchor = isRight ? 'start' : 'end';
+        const textX = isRight ? tx + 5 : tx - 5;
+
+        return `
+          <line x1="${lx1}" y1="${ly1}" x2="${lx2}" y2="${ly2}" stroke="${muted}" stroke-width="1" opacity="0.6"/>
+          <line x1="${lx2}" y1="${ly2}" x2="${tx}" y2="${ty}" stroke="${muted}" stroke-width="1" opacity="0.6"/>
+          <circle cx="${lx1}" cy="${ly1}" r="2" fill="${seg.color}"/>
+          <text x="${textX}" y="${ty + 4}" text-anchor="${anchor}" fill="${textClr}" font-size="12" font-weight="600" font-family="Plus Jakarta Sans, sans-serif">${seg.name}</text>`;
+      }).join('');
+
+      // Center text
+      const centerSvg = `
+        <text id="srcCenterVal" x="${cx}" y="${cy - 4}" text-anchor="middle" fill="${textClr}" font-size="17" font-weight="700" font-family="Plus Jakarta Sans, sans-serif">₹${(total/1000).toFixed(0)}K</text>
+        <text id="srcCenterLabel" x="${cx}" y="${cy + 14}" text-anchor="middle" fill="${muted}" font-size="11" font-family="Plus Jakarta Sans, sans-serif">Total</text>`;
+
+      container.innerHTML = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${segPaths}${centerSvg}${labelsSvg}</svg>`;
+
+      // Tooltip
+      const tip = document.createElement('div');
+      tip.className = 'chart-tooltip';
+      container.appendChild(tip);
+
+      const allSegs = container.querySelectorAll('.donut-segment');
+      const cValEl = container.querySelector('#srcCenterVal');
+      const cLabelEl = container.querySelector('#srcCenterLabel');
+      let activeIdx = -1;
+
+      function showSegment(idx) {
+        if (idx === activeIdx) return;
+        activeIdx = idx;
+        const seg = segments[idx];
+
+        allSegs.forEach((el, i) => {
+          if (i === idx) {
+            el.setAttribute('d', el.dataset.hover);
+            el.classList.remove('donut-dimmed');
+            el.style.filter = 'brightness(1.12)';
+          } else {
+            el.setAttribute('d', el.dataset.normal);
+            el.classList.add('donut-dimmed');
+            el.style.filter = '';
+          }
+        });
+
+        cValEl.textContent = '₹' + seg.value.toLocaleString('en-IN');
+        cValEl.setAttribute('font-size', '15');
+        cLabelEl.textContent = seg.name;
+
+        const midAngle = (seg.start + seg.end) / 2 - Math.PI / 2;
+        const tipPosR = R * 0.82;
+        const tx = cx + tipPosR * Math.cos(midAngle);
+        const ty = cy + tipPosR * Math.sin(midAngle);
+
+        tip.innerHTML = `
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:${seg.color};flex-shrink:0;"></div>
+            <span style="font-weight:600;">${seg.name}</span>
+          </div>
+          <div style="font-size:15px;font-weight:700;color:${seg.color};">₹${seg.value.toLocaleString('en-IN')}</div>
+          <div style="font-size:11px;color:${muted};margin-top:2px;">${seg.pct}% of total</div>`;
+
+        const tipW = tip.offsetWidth || 140;
+        const tipH = tip.offsetHeight || 68;
+        let left = tx - tipW / 2;
+        let top = ty - tipH - 12;
+        if (left < 4) left = 4;
+        if (left + tipW > W - 4) left = W - tipW - 4;
+        if (top < 0) top = ty + 12;
+        tip.style.left = left + 'px';
+        tip.style.top = top + 'px';
+        tip.classList.add('visible');
+      }
+
+      function resetChart() {
+        activeIdx = -1;
+        allSegs.forEach(el => {
+          el.setAttribute('d', el.dataset.normal);
+          el.classList.remove('donut-dimmed');
+          el.style.filter = '';
+        });
+        tip.classList.remove('visible');
+        cValEl.textContent = '₹' + (total/1000).toFixed(0) + 'K';
+        cValEl.setAttribute('font-size', '17');
+        cLabelEl.textContent = 'Total';
+      }
+
+      allSegs.forEach((el, i) => {
+        el.addEventListener('mouseenter', () => showSegment(i));
+        el.addEventListener('touchstart', (e) => { e.preventDefault(); showSegment(i); }, { passive: false });
+      });
+
+      container.addEventListener('mouseleave', resetChart);
+      container.addEventListener('touchend', resetChart);
+    }
+
+    // ===== INIT =====
+    initDropdowns();
+    initDatePickers();
+    initTrendChart();
+    initSourceChart();
+    renderEntries();
+    renderRecurring();
+  </script>
+</body>
+</html>

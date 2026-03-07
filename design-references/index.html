@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kosh — Your Personal Financial OS</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="favico/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favico/favicon-16x16.png">
+  <link rel="manifest" href="favico/site.webmanifest">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Fraunces"', 'Georgia', 'serif'],
+            body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            kosh: {
+              gold: '#C9A84C',
+              'gold-light': '#E4CC7A',
+              'gold-dark': '#A68A3E',
+              cream: '#F5F0E8',
+              charcoal: '#1A1A1A',
+              slate: '#0F0F0F',
+              'dark-card': '#161616',
+              'dark-border': '#2A2A2A',
+              'light-bg': '#FAFAF7',
+              'light-card': '#FFFFFF',
+              'light-border': '#E8E4DC',
+              'light-muted': '#8A8578',
+              muted: '#6B6B6B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    .dark ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .light ::-webkit-scrollbar-thumb { background: #D4D0C8; border-radius: 3px; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    .hero-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(60px) rotateX(-15deg);
+      animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes heroReveal {
+      to { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    .float { animation: float 6s ease-in-out infinite; }
+    .float-delay { animation: float 6s ease-in-out 2s infinite; }
+    .float-delay-2 { animation: float 6s ease-in-out 4s infinite; }
+
+    .gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .dark .gradient-orb { opacity: 0.12; }
+    .light .gradient-orb { opacity: 0.08; }
+
+    .glow-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+      opacity: 0.3;
+    }
+
+    .nav-glass {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .dark .nav-glass { background: rgba(15, 15, 15, 0.8); border-bottom: 1px solid rgba(42, 42, 42, 0.5); }
+    .light .nav-glass { background: rgba(250, 250, 247, 0.85); border-bottom: 1px solid rgba(232, 228, 220, 0.8); }
+
+    .feature-card {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .dark .feature-card:hover { box-shadow: 0 20px 60px -15px rgba(201, 168, 76, 0.08); }
+    .light .feature-card:hover { box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.08); }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: marquee 30s linear infinite; }
+
+    * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+
+    .pricing-glow { position: relative; }
+    .pricing-glow::before {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: inherit;
+      background: linear-gradient(135deg, #C9A84C, transparent, #C9A84C);
+      z-index: -1;
+      opacity: 0.5;
+    }
+
+    .cta-shimmer { position: relative; overflow: hidden; }
+    .cta-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+
+    .mockup-shine { position: relative; overflow: hidden; }
+    .mockup-shine::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: linear-gradient(to bottom right, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* FAQ accordion */
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+    }
+    .faq-answer.open { max-height: 300px; }
+    .faq-icon { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-icon.open { transform: rotate(45deg); }
+
+    /* Auth Modal */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+    }
+    .auth-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .auth-backdrop {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(24px) saturate(120%);
+      -webkit-backdrop-filter: blur(24px) saturate(120%);
+    }
+    .dark .auth-backdrop { background: rgba(10, 10, 10, 0.75); }
+    .light .auth-backdrop { background: rgba(250, 250, 247, 0.8); }
+
+    .auth-modal {
+      position: relative;
+      z-index: 1;
+      transform: scale(0.92) translateY(20px);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    }
+    .auth-overlay.open .auth-modal {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    /* Google button hover */
+    .google-btn {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .google-btn:hover {
+      transform: translateY(-1px);
+    }
+    .dark .google-btn:hover {
+      box-shadow: 0 8px 30px -8px rgba(201, 168, 76, 0.15);
+      border-color: rgba(201, 168, 76, 0.3);
+    }
+    .light .google-btn:hover {
+      box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.1);
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+    .google-btn:active {
+      transform: translateY(0) scale(0.99);
+    }
+
+    /* Subtle pulse on the logo in modal */
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.2); }
+      50% { box-shadow: 0 0 0 12px rgba(201, 168, 76, 0); }
+    }
+    .auth-logo-pulse {
+      animation: logoPulse 3s ease-in-out infinite;
+    }
+
+    /* Close btn */
+    .auth-close {
+      transition: transform 0.2s ease, background-color 0.2s ease;
+    }
+    .auth-close:hover {
+      transform: rotate(90deg);
+    }
+  </style>
+</head>
+
+<body class="dark:bg-kosh-slate dark:text-white bg-kosh-light-bg text-kosh-charcoal overflow-x-hidden">
+
+  <!-- ======================== NAVBAR ======================== -->
+  <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-18">
+        <a href="#" class="flex items-center gap-2.5 group">
+          <img src="logo.png" width="36" height="36" alt="Kosh" class="transition-transform duration-300 group-hover:scale-105">
+          <span class="font-display text-xl tracking-tight dark:text-white text-kosh-charcoal" style="font-variation-settings: 'opsz' 40;">Kosh</span>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#features" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">Features</a>
+          <a href="#how-it-works" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">How it works</a>
+          <a href="#family" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">Family</a>
+          <a href="#pricing" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">Pricing</a>
+          <a href="#faq" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">FAQ</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- Theme toggle -->
+          <button id="themeToggle" class="relative w-10 h-10 rounded-full dark:bg-kosh-dark-card dark:hover:bg-kosh-dark-border bg-kosh-cream hover:bg-kosh-light-border flex items-center justify-center transition-all duration-300" aria-label="Toggle theme">
+            <svg class="w-[18px] h-[18px] dark:block hidden text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            <svg class="w-[18px] h-[18px] dark:hidden block text-kosh-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+
+          <!-- Login CTA -->
+          <a href="#" data-auth-trigger class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-all duration-300 cta-shimmer">
+            Login
+          </a>
+
+          <!-- Mobile hamburger -->
+          <button id="mobileMenuBtn" class="md:hidden w-10 h-10 flex items-center justify-center" aria-label="Menu">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 dark:bg-kosh-slate bg-kosh-light-bg">
+    <div class="flex items-center justify-between px-6 h-16">
+      <span class="font-display text-xl" style="font-variation-settings: 'opsz' 40;">Kosh</span>
+      <button id="mobileMenuClose" class="w-10 h-10 flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="flex flex-col items-center gap-8 mt-20">
+      <a href="#features" class="mobile-nav-link text-2xl font-display">Features</a>
+      <a href="#how-it-works" class="mobile-nav-link text-2xl font-display">How it works</a>
+      <a href="#family" class="mobile-nav-link text-2xl font-display">Family</a>
+      <a href="#pricing" class="mobile-nav-link text-2xl font-display">Pricing</a>
+      <a href="#faq" class="mobile-nav-link text-2xl font-display">FAQ</a>
+      <a href="#" data-auth-trigger class="mt-4 px-8 py-3 rounded-full bg-kosh-gold text-kosh-slate font-semibold">Login</a>
+    </div>
+  </div>
+
+
+  <!-- ======================== HERO ======================== -->
+  <section class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+    <div class="gradient-orb w-[600px] h-[600px] bg-kosh-gold top-[-200px] left-[-200px]"></div>
+    <div class="gradient-orb w-[500px] h-[500px] bg-kosh-gold bottom-[-100px] right-[-150px]"></div>
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2260%22 height=%2260%22><line x1=%220%22 y1=%2260%22 x2=%2260%22 y2=%2260%22 stroke=%22%23888%22 stroke-width=%220.5%22/><line x1=%2260%22 y1=%220%22 x2=%2260%22 y2=%2260%22 stroke=%22%23888%22 stroke-width=%220.5%22/></svg>');"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+      <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[1.05] tracking-tight mb-6" style="font-variation-settings: 'opsz' 144;">
+        <span class="hero-word" style="animation-delay: 0.1s">Your</span>
+        <span class="hero-word" style="animation-delay: 0.2s">complete</span><br class="hidden sm:block" />
+        <span class="hero-word italic text-kosh-gold" style="animation-delay: 0.35s">financial</span>
+        <span class="hero-word" style="animation-delay: 0.45s">operating</span><br class="hidden sm:block" />
+        <span class="hero-word" style="animation-delay: 0.6s">system.</span>
+      </h1>
+
+      <p class="max-w-xl mx-auto text-base sm:text-lg dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-10 opacity-0 animate-[heroReveal_0.8s_0.8s_forwards]">
+        Track income, expenses, assets, liabilities, insurance — everything. Built for India, designed for families. Your entire financial life, in one place.
+      </p>
+
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4 opacity-0 animate-[heroReveal_0.8s_1s_forwards]">
+        <a href="#" data-auth-trigger class="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-kosh-gold text-kosh-slate font-semibold text-base hover:bg-kosh-gold-light hover:shadow-[0_0_40px_rgba(201,168,76,0.25)] transition-all duration-400 cta-shimmer">
+          Start for free
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#features" class="inline-flex items-center gap-2 px-8 py-3.5 rounded-full dark:text-white text-kosh-charcoal border dark:border-kosh-dark-border border-kosh-light-border hover:border-kosh-gold/30 font-medium text-base transition-all duration-300">
+          See how it works
+        </a>
+      </div>
+
+      <!-- Dashboard Mockup -->
+      <div class="mt-16 sm:mt-20 relative max-w-5xl mx-auto opacity-0 animate-[heroReveal_1s_1.2s_forwards]">
+        <div class="mockup-shine rounded-xl sm:rounded-2xl overflow-hidden dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]">
+          <div class="flex items-center gap-2 px-4 py-3 border-b dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex gap-1.5">
+              <div class="w-3 h-3 rounded-full bg-red-400/60"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-400/60"></div>
+              <div class="w-3 h-3 rounded-full bg-green-400/60"></div>
+            </div>
+            <div class="flex-1 mx-4">
+              <div class="max-w-sm mx-auto h-6 rounded-md dark:bg-kosh-slate bg-kosh-cream flex items-center px-3">
+                <span class="text-xs dark:text-kosh-muted text-kosh-light-muted">app.kosh.finance</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-4 sm:p-6">
+            <div class="grid grid-cols-12 gap-4">
+              <!-- Sidebar skeleton -->
+              <div class="col-span-2 hidden sm:block">
+                <div class="space-y-3">
+                  <div class="flex items-center gap-2 px-3 py-2 rounded-lg dark:bg-kosh-gold/10 bg-kosh-gold/10">
+                    <div class="w-4 h-4 rounded bg-kosh-gold/30"></div>
+                    <div class="h-2.5 w-16 rounded dark:bg-kosh-gold/40 bg-kosh-gold/50"></div>
+                  </div>
+                  <div class="flex items-center gap-2 px-3 py-2"><div class="w-4 h-4 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div><div class="h-2.5 w-14 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div></div>
+                  <div class="flex items-center gap-2 px-3 py-2"><div class="w-4 h-4 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div><div class="h-2.5 w-12 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div></div>
+                  <div class="flex items-center gap-2 px-3 py-2"><div class="w-4 h-4 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div><div class="h-2.5 w-16 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div></div>
+                  <div class="flex items-center gap-2 px-3 py-2"><div class="w-4 h-4 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div><div class="h-2.5 w-10 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div></div>
+                </div>
+              </div>
+              <!-- Main -->
+              <div class="col-span-12 sm:col-span-10 space-y-4">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Net Worth</div>
+                    <div class="text-lg font-semibold dark:text-white text-kosh-charcoal">₹42.8L</div>
+                    <div class="text-xs text-emerald-500 mt-1">+12.4% ↑</div>
+                  </div>
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Monthly Income</div>
+                    <div class="text-lg font-semibold dark:text-white text-kosh-charcoal">₹2.4L</div>
+                    <div class="text-xs text-emerald-500 mt-1">+3.2% ↑</div>
+                  </div>
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Monthly Expenses</div>
+                    <div class="text-lg font-semibold dark:text-white text-kosh-charcoal">₹78.5K</div>
+                    <div class="text-xs text-red-400 mt-1">+5.1% ↑</div>
+                  </div>
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Savings Rate</div>
+                    <div class="text-lg font-semibold dark:text-white text-kosh-charcoal">67.3%</div>
+                    <div class="text-xs text-emerald-500 mt-1">+2.1% ↑</div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div class="sm:col-span-2 rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border h-48">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-3">Net Worth Trend</div>
+                    <svg viewBox="0 0 400 120" class="w-full h-32">
+                      <defs>
+                        <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/>
+                          <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <path d="M0,100 Q30,95 60,85 T120,70 T180,60 T240,40 T300,35 T360,20 L400,15 L400,120 L0,120Z" fill="url(#chartGrad)"/>
+                      <path d="M0,100 Q30,95 60,85 T120,70 T180,60 T240,40 T300,35 T360,20 L400,15" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                      <circle cx="400" cy="15" r="4" fill="#C9A84C"/>
+                    </svg>
+                  </div>
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border h-48">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-3">Asset Allocation</div>
+                    <div class="flex items-center justify-center h-28">
+                      <svg viewBox="0 0 100 100" class="w-28 h-28">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke-width="12" class="dark:stroke-kosh-dark-border stroke-kosh-light-border"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#C9A84C" stroke-width="12" stroke-dasharray="100 151" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#6B8E6B" stroke-width="12" stroke-dasharray="60 191" stroke-dashoffset="-100" transform="rotate(-90 50 50)"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#7B8CDE" stroke-width="12" stroke-dasharray="50 201" stroke-dashoffset="-160" transform="rotate(-90 50 50)"/>
+                        <text x="50" y="47" text-anchor="middle" class="dark:fill-white fill-kosh-charcoal text-[10px] font-semibold" style="font-family:'Plus Jakarta Sans'">₹42.8L</text>
+                        <text x="50" y="58" text-anchor="middle" class="dark:fill-[#6B6B6B] fill-kosh-light-muted text-[6px]" style="font-family:'Plus Jakarta Sans'">Total Assets</text>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 bg-kosh-gold/10 rounded-full blur-3xl"></div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-0 animate-[heroReveal_0.8s_1.5s_forwards]">
+      <span class="text-xs dark:text-kosh-muted text-kosh-light-muted tracking-widest uppercase">Scroll</span>
+      <div class="w-5 h-8 rounded-full border dark:border-kosh-dark-border border-kosh-light-border flex items-start justify-center p-1">
+        <div class="w-1 h-2 rounded-full bg-kosh-gold animate-bounce"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== MARQUEE STRIP ======================== -->
+  <section class="py-6 border-y dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+    <div class="flex whitespace-nowrap">
+      <div class="marquee-track flex items-center gap-10 text-sm dark:text-kosh-muted/40 text-kosh-light-muted/50 font-medium uppercase tracking-widest">
+        <span>Income Tracking</span><span class="text-kosh-gold">✦</span>
+        <span>Expense Management</span><span class="text-kosh-gold">✦</span>
+        <span>Mutual Funds</span><span class="text-kosh-gold">✦</span>
+        <span>Stocks & Equity</span><span class="text-kosh-gold">✦</span>
+        <span>Fixed Deposits</span><span class="text-kosh-gold">✦</span>
+        <span>PPF & NPS</span><span class="text-kosh-gold">✦</span>
+        <span>Gold & SGB</span><span class="text-kosh-gold">✦</span>
+        <span>Real Estate</span><span class="text-kosh-gold">✦</span>
+        <span>Insurance</span><span class="text-kosh-gold">✦</span>
+        <span>Liabilities</span><span class="text-kosh-gold">✦</span>
+        <span>Net Worth</span><span class="text-kosh-gold">✦</span>
+        <span>Family Tracking</span><span class="text-kosh-gold">✦</span>
+        <span>Credit Cards</span><span class="text-kosh-gold">✦</span>
+        <span>Goals</span><span class="text-kosh-gold">✦</span>
+        <span>Income Tracking</span><span class="text-kosh-gold">✦</span>
+        <span>Expense Management</span><span class="text-kosh-gold">✦</span>
+        <span>Mutual Funds</span><span class="text-kosh-gold">✦</span>
+        <span>Stocks & Equity</span><span class="text-kosh-gold">✦</span>
+        <span>Fixed Deposits</span><span class="text-kosh-gold">✦</span>
+        <span>PPF & NPS</span><span class="text-kosh-gold">✦</span>
+        <span>Gold & SGB</span><span class="text-kosh-gold">✦</span>
+        <span>Real Estate</span><span class="text-kosh-gold">✦</span>
+        <span>Insurance</span><span class="text-kosh-gold">✦</span>
+        <span>Liabilities</span><span class="text-kosh-gold">✦</span>
+        <span>Net Worth</span><span class="text-kosh-gold">✦</span>
+        <span>Family Tracking</span><span class="text-kosh-gold">✦</span>
+        <span>Credit Cards</span><span class="text-kosh-gold">✦</span>
+        <span>Goals</span><span class="text-kosh-gold">✦</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FEATURES ======================== -->
+  <section id="features" class="py-24 sm:py-32 relative">
+    <div class="gradient-orb w-[400px] h-[400px] bg-kosh-gold top-0 right-[-200px]"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">Features</span>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-5" style="font-variation-settings: 'opsz' 144;">
+          Everything you need,<br/><span class="italic text-kosh-gold">nothing you don't.</span>
+        </h2>
+        <p class="reveal reveal-delay-2 max-w-lg mx-auto dark:text-kosh-muted text-kosh-light-muted leading-relaxed">
+          From daily expenses to long-term wealth building — Kosh tracks every rupee so you don't have to juggle spreadsheets ever again.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div class="reveal feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="w-11 h-11 rounded-xl bg-kosh-gold/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 6v12M6 12h12"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Income & Expenses</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Track every rupee flowing in and out. Categorize, tag, and understand your cash flow patterns at a glance.</p>
+        </div>
+
+        <div class="reveal reveal-delay-1 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Asset Tracking</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Mutual funds, stocks, FDs, PPF, NPS, gold, SGB, real estate — all your assets, beautifully organized.</p>
+        </div>
+
+        <div class="reveal reveal-delay-2 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="w-11 h-11 rounded-xl bg-red-500/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Liabilities & Loans</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Home loans, car loans, credit cards — track EMIs, outstanding balances, and payoff timelines clearly.</p>
+        </div>
+
+        <div class="reveal feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="w-11 h-11 rounded-xl bg-blue-500/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Insurance & Protection</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Life, health, term, vehicle — keep all your policies organized with premium due dates and coverage details.</p>
+        </div>
+
+        <div class="reveal reveal-delay-1 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="w-11 h-11 rounded-xl bg-purple-500/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Net Worth Dashboard</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">See your complete financial picture — assets minus liabilities — with trends, breakdowns, and growth tracking.</p>
+        </div>
+
+        <div class="reveal reveal-delay-2 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="w-11 h-11 rounded-xl bg-amber-500/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/></svg>
+          </div>
+          <h3 class="font-semibold text-lg mb-2">Financial Goals</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Set savings goals, track progress visually, and stay motivated with clear milestones and projected timelines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== HOW IT WORKS ======================== -->
+  <section id="how-it-works" class="py-24 sm:py-32 relative dark:bg-kosh-dark-card/30 bg-kosh-cream/30">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">How it works</span>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-5" style="font-variation-settings: 'opsz' 144;">
+          Three steps to<br/><span class="italic text-kosh-gold">financial clarity.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12">
+        <div class="reveal text-center">
+          <div class="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl dark:bg-kosh-slate bg-white border dark:border-kosh-dark-border border-kosh-light-border mb-6">
+            <span class="font-display text-2xl text-kosh-gold">1</span>
+            <div class="hidden md:block absolute top-1/2 -right-[calc(50%+16px)] w-[calc(100%)] h-px dark:bg-kosh-dark-border bg-kosh-light-border"></div>
+          </div>
+          <h3 class="font-semibold text-lg mb-3">Add your accounts</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed max-w-xs mx-auto">Add your income sources, bank accounts, investments, loans and insurance policies. Set it up once.</p>
+        </div>
+        <div class="reveal reveal-delay-2 text-center">
+          <div class="relative inline-flex items-center justify-center w-16 h-16 rounded-2xl dark:bg-kosh-slate bg-white border dark:border-kosh-dark-border border-kosh-light-border mb-6">
+            <span class="font-display text-2xl text-kosh-gold">2</span>
+            <div class="hidden md:block absolute top-1/2 -right-[calc(50%+16px)] w-[calc(100%)] h-px dark:bg-kosh-dark-border bg-kosh-light-border"></div>
+          </div>
+          <h3 class="font-semibold text-lg mb-3">Track everything</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed max-w-xs mx-auto">Log income, expenses, update asset values. Kosh calculates your net worth, savings rate, and projections automatically.</p>
+        </div>
+        <div class="reveal reveal-delay-4 text-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl dark:bg-kosh-slate bg-white border dark:border-kosh-dark-border border-kosh-light-border mb-6">
+            <span class="font-display text-2xl text-kosh-gold">3</span>
+          </div>
+          <h3 class="font-semibold text-lg mb-3">Grow your wealth</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed max-w-xs mx-auto">Visualize trends, hit your goals, and make smarter financial decisions backed by your own data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== BUILT FOR INDIA ======================== -->
+  <section class="py-24 sm:py-32 relative overflow-hidden">
+    <div class="gradient-orb w-[500px] h-[500px] bg-kosh-gold bottom-[-200px] left-[-200px]"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">Built for India</span>
+          <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl tracking-tight mb-6" style="font-variation-settings: 'opsz' 144;">
+            Understands how<br/><span class="italic text-kosh-gold">India invests.</span>
+          </h2>
+          <p class="reveal reveal-delay-2 dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-8">Unlike generic finance apps, Kosh is purpose-built for Indian financial products and the way Indian households manage money.</p>
+          <div class="space-y-4">
+            <div class="reveal reveal-delay-2 flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><span class="text-sm font-medium">Indian Investment Products</span><p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-0.5">PPF, NPS, EPF, SGB, SCSS, FDs, RDs — all first-class citizens.</p></div>
+            </div>
+            <div class="reveal reveal-delay-3 flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><span class="text-sm font-medium">INR-native</span><p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-0.5">All amounts in Indian Rupees. Lakhs and crores, not millions.</p></div>
+            </div>
+            <div class="reveal reveal-delay-4 flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><span class="text-sm font-medium">Household finance model</span><p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-0.5">Joint accounts, family gold, shared property — Kosh gets it.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Floating cards -->
+        <div class="relative flex items-center justify-center min-h-[400px]">
+          <div class="float absolute top-4 left-4 sm:left-8 w-52 rounded-2xl p-5 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-lg">
+            <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Mutual Funds</div>
+            <div class="text-xl font-semibold">₹14.2L</div>
+            <div class="mt-3 h-1.5 rounded-full dark:bg-kosh-slate bg-kosh-cream overflow-hidden"><div class="h-full w-[65%] rounded-full bg-kosh-gold"></div></div>
+            <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-1">65% of target</div>
+          </div>
+          <div class="float-delay absolute top-1/3 right-4 sm:right-8 w-52 rounded-2xl p-5 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-lg">
+            <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">PPF Balance</div>
+            <div class="text-xl font-semibold">₹8.4L</div>
+            <div class="text-xs text-emerald-500 mt-1">+7.1% annual return</div>
+            <div class="mt-2 flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-xs dark:text-kosh-muted text-kosh-light-muted">Active · 8 yrs remaining</span></div>
+          </div>
+          <div class="float-delay-2 absolute bottom-4 left-1/2 -translate-x-1/2 w-56 rounded-2xl p-5 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-lg">
+            <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Sovereign Gold Bond</div>
+            <div class="text-xl font-semibold text-kosh-gold">₹3.6L</div>
+            <div class="flex items-center gap-2 mt-2">
+              <div class="flex -space-x-1">
+                <div class="w-5 h-5 rounded-full bg-kosh-gold/30 border dark:border-kosh-dark-card border-white"></div>
+                <div class="w-5 h-5 rounded-full bg-kosh-gold/50 border dark:border-kosh-dark-card border-white"></div>
+                <div class="w-5 h-5 rounded-full bg-kosh-gold/70 border dark:border-kosh-dark-card border-white"></div>
+              </div>
+              <span class="text-xs dark:text-kosh-muted text-kosh-light-muted">3 series held</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FAMILY TRACKING ======================== -->
+  <section id="family" class="py-24 sm:py-32 relative dark:bg-kosh-dark-card/30 bg-kosh-cream/30">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <!-- Family mockup -->
+        <div class="reveal order-2 lg:order-1 relative">
+          <div class="rounded-2xl p-6 sm:p-8 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center justify-between mb-6">
+              <div><div class="text-xs dark:text-kosh-muted text-kosh-light-muted">Family</div><div class="text-lg font-semibold">The Sharma Household</div></div>
+              <div class="flex -space-x-2">
+                <div class="w-9 h-9 rounded-full bg-kosh-gold/20 border-2 dark:border-kosh-dark-card border-white flex items-center justify-center text-xs font-semibold text-kosh-gold">R</div>
+                <div class="w-9 h-9 rounded-full bg-emerald-500/20 border-2 dark:border-kosh-dark-card border-white flex items-center justify-center text-xs font-semibold text-emerald-500">P</div>
+              </div>
+            </div>
+            <div class="glow-line mb-6"></div>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60"><div class="text-xs dark:text-kosh-muted text-kosh-light-muted">Combined Net Worth</div><div class="text-xl font-semibold mt-1">₹1.24Cr</div></div>
+              <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60"><div class="text-xs dark:text-kosh-muted text-kosh-light-muted">Monthly Household Income</div><div class="text-xl font-semibold mt-1">₹4.8L</div></div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3 rounded-xl dark:bg-kosh-slate bg-kosh-cream/60">
+                <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-kosh-gold/20 flex items-center justify-center text-xs font-semibold text-kosh-gold">R</div><div><div class="text-sm font-medium">Rahul</div><div class="text-xs dark:text-kosh-muted text-kosh-light-muted">Owner</div></div></div>
+                <div class="text-right"><div class="text-sm font-semibold">₹78.5L</div><div class="text-xs text-emerald-500">63% of total</div></div>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-xl dark:bg-kosh-slate bg-kosh-cream/60">
+                <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-xs font-semibold text-emerald-500">P</div><div><div class="text-sm font-medium">Priya</div><div class="text-xs dark:text-kosh-muted text-kosh-light-muted">Member</div></div></div>
+                <div class="text-right"><div class="text-sm font-semibold">₹45.9L</div><div class="text-xs text-emerald-500">37% of total</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Text -->
+        <div class="order-1 lg:order-2">
+          <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">Family Tracking</span>
+          <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl tracking-tight mb-6" style="font-variation-settings: 'opsz' 144;">
+            Your household,<br/><span class="italic text-kosh-gold">one dashboard.</span>
+          </h2>
+          <p class="reveal reveal-delay-2 dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-8">Indian families manage money together. Kosh lets you invite your partner, track combined net worth, and see each member's contribution — all while keeping individual finances organized.</p>
+          <div class="space-y-4">
+            <div class="reveal reveal-delay-2 flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><span class="text-sm dark:text-kosh-muted text-kosh-light-muted">Invite family members with a single link</span></div>
+            <div class="reveal reveal-delay-3 flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><span class="text-sm dark:text-kosh-muted text-kosh-light-muted">Combined net worth and household income at a glance</span></div>
+            <div class="reveal reveal-delay-4 flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><span class="text-sm dark:text-kosh-muted text-kosh-light-muted">Privacy controls — choose what to share</span></div>
+            <div class="reveal reveal-delay-5 flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><span class="text-sm dark:text-kosh-muted text-kosh-light-muted">Track shared goals and joint investments together</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== STATS ======================== -->
+  <section class="py-20 border-y dark:border-kosh-dark-border border-kosh-light-border">
+    <div class="max-w-5xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div class="reveal">
+          <div class="font-display text-4xl sm:text-5xl text-kosh-gold" style="font-variation-settings: 'opsz' 144;">₹0</div>
+          <div class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-2">Free during<br/>Early Access</div>
+        </div>
+        <div class="reveal reveal-delay-1">
+          <div class="font-display text-4xl sm:text-5xl" style="font-variation-settings: 'opsz' 144;">15+</div>
+          <div class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-2">Indian asset<br/>types supported</div>
+        </div>
+        <div class="reveal reveal-delay-2">
+          <div class="font-display text-4xl sm:text-5xl" style="font-variation-settings: 'opsz' 144;">2 min</div>
+          <div class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-2">Setup<br/>time</div>
+        </div>
+        <div class="reveal reveal-delay-3">
+          <div class="font-display text-4xl sm:text-5xl" style="font-variation-settings: 'opsz' 144;">∞</div>
+          <div class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-2">Peace of<br/>mind</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== PRICING ======================== -->
+  <section id="pricing" class="py-24 sm:py-32 relative">
+    <div class="gradient-orb w-[400px] h-[400px] bg-kosh-gold top-[50%] left-[50%] -translate-x-1/2 -translate-y-1/2"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">Pricing</span>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-5" style="font-variation-settings: 'opsz' 144;">
+          Simple, transparent<br/><span class="italic text-kosh-gold">pricing.</span>
+        </h2>
+        <p class="reveal reveal-delay-2 max-w-lg mx-auto dark:text-kosh-muted text-kosh-light-muted leading-relaxed">
+          Kosh is currently in early access. Get full access to every feature while we build the future of personal finance in India.
+        </p>
+      </div>
+
+      <div class="max-w-lg mx-auto">
+        <div class="reveal pricing-glow rounded-2xl">
+          <div class="rounded-2xl p-8 sm:p-10 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border relative overflow-hidden">
+            <div class="absolute top-5 right-5">
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-kosh-gold text-kosh-slate">Early Access</span>
+            </div>
+
+            <h3 class="font-display text-2xl mb-2" style="font-variation-settings: 'opsz' 40;">Kosh Personal</h3>
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted mb-8">Everything you need to take control of your finances — for you and your family.</p>
+
+            <div class="flex items-baseline gap-2 mb-2">
+              <span class="font-display text-6xl sm:text-7xl text-kosh-gold" style="font-variation-settings: 'opsz' 144;">₹0</span>
+            </div>
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted mb-8">Free for all users during early access. No credit card required.</p>
+
+            <a href="#" data-auth-trigger class="block w-full text-center py-3.5 rounded-full bg-kosh-gold text-kosh-slate font-semibold hover:bg-kosh-gold-light transition-all duration-300 cta-shimmer mb-8">
+              Get Started — Free
+            </a>
+
+            <div class="glow-line mb-6"></div>
+
+            <p class="text-xs font-medium uppercase tracking-wider mb-4">What's included</p>
+            <ul class="space-y-3.5">
+              <li class="flex items-center gap-3 text-sm dark:text-kosh-muted text-kosh-light-muted"><svg class="w-4 h-4 text-kosh-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Unlimited income & expense tracking</li>
+              <li class="flex items-center gap-3 text-sm dark:text-kosh-muted text-kosh-light-muted"><svg class="w-4 h-4 text-kosh-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>All asset types — MF, stocks, FD, PPF, NPS, SGB, real estate</li>
+              <li class="flex items-center gap-3 text-sm dark:text-kosh-muted text-kosh-light-muted"><svg class="w-4 h-4 text-kosh-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Liability & loan management</li>
+              <li class="flex items-center gap-3 text-sm dark:text-kosh-muted text-kosh-light-muted"><svg class="w-4 h-4 text-kosh-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Insurance policy tracking</li>
+              <li class="flex items-center gap-3 text-sm dark:text-kosh-muted text-kosh-light-muted"><svg class="w-4 h-4 text-kosh-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Net worth dashboard & analytics</li>
+              <li class="flex items-center gap-3 text-sm dark:text-kosh-muted text-kosh-light-muted"><svg class="w-4 h-4 text-kosh-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Family & household tracking</li>
+              <li class="flex items-center gap-3 text-sm dark:text-kosh-muted text-kosh-light-muted"><svg class="w-4 h-4 text-kosh-gold flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Financial goals & milestones</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FAQ ======================== -->
+  <section id="faq" class="py-24 sm:py-32 relative dark:bg-kosh-dark-card/30 bg-kosh-cream/30">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">FAQ</span>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl tracking-tight mb-5" style="font-variation-settings: 'opsz' 144;">
+          Got <span class="italic text-kosh-gold">questions?</span>
+        </h2>
+      </div>
+
+      <div class="space-y-3">
+        <div class="reveal faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">What is Kosh?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Kosh is a personal and household finance tracker purpose-built for India. It lets you track your income, expenses, assets (mutual funds, stocks, FDs, PPF, NPS, gold, real estate), liabilities (loans, credit cards), insurance policies, and financial goals — all in one place. Think of it as your complete financial operating system.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-1 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">Is Kosh really free?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Yes. Kosh is currently in early access and completely free — no hidden charges, no credit card required. We'll introduce paid plans in the future for premium features, but early access users will always have access to the core features at no cost.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">How is Kosh different from other finance apps?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Most finance apps are built for western markets and bolt on Indian support as an afterthought. Kosh is built India-first — we natively support PPF, NPS, EPF, SGB, SCSS, FDs, RDs, and Indian mutual fund schemes. Amounts display in lakhs and crores. And our household model understands how Indian families actually manage money together.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-3 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">What does "family tracking" mean?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">You can invite your spouse or family members to your Kosh household. Everyone tracks their own finances independently, but you also get a combined household view — total net worth, combined income, shared goals. Each member controls what they share, so privacy is always respected.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-4 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">Is my financial data secure?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Absolutely. Your data is encrypted at rest and in transit. Kosh never connects to your bank accounts or investment platforms — you add data manually, which means we never have access to your credentials. Your financial data stays yours.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-5 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">Does Kosh connect to my bank accounts?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">No. Kosh is a manual-entry finance tracker. You add your accounts, investments, and transactions yourself. This is by design — it keeps your banking credentials completely private and gives you full control over your data. We believe in data ownership.</p>
+          </div>
+        </div>
+
+        <div class="reveal faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">What happens when paid plans launch?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">When we introduce paid plans, they'll unlock premium features like advanced analytics, reports, and additional integrations. Early access users will always retain free access to the core tracking features they signed up for. We'll communicate any changes well in advance.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FINAL CTA ======================== -->
+  <section class="py-24 sm:py-32 relative overflow-hidden">
+    <div class="gradient-orb w-[600px] h-[600px] bg-kosh-gold top-[-100px] left-[50%] -translate-x-1/2"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10">
+      <h2 class="reveal font-display text-4xl sm:text-5xl lg:text-7xl tracking-tight mb-6" style="font-variation-settings: 'opsz' 144;">
+        Take control of your<br/><span class="italic text-kosh-gold">financial story.</span>
+      </h2>
+      <p class="reveal reveal-delay-1 max-w-lg mx-auto dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-10">
+        Start your journey to complete financial clarity. It takes less than two minutes to set up and it's completely free.
+      </p>
+      <div class="reveal reveal-delay-2">
+        <a href="#" data-auth-trigger class="group inline-flex items-center gap-3 px-10 py-4 rounded-full bg-kosh-gold text-kosh-slate font-semibold text-lg hover:bg-kosh-gold-light hover:shadow-[0_0_60px_rgba(201,168,76,0.3)] transition-all duration-400 cta-shimmer">
+          Get started — it's free
+          <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="border-t dark:border-kosh-dark-border border-kosh-light-border py-16">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-10 mb-12">
+        <div class="col-span-2 md:col-span-1">
+          <a href="#" class="flex items-center gap-2.5 mb-4">
+            <img src="logo.png" width="32" height="32" alt="Kosh">
+            <span class="font-display text-lg" style="font-variation-settings: 'opsz' 40;">Kosh</span>
+          </a>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Your personal financial operating system. Built for India.</p>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold mb-4">Product</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#features" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Features</a></li>
+            <li><a href="#pricing" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Pricing</a></li>
+            <li><a href="#family" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Family Tracking</a></li>
+            <li><a href="#" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Roadmap</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold mb-4">Resources</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Blog</a></li>
+            <li><a href="#" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Help Center</a></li>
+            <li><a href="#faq" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">FAQ</a></li>
+            <li><a href="#" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Changelog</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-sm font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2.5">
+            <li><a href="#" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Privacy Policy</a></li>
+            <li><a href="#" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="text-sm dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors">Security</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="glow-line mb-8"></div>
+
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-sm dark:text-kosh-muted text-kosh-light-muted">&copy; 2025 Kosh. All rights reserved.</p>
+        <div class="flex items-center gap-4">
+          <a href="#" class="w-9 h-9 rounded-full dark:bg-kosh-dark-card bg-kosh-cream border dark:border-kosh-dark-border border-kosh-light-border flex items-center justify-center dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" class="w-9 h-9 rounded-full dark:bg-kosh-dark-card bg-kosh-cream border dark:border-kosh-dark-border border-kosh-light-border flex items-center justify-center dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg></a>
+          <a href="#" class="w-9 h-9 rounded-full dark:bg-kosh-dark-card bg-kosh-cream border dark:border-kosh-dark-border border-kosh-light-border flex items-center justify-center dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold transition-colors"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ======================== AUTH MODAL ======================== -->
+  <div id="authOverlay" class="auth-overlay">
+    <div class="auth-backdrop" id="authBackdrop"></div>
+    <div class="auth-modal w-[90vw] max-w-[420px]">
+      <div class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden">
+        
+        <!-- Close button -->
+        <div class="flex justify-end p-4 pb-0">
+          <button id="authClose" class="auth-close w-8 h-8 rounded-full dark:bg-kosh-slate bg-kosh-cream/80 dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border flex items-center justify-center" aria-label="Close">
+            <svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <!-- Modal content -->
+        <div class="px-8 sm:px-10 pb-8 sm:pb-10 pt-2">
+          <!-- Logo -->
+          <div class="flex justify-center mb-6">
+            <div class="auth-logo-pulse rounded-2xl">
+              <img src="logo.png" width="56" height="56" alt="Kosh">
+            </div>
+          </div>
+
+          <!-- Heading -->
+          <h3 class="font-display text-2xl sm:text-[26px] text-center tracking-tight mb-2" style="font-variation-settings: 'opsz' 40;">
+            Welcome to <span class="text-kosh-gold">Kosh</span>
+          </h3>
+          <p class="text-sm text-center dark:text-kosh-muted text-kosh-light-muted mb-8">
+            Sign in to start tracking your financial life.
+          </p>
+
+          <!-- Google Sign In Button -->
+          <button class="google-btn w-full flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl border dark:border-kosh-dark-border border-kosh-light-border dark:bg-kosh-slate bg-kosh-light-bg font-medium text-[15px]">
+            <svg width="20" height="20" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+            <span class="dark:text-white text-kosh-charcoal">Continue with Google</span>
+          </button>
+
+          <!-- Divider -->
+          <div class="flex items-center gap-4 my-6">
+            <div class="flex-1 h-px dark:bg-kosh-dark-border bg-kosh-light-border"></div>
+            <span class="text-xs dark:text-kosh-muted/60 text-kosh-light-muted/60 uppercase tracking-widest">or</span>
+            <div class="flex-1 h-px dark:bg-kosh-dark-border bg-kosh-light-border"></div>
+          </div>
+
+          <!-- Email input (teaser — disabled, shows future intent) -->
+          <div class="relative mb-4">
+            <input type="email" placeholder="name@email.com" disabled class="w-full px-4 py-3.5 rounded-xl border dark:border-kosh-dark-border border-kosh-light-border dark:bg-kosh-slate bg-kosh-light-bg text-sm dark:text-kosh-muted text-kosh-light-muted placeholder:dark:text-kosh-muted/40 placeholder:text-kosh-light-muted/40 opacity-50 cursor-not-allowed" />
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-medium dark:text-kosh-muted/50 text-kosh-light-muted/50 uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80">Soon</span>
+          </div>
+
+          <!-- Legal -->
+          <p class="text-[11px] text-center dark:text-kosh-muted/50 text-kosh-light-muted/50 leading-relaxed mt-6">
+            By continuing, you agree to Kosh's <a href="#" class="underline hover:text-kosh-gold transition-colors">Terms of Service</a> and <a href="#" class="underline hover:text-kosh-gold transition-colors">Privacy Policy</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // ===== AUTH MODAL =====
+    const authOverlay = document.getElementById('authOverlay');
+    const authBackdrop = document.getElementById('authBackdrop');
+    const authCloseBtn = document.getElementById('authClose');
+
+    function openAuth() {
+      authOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeAuth() {
+      authOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // Wire up all login/get-started triggers
+    document.querySelectorAll('[data-auth-trigger]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        // Close mobile menu if open
+        const mm = document.getElementById('mobileMenu');
+        if (mm.classList.contains('open')) mm.classList.remove('open');
+        openAuth();
+      });
+    });
+
+    authBackdrop.addEventListener('click', closeAuth);
+    authCloseBtn.addEventListener('click', closeAuth);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && authOverlay.classList.contains('open')) closeAuth();
+    });
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('kosh-theme');
+    if (savedTheme) { html.classList.remove('dark', 'light'); html.classList.add(savedTheme); }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      html.classList.remove('dark', 'light');
+      html.classList.add(isDark ? 'light' : 'dark');
+      localStorage.setItem('kosh-theme', isDark ? 'light' : 'dark');
+    });
+
+    // Mobile Menu
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+    mobileMenuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    mobileNavLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    // Scroll Reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Navbar shadow
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').classList.toggle('shadow-sm', window.scrollY > 50);
+    });
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // FAQ Accordion
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const icon = item.querySelector('.faq-icon');
+      const isOpen = answer.classList.contains('open');
+
+      document.querySelectorAll('.faq-answer.open').forEach(a => {
+        a.classList.remove('open');
+        a.closest('.faq-item').querySelector('.faq-icon').classList.remove('open');
+      });
+
+      if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#C9973A" />
+      <stop offset="100%" stop-color="#B8860B" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(100, 100)">
+    <!-- Vault body — reduced corner radius from 17 to 12 -->
+    <rect x="-52" y="-52" width="104" height="104" rx="12" fill="none" stroke="url(#gold)" stroke-width="4" />
+
+    <!-- Dial ring — enlarged from r=20 to r=30 -->
+    <circle cx="0" cy="0" r="30" fill="none" stroke="url(#gold)" stroke-width="2.5" />
+
+    <!-- 4 cardinal ticks — thickened, lengthened -->
+    <!-- Top -->
+    <line x1="0" y1="-30" x2="0" y2="-22" stroke="url(#gold)" stroke-width="3.2" stroke-linecap="round" />
+    <!-- Right -->
+    <line x1="30" y1="0" x2="22" y2="0" stroke="url(#gold)" stroke-width="3.2" stroke-linecap="round" />
+    <!-- Bottom -->
+    <line x1="0" y1="30" x2="0" y2="22" stroke="url(#gold)" stroke-width="3.2" stroke-linecap="round" />
+    <!-- Left -->
+    <line x1="-30" y1="0" x2="-22" y2="0" stroke="url(#gold)" stroke-width="3.2" stroke-linecap="round" />
+
+    <!-- Center dot — enlarged from 2.8 to 5 -->
+    <circle cx="0" cy="0" r="5" fill="url(#gold)" />
+  </g>
+</svg>

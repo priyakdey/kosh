@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mutual Funds (Family) — Kosh</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="favico/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favico/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favico/favicon-16x16.png">
+  <link rel="manifest" href="favico/site.webmanifest">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Fraunces"', 'Georgia', 'serif'],
+            body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            kosh: {
+              gold: '#C9A84C', 'gold-light': '#E4CC7A', 'gold-dark': '#A68A3E',
+              cream: '#F5F0E8', charcoal: '#1A1A1A', slate: '#0F0F0F',
+              'dark-card': '#161616', 'dark-border': '#2A2A2A',
+              'light-bg': '#FAFAF7', 'light-card': '#FFFFFF',
+              'light-border': '#E8E4DC', 'light-muted': '#8A8578', muted: '#6B6B6B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    * { transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    .dark ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .light ::-webkit-scrollbar-thumb { background: #D4D0C8; border-radius: 3px; }
+
+    /* ====== Sidebar ====== */
+    .sidebar { width: 260px; transition: width 0.3s cubic-bezier(0.16,1,0.3,1), transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .sidebar.collapsed { width: 68px; }
+    .sidebar.collapsed .sb-hide { display: none; }
+    .sidebar.collapsed .sidebar-profile { justify-content: center; }
+    .sidebar.collapsed .nav-link { justify-content: center; padding-left: 0; padding-right: 0; }
+    .main-content { margin-left: 260px; transition: margin-left 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .sidebar.collapsed ~ .main-content { margin-left: 68px; }
+    @media (max-width: 768px) {
+      .sidebar { position: fixed; transform: translateX(-100%); width: 280px; z-index: 40; }
+      .sidebar.mobile-open { transform: translateX(0); }
+      .main-content { margin-left: 0 !important; }
+      .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 35; }
+      .sidebar-overlay.active { display: block; }
+    }
+    .nav-link { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.15s ease; position: relative; }
+    .dark .nav-link { color: #6B6B6B; } .light .nav-link { color: #8A8578; }
+    .dark .nav-link:hover { color: #fff; background: rgba(201,168,76,0.06); }
+    .light .nav-link:hover { color: #1A1A1A; background: rgba(201,168,76,0.06); }
+    .nav-link.active { color: #C9A84C !important; background: rgba(201,168,76,0.08) !important; }
+    .nav-link.active::before { content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; border-radius: 0 3px 3px 0; background: #C9A84C; }
+    .topbar { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .dark .topbar { background: rgba(15,15,15,0.85); border-bottom: 1px solid #2A2A2A; }
+    .light .topbar { background: rgba(250,250,247,0.9); border-bottom: 1px solid #E8E4DC; }
+
+    /* ====== Form Controls ====== */
+    .kosh-input { width: 100%; padding: 10px 14px; border-radius: 10px; font-size: 14px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
+    .dark .kosh-input { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
+    .light .kosh-input { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
+    .kosh-input:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+    .kosh-input::placeholder { color: #6B6B6B; } .light .kosh-input::placeholder { color: #8A8578; }
+    .kosh-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .kosh-checkbox { width: 18px; height: 18px; border-radius: 5px; appearance: none; cursor: pointer; position: relative; flex-shrink: 0; }
+    .dark .kosh-checkbox { background: #0F0F0F; border: 1.5px solid #2A2A2A; }
+    .light .kosh-checkbox { background: #FAFAF7; border: 1.5px solid #E8E4DC; }
+    .kosh-checkbox:checked { background: #C9A84C; border-color: #C9A84C; }
+    .kosh-checkbox:checked::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #0F0F0F; }
+
+    /* ====== CUSTOM DROPDOWN ====== */
+    .kd { position: relative; display: inline-block; }
+    .kd-trigger {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      padding: 10px 14px; border-radius: 10px; font-size: 14px; cursor: pointer;
+      outline: none; width: 100%; text-align: left;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .dark .kd-trigger { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
+    .light .kd-trigger { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
+    .kd.open .kd-trigger, .kd-trigger:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+    .kd-trigger .kd-placeholder { color: #6B6B6B; }
+    .light .kd-trigger .kd-placeholder { color: #8A8578; }
+    .kd-caret {
+      width: 16px; height: 16px; flex-shrink: 0;
+      transition: transform 0.2s cubic-bezier(0.16,1,0.3,1);
+    }
+    .kd.open .kd-caret { transform: rotate(180deg); }
+    .dark .kd-caret { color: #6B6B6B; } .light .kd-caret { color: #8A8578; }
+
+    .kd-menu {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 50;
+      border-radius: 12px; padding: 4px; max-height: 240px; overflow-y: auto;
+      opacity: 0; visibility: hidden;
+      transform: translateY(-8px) scale(0.98);
+      transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 12px 40px -8px rgba(0,0,0,0.3);
+    }
+    .dark .kd-menu { background: #1A1A1A; border: 1px solid #2A2A2A; }
+    .light .kd-menu { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 12px 40px -8px rgba(0,0,0,0.1); }
+    .kd.open .kd-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+    .kd-option {
+      padding: 9px 12px; border-radius: 8px; font-size: 13px; cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+    .dark .kd-option:hover { background: rgba(201,168,76,0.08); color: #fff; }
+    .light .kd-option:hover { background: rgba(201,168,76,0.06); color: #1A1A1A; }
+    .kd-option.selected { color: #C9A84C !important; font-weight: 600; }
+    .dark .kd-option.selected { background: rgba(201,168,76,0.08); }
+    .light .kd-option.selected { background: rgba(201,168,76,0.06); }
+
+    /* Small variant */
+    .kd-sm .kd-trigger { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
+    .kd-sm .kd-menu { padding: 3px; }
+    .kd-sm .kd-option { padding: 7px 10px; font-size: 12px; border-radius: 6px; }
+    .kd-sm .kd-caret { width: 14px; height: 14px; }
+
+    /* Width auto for inline dropdowns */
+    .kd-auto { display: inline-block; }
+    .kd-auto .kd-menu { min-width: 100%; white-space: nowrap; }
+
+    /* ====== CUSTOM DATE PICKER ====== */
+    .kdp { position: relative; display: inline-block; width: 100%; }
+    .kdp-trigger {
+      display: flex; align-items: center; gap: 10px; width: 100%;
+      padding: 10px 14px; border-radius: 10px; font-size: 14px; cursor: pointer;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .dark .kdp-trigger { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
+    .light .kdp-trigger { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
+    .kdp.open .kdp-trigger, .kdp-trigger:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
+    .kdp-icon { width: 16px; height: 16px; flex-shrink: 0; }
+    .dark .kdp-icon { color: #6B6B6B; } .light .kdp-icon { color: #8A8578; }
+    .kdp-caret { margin-left: auto; width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.2s; }
+    .kdp.open .kdp-caret { transform: rotate(180deg); }
+    .dark .kdp-caret { color: #6B6B6B; } .light .kdp-caret { color: #8A8578; }
+
+    .kdp-popup {
+      position: absolute; top: calc(100% + 6px); left: 0; z-index: 50;
+      width: 300px; border-radius: 14px; padding: 16px;
+      opacity: 0; visibility: hidden;
+      transform: translateY(-8px) scale(0.98);
+      transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1);
+      box-shadow: 0 16px 50px -10px rgba(0,0,0,0.3);
+    }
+    .dark .kdp-popup { background: #1A1A1A; border: 1px solid #2A2A2A; }
+    .light .kdp-popup { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 16px 50px -10px rgba(0,0,0,0.1); }
+    .kdp.open .kdp-popup { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+
+    .kdp-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .kdp-nav button { width: 28px; height: 28px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; background: transparent; }
+    .dark .kdp-nav button { color: #6B6B6B; } .dark .kdp-nav button:hover { background: #2A2A2A; color: #fff; }
+    .light .kdp-nav button { color: #8A8578; } .light .kdp-nav button:hover { background: #E8E4DC; color: #1A1A1A; }
+    .kdp-nav span { font-size: 13px; font-weight: 600; }
+
+    .kdp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
+    .kdp-grid .kdp-hdr { font-size: 10px; font-weight: 600; padding: 6px 0; text-transform: uppercase; letter-spacing: 0.05em; }
+    .dark .kdp-hdr { color: #6B6B6B; } .light .kdp-hdr { color: #8A8578; }
+    .kdp-day {
+      font-size: 12px; padding: 7px 0; border-radius: 8px; cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+    .dark .kdp-day:hover { background: rgba(201,168,76,0.1); color: #fff; }
+    .light .kdp-day:hover { background: rgba(201,168,76,0.08); }
+    .kdp-day.selected { background: #C9A84C !important; color: #0F0F0F !important; font-weight: 700; }
+    .kdp-day.today { font-weight: 700; color: #C9A84C; }
+    .kdp-day.other-month { opacity: 0.25; }
+
+    /* Small date picker variant */
+    .kdp-sm .kdp-trigger { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
+
+    /* ====== Modal ====== */
+    .modal-overlay { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    .modal-backdrop { position: absolute; inset: 0; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+    .dark .modal-backdrop { background: rgba(10,10,10,0.7); }
+    .light .modal-backdrop { background: rgba(250,250,247,0.8); }
+    .modal-panel { position: relative; z-index: 1; transform: scale(0.95) translateY(12px); opacity: 0; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s; }
+    .modal-overlay.open .modal-panel { transform: scale(1) translateY(0); opacity: 1; }
+
+    /* ====== Misc ====== */
+    .stat-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .stat-card:hover { transform: translateY(-2px); }
+    .dark .stat-card:hover { box-shadow: 0 8px 30px -10px rgba(201,168,76,0.06); }
+    .light .stat-card:hover { box-shadow: 0 8px 30px -10px rgba(0,0,0,0.06); }
+    .income-row { transition: background 0.1s; }
+    .dark .income-row:hover { background: rgba(201,168,76,0.03); }
+    .light .income-row:hover { background: rgba(201,168,76,0.03); }
+    .tab-btn { position: relative; padding: 12px 16px; font-weight: 600; font-size: 13px; transition: color 0.2s; }
+    .tab-btn::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; border-radius: 2px; background: transparent; transition: background 0.2s; }
+    .tab-btn.active { color: #C9A84C; } .tab-btn.active::after { background: #C9A84C; }
+    .dark .tab-btn:not(.active) { color: #6B6B6B; } .dark .tab-btn:not(.active):hover { color: #999; }
+    .light .tab-btn:not(.active) { color: #8A8578; } .light .tab-btn:not(.active):hover { color: #5A5548; }
+    .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+    /* ====== Interactive Chart ====== */
+    #trendChart { position: relative; cursor: crosshair; user-select: none; -webkit-user-select: none; }
+    #trendChart svg { display: block; }
+    #sourceChart { user-select: none; -webkit-user-select: none; }
+    #sourceChart svg { display: block; }
+    .chart-tooltip {
+      position: absolute; pointer-events: none; z-index: 10;
+      padding: 10px 14px; border-radius: 10px;
+      font-size: 12px; white-space: nowrap;
+      opacity: 0; transform: translateY(6px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+    .chart-tooltip.visible { opacity: 1; transform: translateY(0); }
+    .dark .chart-tooltip { background: #1A1A1A; border: 1px solid #2A2A2A; box-shadow: 0 10px 30px -6px rgba(0,0,0,0.6); }
+    .light .chart-tooltip { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 10px 30px -6px rgba(0,0,0,0.12); }
+
+    /* Donut chart */
+    .donut-segment { transition: opacity 0.15s ease, filter 0.15s ease; cursor: pointer; }
+    .donut-segment.dimmed { opacity: 0.25; }
+    .donut-segment.active { filter: brightness(1.12) drop-shadow(0 2px 8px rgba(0,0,0,0.25)); }
+
+    /* ====== Portfolio Toggle ====== */
+    .portfolio-tab {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 600;
+      cursor: pointer; border: none; transition: all 0.2s ease;
+    }
+    .dark .portfolio-tab { color: #6B6B6B; background: transparent; }
+    .light .portfolio-tab { color: #8A8578; background: transparent; }
+    .dark .portfolio-tab.active { color: #fff; background: #C9A84C; }
+    .light .portfolio-tab.active { color: #0F0F0F; background: #C9A84C; }
+    .dark .portfolio-tab:not(.active):hover { color: #aaa; background: rgba(255,255,255,0.04); }
+    .light .portfolio-tab:not(.active):hover { color: #555; background: rgba(0,0,0,0.04); }
+    /* Member avatar in table */
+    .member-avatar {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px; border-radius: 50%; font-size: 10px; font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    /* ====== Delete Popover ====== */
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(0.95) translateY(4px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    /* Action buttons in table */
+    .action-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 500;
+      transition: all 0.15s ease; cursor: pointer; border: none; background: transparent;
+    }
+    .action-btn-edit { }
+    .dark .action-btn-edit { color: #6B6B6B; }
+    .light .action-btn-edit { color: #8A8578; }
+    .dark .action-btn-edit:hover { color: #C9A84C; background: rgba(201,168,76,0.08); }
+    .light .action-btn-edit:hover { color: #C9A84C; background: rgba(201,168,76,0.06); }
+    .action-btn-delete { }
+    .dark .action-btn-delete { color: #6B6B6B; }
+    .light .action-btn-delete { color: #8A8578; }
+    .dark .action-btn-delete:hover { color: #F87171; background: rgba(248,113,113,0.08); }
+    .light .action-btn-delete:hover { color: #EF4444; background: rgba(239,68,68,0.06); }
+    .action-btn-pause { }
+    .dark .action-btn-pause { color: #6B6B6B; }
+    .light .action-btn-pause { color: #8A8578; }
+    .dark .action-btn-pause:hover { color: #FBBF24; background: rgba(251,191,36,0.08); }
+    .light .action-btn-pause:hover { color: #F59E0B; background: rgba(245,158,11,0.06); }
+
+    .income-banner { background: linear-gradient(135deg, #132a1c 0%, #0a1f12 50%, #0d1a0f 100%); position: relative; overflow: hidden; }
+    .income-banner::before { content: ''; position: absolute; inset: 0; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23C9A84C'/%3E%3C/svg%3E"); }
+    .light .income-banner { background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #dcedc8 100%); }
+    .light .income-banner .b-title { color: #2e7d32; } .light .income-banner .b-amount { color: #1b5e20; }
+    .light .income-banner .b-chip { background: rgba(46,125,50,0.12); } .light .income-banner .b-chip span { color: #2e7d32; }
+    .light .income-banner .b-pill { background: rgba(46,125,50,0.06); border-color: rgba(46,125,50,0.12); }
+    .light .income-banner .b-pill-label { color: #558b2f; } .light .income-banner .b-pill-value { color: #1b5e20; }
+
+    /* MF banner — deep indigo gradient */
+    .mf-banner { background: linear-gradient(135deg, #1a1432 0%, #0f0e24 50%, #12102a 100%); position: relative; overflow: hidden; }
+    .mf-banner::before { content: ''; position: absolute; inset: 0; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23C9A84C'/%3E%3C/svg%3E"); }
+    .mf-banner .b-title { color: rgba(167,139,250,0.85); }
+    .mf-banner .b-pill-label { color: rgba(167,139,250,0.65); }
+    .mf-banner .b-pill-value { color: #fff; }
+    .mf-banner .b-pill { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.07); }
+    .light .mf-banner { background: linear-gradient(135deg, #ede7f6 0%, #d1c4e9 50%, #e8eaf6 100%); }
+    .light .mf-banner .b-title { color: #4527a0; }
+    .light .mf-banner .b-amount { color: #1a237e; }
+    .light .mf-banner .b-chip { background: rgba(69,39,160,0.1); }
+    .light .mf-banner .b-chip span { color: #4527a0; }
+    .light .mf-banner .b-pill { background: rgba(26,35,126,0.05); border-color: rgba(26,35,126,0.1); }
+    .light .mf-banner .b-pill-label { color: #5c6bc0; }
+    .light .mf-banner .b-pill-value { color: #1a237e; }
+    .mf-banner .budget-label { color: rgba(167,139,250,0.5); }
+    .light .mf-banner .budget-label { color: #7986cb; }
+
+    /* Horizontal bar chart */
+    .hbar { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .hbar-label { width: 80px; text-align: right; font-size: 11px; flex-shrink: 0; }
+    .hbar-track { flex: 1; height: 18px; border-radius: 4px; background: rgba(255,255,255,0.04); overflow: hidden; position: relative; }
+    .light .hbar-track { background: rgba(0,0,0,0.04); }
+    .hbar-fill { height: 100%; border-radius: 4px; transition: width 0.6s cubic-bezier(0.16,1,0.3,1); position: relative; }
+    .hbar-value { font-size: 11px; width: 40px; flex-shrink: 0; font-weight: 600; }
+  </style>
+</head>
+
+<body class="dark:bg-kosh-slate dark:text-white bg-kosh-light-bg text-kosh-charcoal">
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- ====== SIDEBAR ====== -->
+  <aside id="sidebar" class="sidebar fixed left-0 top-0 h-full z-30 dark:bg-kosh-dark-card bg-white border-r dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+    <div class="flex items-center justify-between px-4 h-[60px] border-b dark:border-kosh-dark-border border-kosh-light-border flex-shrink-0">
+      <a href="dashboard.html" class="flex items-center gap-2.5">
+        <img src="logo.png" width="30" height="30" alt="Kosh" class="flex-shrink-0">
+        <span class="sb-hide font-display text-lg tracking-tight" style="font-variation-settings:'opsz' 40;">Kosh</span>
+      </a>
+      <button id="sidebarToggle" class="w-7 h-7 rounded-md flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
+        <svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+      <a href="dashboard.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg><span class="sb-hide">Dashboard</span></a>
+      <a href="income.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg><span class="sb-hide">Income</span></a>
+      <a href="expense.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg><span class="sb-hide">Expense</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Assets</p></div>
+      <a href="assets-mutual-fund.html" class="nav-link active"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span class="sb-hide">Mutual Funds</span></a>
+      <a href="assets-stocks.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span><span class="sb-hide">Stocks</span></a>
+      <a href="assets-fixed-deposit.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></span><span class="sb-hide">Fixed Deposits</span></a>
+      <a href="assets-recurring-deposit.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0"></span><span class="sb-hide">Recurring Deposits</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Liabilities</p></div>
+      <a href="liabilities-credit-cards.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span><span class="sb-hide">Credit Cards</span></a>
+      <a href="liabilities-loans.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span><span class="sb-hide">Loans</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Protection</p></div>
+      <a href="protection-term-insurance.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0"></span><span class="sb-hide">Term Insurance</span></a>
+      <a href="protection-health-insurance.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span><span class="sb-hide">Health Insurance</span></a>
+      <a href="protection-others.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0"></span><span class="sb-hide">Others</span></a>
+      <div class="pt-5 pb-1"></div>
+      <a href="goals.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg><span class="sb-hide">Goals</span></a>
+    </nav>
+    <div class="border-t dark:border-kosh-dark-border border-kosh-light-border p-3 flex-shrink-0">
+      <a href="settings.html" class="sidebar-profile flex items-center gap-3 px-2 py-2 rounded-lg dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
+        <div class="w-8 h-8 rounded-full bg-kosh-gold/20 flex items-center justify-center text-xs font-bold text-kosh-gold flex-shrink-0">PD</div>
+        <div class="sb-hide flex-1 min-w-0"><p class="text-sm font-semibold truncate">Priyak Dey</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted truncate">Settings</p></div>
+        <svg class="sb-hide w-4 h-4 dark:text-kosh-muted text-kosh-light-muted flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ====== MAIN ====== -->
+  <div class="main-content min-h-screen flex flex-col">
+    <header class="topbar sticky top-0 z-20 h-[60px] flex items-center justify-between px-6 gap-4 flex-shrink-0">
+      <button id="mobileMenuBtn" class="md:hidden w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
+      <div class="flex-1 max-w-md"><div class="relative"><svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-kosh-muted text-kosh-light-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg><input type="text" placeholder="Search funds, AMCs..." class="kosh-input pl-10 !py-2 !text-sm !rounded-lg" /></div></div>
+      <div class="flex items-center gap-1.5">
+        <button class="relative w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-[18px] h-[18px] dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-red-500 ring-2 dark:ring-kosh-slate ring-kosh-light-bg"></span></button>
+        <button id="themeToggle" class="w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-[18px] h-[18px] dark:block hidden text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="w-[18px] h-[18px] dark:hidden block text-kosh-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+        <button class="ml-1 px-4 py-2 rounded-lg text-sm font-medium dark:text-red-400 text-red-600 dark:bg-red-500/8 bg-red-50 dark:hover:bg-red-500/15 hover:bg-red-100 transition-colors">Logout</button>
+      </div>
+    </header>
+
+    <main class="flex-1 p-6 max-w-[1440px]">
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+        <div>
+          <h1 class="font-display text-2xl sm:text-3xl tracking-tight" style="font-variation-settings:'opsz' 72;">Mutual Funds</h1>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-1">Portfolio overview and SIP management</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <button id="addTxnBtn" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-all whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 4.5v15m7.5-7.5h-15"/></svg>Add Transaction
+          </button>
+        </div>
+      </div>
+
+      <!-- Portfolio Toggle -->
+      <div class="flex items-center justify-between mb-4">
+        <div class="inline-flex items-center rounded-lg dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border p-1">
+          <button class="portfolio-tab active" data-mode="personal">Personal</button>
+          <button class="portfolio-tab" data-mode="family">Family</button>
+        </div>
+        <div id="familyAvatars" class="hidden items-center gap-2">
+          <div class="flex -space-x-2">
+            <div class="w-7 h-7 rounded-full bg-blue-500/15 border-2 dark:border-kosh-dark-card border-white flex items-center justify-center text-[10px] font-bold text-blue-400" title="Priyak">PD</div>
+            <div class="w-7 h-7 rounded-full bg-rose-500/15 border-2 dark:border-kosh-dark-card border-white flex items-center justify-center text-[10px] font-bold text-rose-400" title="Sweta">SP</div>
+          </div>
+          <span class="text-xs dark:text-kosh-muted text-kosh-light-muted">2 members</span>
+        </div>
+      </div>
+
+      <!-- ===== Summary Banner ===== -->
+      <div class="mf-banner rounded-2xl p-6 mb-6">
+        <div class="relative z-10 flex flex-wrap items-end justify-between gap-6">
+          <div>
+            <p class="b-title text-sm font-medium mb-1">Portfolio Value</p>
+            <div class="flex items-end gap-3 flex-wrap">
+              <h2 class="b-amount font-display text-4xl sm:text-5xl text-white" style="font-variation-settings:'opsz' 144;">₹15,35,000</h2>
+              <div class="b-chip flex items-center gap-1.5 mb-1.5 bg-emerald-500/15 px-2.5 py-1 rounded-full">
+                <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22"/><path d="M18.75 8.25H22.5V12"/></svg>
+                <span class="text-emerald-300 text-xs font-semibold">+11.2%</span><span class="text-emerald-300/60 text-xs">overall</span>
+              </div>
+            </div>
+            <div class="mt-2 flex items-center gap-4">
+              <span class="budget-label text-xs">Invested ₹13,80,000</span>
+              <span class="text-xs text-emerald-400 font-semibold">+₹1,55,000 returns</span>
+            </div>
+          </div>
+          <div class="flex flex-wrap gap-2.5">
+            <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Funds</p><p class="b-pill-value text-lg font-bold mt-0.5">7</p></div>
+            <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">XIRR</p><p class="b-pill-value text-lg font-bold mt-0.5">14.2%</p></div>
+            <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">SIPs</p><p class="b-pill-value text-lg font-bold mt-0.5">5</p></div>
+            <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">SIP/Mo</p><p class="b-pill-value text-lg font-bold mt-0.5">₹42.5K</p></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Analytics Row 1 ===== -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-5">
+        <!-- Portfolio Value Trend -->
+        <div class="lg:col-span-2 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+          <div class="p-5 pb-0"><h3 class="text-sm font-semibold">Portfolio Value</h3><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Last 6 months</p></div>
+          <div class="flex-1 px-5 pt-4"><div id="trendChart" class="relative" style="height:160px;"></div></div>
+          <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center gap-1.5 text-sm font-medium"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22"/></svg><span>Returns gap widening — ₹1.55L profit</span></div>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Invested ₹13.8L → Current ₹15.35L (+11.2%)</p>
+          </div>
+        </div>
+        <!-- Allocation by Category -->
+        <div class="lg:col-span-2 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+          <div class="p-5 pb-0"><h3 class="text-sm font-semibold">Allocation by Category</h3><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Current distribution</p></div>
+          <div class="flex-1 px-2 pt-2"><div id="allocChart" class="relative" style="height:180px;"></div></div>
+          <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center gap-1.5 text-sm font-medium"><span>6 fund categories across 7 schemes</span></div>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Large Cap leads at 36% — well diversified</p>
+          </div>
+        </div>
+        <!-- Highlights -->
+        <div class="lg:col-span-1 stat-card rounded-xl p-5 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col gap-3">
+          <h3 class="text-sm font-semibold">Highlights</h3>
+          <div class="p-3 rounded-lg bg-emerald-500/5 border dark:border-emerald-500/10 border-emerald-200/50"><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Best Performer</p><p class="text-sm font-semibold text-emerald-400 mt-0.5">PPFAS Flexi Cap</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">+24.0% · XIRR 18.6%</p></div>
+          <div class="p-3 rounded-lg bg-violet-500/5 border dark:border-violet-500/10 border-violet-200/50"><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Portfolio XIRR</p><p class="text-sm font-semibold text-violet-400 mt-0.5">14.2%</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Beating FD by 7.2%</p></div>
+          <div class="p-3 rounded-lg bg-blue-500/5 border dark:border-blue-500/10 border-blue-200/50"><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Monthly SIP</p><p class="text-sm font-semibold text-blue-500 mt-0.5">₹42,500</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">5 active SIPs</p></div>
+        </div>
+      </div>
+
+      <!-- ===== Analytics Row 2 ===== -->
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-6">
+        <!-- Sector Exposure -->
+        <div class="lg:col-span-3 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+          <div class="p-5 pb-3"><h3 class="text-sm font-semibold">Sector Exposure</h3><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Estimated from fund holdings</p></div>
+          <div class="flex-1 px-5 pb-4" id="sectorChart"></div>
+          <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center gap-1.5 text-sm font-medium"><span>Banking & Finance leads sector allocation</span></div>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Technology exposure at 18% via ICICI Tech + PPFAS</p>
+          </div>
+        </div>
+        <!-- Fund Weightage -->
+        <div class="lg:col-span-2 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+          <div class="p-5 pb-3"><h3 class="text-sm font-semibold">Fund Weightage</h3><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">By current value</p></div>
+          <div class="flex-1 px-5 pb-4" id="weightChart"></div>
+          <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center gap-1.5 text-sm font-medium"><span>Top 3 funds = 57% of portfolio</span></div>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Good diversification across 7 schemes</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Tables ===== -->
+      <div class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+        <div class="flex items-center border-b dark:border-kosh-dark-border border-kosh-light-border px-5">
+          <button class="tab-btn active" data-tab="holdings">Holdings <span class="ml-1 text-[10px] w-5 h-5 inline-flex items-center justify-center rounded-full bg-kosh-gold/10 text-kosh-gold">7</span></button>
+          <button class="tab-btn" data-tab="sips">SIPs <span class="ml-1 text-[10px] w-5 h-5 inline-flex items-center justify-center rounded-full bg-kosh-gold/10 text-kosh-gold">5</span></button>
+        </div>
+
+        <!-- Holdings tab -->
+        <div id="tab-holdings">
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead><tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Fund</th>
+                <th id="holdingsMemberTh" class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted hidden">Member</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Category</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Invested</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Current</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Returns</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">XIRR</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Units</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">NAV</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Broker</th>
+              </tr></thead>
+              <tbody id="holdingsBody" class="divide-y dark:divide-kosh-dark-border divide-kosh-light-border"></tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <div class="flex items-center justify-between px-5 py-3 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center gap-3">
+              <span class="text-xs dark:text-kosh-muted text-kosh-light-muted">Rows per page</span>
+              <div class="kd" id="holdingsPerPageDD" style="width:70px;">
+                <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">5</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
+                <div class="kd-menu"><div class="kd-option selected" data-value="5">5</div><div class="kd-option" data-value="10">10</div><div class="kd-option" data-value="25">25</div></div>
+              </div>
+            </div>
+            <span id="holdingsPagInfo" class="text-xs dark:text-kosh-muted text-kosh-light-muted"></span>
+            <div id="holdingsPagBtns" class="flex items-center gap-1"></div>
+          </div>
+        </div>
+
+        <!-- SIPs tab -->
+        <div id="tab-sips" class="hidden">
+          <div class="px-5 py-4"><p class="text-sm dark:text-kosh-muted text-kosh-light-muted">Active and paused SIP mandates.</p></div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead><tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Fund</th>
+                <th id="sipsMemberTh" class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted hidden">Member</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Amount</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Frequency</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Next Date</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Broker</th>
+                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Status</th>
+                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Actions</th>
+              </tr></thead>
+              <tbody id="sipsBody" class="divide-y dark:divide-kosh-dark-border divide-kosh-light-border"></tbody>
+            </table>
+          </div>
+          <div class="flex items-center justify-between px-5 py-3 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <span id="sipsPagInfo" class="text-xs dark:text-kosh-muted text-kosh-light-muted"></span>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ====== ADD TRANSACTION MODAL ====== -->
+  <div id="addTxnModal" class="modal-overlay">
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-panel w-[92vw] max-w-[540px]">
+      <div class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden max-h-[90vh] overflow-y-auto">
+        <div class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
+          <div><h2 class="font-display text-xl tracking-tight" style="font-variation-settings:'opsz' 40;">Add Transaction</h2><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Record a mutual fund investment</p></div>
+          <button id="modalClose" class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+        </div>
+        <div class="px-6 py-5 space-y-5">
+          <!-- Fund Search -->
+          <div>
+            <label class="kosh-label">Fund Name <span class="text-red-400">*</span></label>
+            <div class="relative">
+              <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-kosh-muted text-kosh-light-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg>
+              <input id="fundSearch" type="text" placeholder="Search mutual funds..." class="kosh-input pl-10" autocomplete="off" />
+              <div id="fundDropdown" class="absolute top-full left-0 right-0 mt-1 rounded-lg dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-xl max-h-[200px] overflow-y-auto hidden z-50">
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="kosh-label">Amount <span class="text-red-400">*</span></label>
+              <input id="amountInput" type="number" placeholder="0.00" step="0.01" class="kosh-input" />
+            </div>
+            <div>
+              <label class="kosh-label">Type <span class="text-red-400">*</span></label>
+              <div class="kd" id="typeDropdown" style="width:100%;">
+                <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select...</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
+                <div class="kd-menu">
+                  <div class="kd-option" data-value="SIP">SIP</div>
+                  <div class="kd-option" data-value="Lumpsum">Lumpsum</div>
+                  <div class="kd-option" data-value="STP">STP</div>
+                  <div class="kd-option" data-value="Switch">Switch</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="kosh-label">Investment Date <span class="text-red-400">*</span></label>
+              <div class="kdp" id="datePicker">
+                <button class="kdp-trigger" type="button"><span class="kdp-value kdp-placeholder">Select date</span><svg class="kdp-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg></button>
+                <div class="kdp-popup"></div>
+              </div>
+            </div>
+            <div>
+              <label class="kosh-label">Broker <span class="text-red-400">*</span></label>
+              <div class="kd" id="brokerDropdown" style="width:100%;">
+                <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select...</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
+                <div class="kd-menu">
+                  <div class="kd-option" data-value="Groww">Groww</div>
+                  <div class="kd-option" data-value="Coin">Zerodha Coin</div>
+                  <div class="kd-option" data-value="Kuvera">Kuvera</div>
+                  <div class="kd-option" data-value="MFCentral">MF Central</div>
+                  <div class="kd-option" data-value="PaytmMoney">Paytm Money</div>
+                  <div class="kd-option" data-value="Direct">Direct (AMC)</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div><label class="kosh-label">Folio Number <span class="text-xs font-normal dark:text-kosh-muted text-kosh-light-muted">(optional)</span></label><input id="folioInput" type="text" placeholder="e.g., 1234567890" class="kosh-input" /></div>
+          <!-- Optional: for importing existing holdings -->
+          <div class="pt-1 border-t dark:border-kosh-dark-border/50 border-kosh-light-border/50">
+            <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted mb-3">Already holding this fund? Add your current portfolio snapshot instead of historical transactions.</p>
+            <div class="grid grid-cols-2 gap-4">
+              <div><label class="kosh-label">Total Invested <span class="text-xs font-normal dark:text-kosh-muted text-kosh-light-muted">(optional)</span></label><input id="totalInvestedInput" type="number" placeholder="₹0.00" step="0.01" class="kosh-input" /></div>
+              <div><label class="kosh-label">Current Value <span class="text-xs font-normal dark:text-kosh-muted text-kosh-light-muted">(optional)</span></label><input id="currentValueInput" type="number" placeholder="₹0.00" step="0.01" class="kosh-input" /></div>
+            </div>
+          </div>
+        </div>
+        <div class="px-6 py-4 border-t dark:border-kosh-dark-border border-kosh-light-border flex gap-3">
+          <button id="modalCancel" class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
+          <button id="modalSave" class="flex-1 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-colors">Save Transaction</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== PAUSE CONFIRMATION POPOVER ====== -->
+  <div id="pausePopover" class="fixed z-[110] hidden">
+    <div class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_20px_60px_-12px_rgba(0,0,0,0.6)] p-4 w-[280px]" style="animation: popIn 0.2s cubic-bezier(0.16,1,0.3,1);">
+      <div class="flex items-start gap-3">
+        <div id="pauseIconWrap" class="w-9 h-9 rounded-lg bg-amber-500/10 flex items-center justify-center flex-shrink-0 mt-0.5">
+          <svg class="w-4 h-4 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg>
+        </div>
+        <div class="flex-1 min-w-0"><p id="pauseTitle" class="text-sm font-semibold">Pause SIP?</p><p id="pauseDesc" class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5 truncate">Next installment won't be debited.</p></div>
+      </div>
+      <div class="flex gap-2 mt-3.5">
+        <button id="pauseCancelBtn" class="flex-1 py-2 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-xs font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
+        <button id="pauseConfirmBtn" class="flex-1 py-2 rounded-lg bg-amber-500 text-white text-xs font-semibold hover:bg-amber-600 transition-colors">Pause</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script>
+    // ===== THEME =====
+    const html = document.documentElement;
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      html.classList.toggle('dark'); html.classList.toggle('light');
+      localStorage.setItem('kosh-theme', html.classList.contains('dark') ? 'dark' : 'light');
+      refreshCharts();
+    });
+
+    // ===== SIDEBAR =====
+    const sidebar = document.getElementById('sidebar');
+    const sOverlay = document.getElementById('sidebarOverlay');
+    const isMobile = () => window.innerWidth < 768;
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      if (isMobile()) { sidebar.classList.toggle('mobile-open'); sOverlay.classList.toggle('active'); }
+      else { sidebar.classList.toggle('collapsed'); }
+    });
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => { sidebar.classList.add('mobile-open'); sOverlay.classList.add('active'); });
+    sOverlay.addEventListener('click', () => { sidebar.classList.remove('mobile-open'); sOverlay.classList.remove('active'); });
+
+    // ===== PORTFOLIO MODE =====
+    let mode = 'personal';
+    function isFamily() { return mode === 'family'; }
+
+    document.querySelectorAll('.portfolio-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.portfolio-tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        mode = tab.dataset.mode;
+        document.getElementById('familyAvatars').classList.toggle('hidden', !isFamily());
+        document.getElementById('familyAvatars').classList.toggle('flex', isFamily());
+        document.getElementById('holdingsMemberTh').classList.toggle('hidden', !isFamily());
+        document.getElementById('sipsMemberTh').classList.toggle('hidden', !isFamily());
+        hPage = 1;
+        updateAll();
+      });
+    });
+
+    // ===== TABS =====
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-holdings').classList.toggle('hidden', btn.dataset.tab !== 'holdings');
+        document.getElementById('tab-sips').classList.toggle('hidden', btn.dataset.tab !== 'sips');
+      });
+    });
+
+    // ===== DROPDOWNS & DATE PICKERS =====
+    function initDropdowns() {
+      document.querySelectorAll('.kd').forEach(dd => {
+        const trigger = dd.querySelector('.kd-trigger'), menu = dd.querySelector('.kd-menu'), valEl = dd.querySelector('.kd-value');
+        if (!trigger || !menu) return;
+        trigger.addEventListener('click', (e) => { e.stopPropagation(); document.querySelectorAll('.kd.open').forEach(d => { if (d !== dd) d.classList.remove('open'); }); dd.classList.toggle('open'); });
+        menu.querySelectorAll('.kd-option').forEach(opt => {
+          opt.addEventListener('click', () => { menu.querySelectorAll('.kd-option').forEach(o => o.classList.remove('selected')); opt.classList.add('selected'); valEl.textContent = opt.textContent; valEl.classList.remove('kd-placeholder'); dd.classList.remove('open'); dd.dispatchEvent(new CustomEvent('change', { detail: { value: opt.dataset.value } })); });
+        });
+      });
+      document.addEventListener('click', () => document.querySelectorAll('.kd.open').forEach(d => d.classList.remove('open')));
+    }
+    function initDatePickers() {
+      document.querySelectorAll('.kdp').forEach(dp => {
+        const trigger = dp.querySelector('.kdp-trigger'), popup = dp.querySelector('.kdp-popup'), valEl = dp.querySelector('.kdp-value');
+        if (!trigger || !popup) return;
+        let cm = new Date().getMonth(), cy = new Date().getFullYear();
+        function render() {
+          const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+          const dim = new Date(cy, cm + 1, 0).getDate(), fd = new Date(cy, cm, 1).getDay();
+          let h = '<div class="kdp-header"><button type="button" class="kdp-nav prev">&lsaquo;</button><span class="kdp-month">'+months[cm]+' '+cy+'</span><button type="button" class="kdp-nav next">&rsaquo;</button></div>';
+          h += '<div class="kdp-weekdays">'; ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d => h += '<span>'+d+'</span>'); h += '</div><div class="kdp-days">';
+          for (let i = 0; i < fd; i++) h += '<span></span>';
+          for (let d = 1; d <= dim; d++) h += '<button type="button" class="kdp-day" data-day="'+d+'">'+d+'</button>';
+          h += '</div>'; popup.innerHTML = h;
+          popup.querySelector('.prev').addEventListener('click', (e) => { e.stopPropagation(); cm--; if (cm < 0) { cm = 11; cy--; } render(); });
+          popup.querySelector('.next').addEventListener('click', (e) => { e.stopPropagation(); cm++; if (cm > 11) { cm = 0; cy++; } render(); });
+          popup.querySelectorAll('.kdp-day').forEach(btn => { btn.addEventListener('click', (e) => { e.stopPropagation(); const m3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']; valEl.textContent = m3[cm]+' '+btn.dataset.day+', '+cy; valEl.classList.remove('kdp-placeholder'); dp.classList.remove('open'); }); });
+        }
+        trigger.addEventListener('click', (e) => { e.stopPropagation(); document.querySelectorAll('.kdp.open').forEach(d => { if (d !== dp) d.classList.remove('open'); }); dp.classList.toggle('open'); if (dp.classList.contains('open')) render(); });
+      });
+      document.addEventListener('click', () => document.querySelectorAll('.kdp.open').forEach(d => d.classList.remove('open')));
+    }
+
+    // ===== MODAL =====
+    const modal = document.getElementById('addTxnModal');
+    function openModal() { modal.classList.add('open'); document.body.style.overflow = 'hidden'; }
+    function closeModal() { modal.classList.remove('open'); document.body.style.overflow = ''; }
+    document.getElementById('addTxnBtn').addEventListener('click', openModal);
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalCancel').addEventListener('click', closeModal);
+    document.getElementById('modalBackdrop').addEventListener('click', closeModal);
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closePausePopover(); document.querySelectorAll('.kd.open,.kdp.open').forEach(d => d.classList.remove('open')); }});
+
+    const fundList = [
+      'Axis Bluechip Fund - Direct Growth','Parag Parikh Flexi Cap Fund - Direct Growth','SBI Small Cap Fund - Direct Growth',
+      'HDFC Mid-Cap Opportunities Fund - Direct Growth','Mirae Asset Large Cap Fund - Direct Growth','ICICI Pru Technology Fund - Direct Growth',
+      'Kotak Nifty 50 Index Fund - Direct Growth','Nippon India Small Cap Fund - Direct Growth','UTI Nifty Next 50 Index Fund - Direct Growth',
+      'Motilal Oswal Nasdaq 100 FOF - Direct Growth','Canara Robeco Bluechip Equity Fund - Direct Growth','DSP Midcap Fund - Direct Growth',
+      'Tata Digital India Fund - Direct Growth','Quant Active Fund - Direct Growth','PPFAS Flexicap Fund - Direct Growth',
+    ];
+    const searchInput = document.getElementById('fundSearch');
+    const searchDD = document.getElementById('fundDropdown');
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.toLowerCase().trim();
+      if (q.length < 2) { searchDD.classList.add('hidden'); return; }
+      const matches = fundList.filter(f => f.toLowerCase().includes(q)).slice(0, 6);
+      if (!matches.length) { searchDD.classList.add('hidden'); return; }
+      searchDD.innerHTML = matches.map(f => '<div class="px-4 py-2.5 text-sm cursor-pointer dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">'+f+'</div>').join('');
+      searchDD.classList.remove('hidden');
+      searchDD.querySelectorAll('div').forEach(opt => { opt.addEventListener('click', () => { searchInput.value = opt.textContent; searchDD.classList.add('hidden'); }); });
+    });
+    document.addEventListener('click', (e) => { if (!searchInput.contains(e.target) && !searchDD.contains(e.target)) searchDD.classList.add('hidden'); });
+
+    // ===== PAUSE POPOVER =====
+    const pausePopover = document.getElementById('pausePopover');
+    let pauseTarget = -1;
+    function showPausePopover(btn, idx) {
+      const allSips = getSips();
+      pauseTarget = idx;
+      const sip = allSips[idx], isPaused = sip.status === 'Paused';
+      document.getElementById('pauseTitle').textContent = isPaused ? 'Resume SIP?' : 'Pause SIP?';
+      document.getElementById('pauseDesc').textContent = isPaused ? sip.fund.split(' -')[0]+' will resume.' : 'Next installment won\'t be debited.';
+      const confirmBtn = document.getElementById('pauseConfirmBtn');
+      confirmBtn.textContent = isPaused ? 'Resume' : 'Pause';
+      confirmBtn.className = isPaused ? 'flex-1 py-2 rounded-lg bg-emerald-500 text-white text-xs font-semibold hover:bg-emerald-600 transition-colors' : 'flex-1 py-2 rounded-lg bg-amber-500 text-white text-xs font-semibold hover:bg-amber-600 transition-colors';
+      const rect = btn.getBoundingClientRect();
+      pausePopover.classList.remove('hidden');
+      let left = rect.right - 280, top = rect.bottom + 6;
+      if (left < 8) left = 8;
+      pausePopover.style.left = left + 'px'; pausePopover.style.top = top + 'px';
+    }
+    function closePausePopover() { pausePopover.classList.add('hidden'); pauseTarget = -1; }
+    document.getElementById('pauseCancelBtn').addEventListener('click', closePausePopover);
+    document.getElementById('pauseConfirmBtn').addEventListener('click', () => {
+      if (pauseTarget >= 0) { const allSips = getSips(); allSips[pauseTarget].status = allSips[pauseTarget].status === 'Active' ? 'Paused' : 'Active'; renderSips(); }
+      closePausePopover();
+    });
+    document.addEventListener('click', (e) => { if (!pausePopover.contains(e.target) && !e.target.closest('.action-btn-pause')) closePausePopover(); });
+
+    // ===== DATA =====
+    const ME = 'PD';
+    const catBadge = { 'Large Cap':'violet', 'Flexi Cap':'blue', 'Small Cap':'rose', 'Mid Cap':'amber', 'Index':'cyan', 'Sectoral':'emerald' };
+    const memberAvatar = {
+      PD: '<div class="w-6 h-6 rounded-full bg-blue-500/15 flex items-center justify-center text-[10px] font-bold text-blue-400">PD</div>',
+      SP: '<div class="w-6 h-6 rounded-full bg-rose-500/15 flex items-center justify-center text-[10px] font-bold text-rose-400">SP</div>'
+    };
+
+    const holdingsPD = [
+      { fund:'Axis Bluechip Fund',                cat:'Large Cap', invested:300000, current:345000, xirr:15.2, units:4521.34, nav:76.31, broker:'Groww',  member:'PD' },
+      { fund:'Parag Parikh Flexi Cap Fund',       cat:'Flexi Cap', invested:250000, current:310000, xirr:18.6, units:4832.71, nav:64.15, broker:'Coin',   member:'PD' },
+      { fund:'HDFC Mid-Cap Opportunities Fund',   cat:'Mid Cap',   invested:200000, current:238000, xirr:13.8, units:2814.57, nav:84.56, broker:'Coin',   member:'PD' },
+      { fund:'Kotak Nifty 50 Index Fund',         cat:'Index',     invested:200000, current:224000, xirr:11.2, units:12444.44,nav:18.00, broker:'Kuvera', member:'PD' },
+      { fund:'Mirae Asset Large Cap Fund',        cat:'Large Cap', invested:180000, current:205000, xirr:12.4, units:2267.77, nav:90.40, broker:'Groww',  member:'PD' },
+      { fund:'SBI Small Cap Fund',                cat:'Small Cap', invested:150000, current:185000, xirr:16.8, units:1194.33, nav:154.89,broker:'Groww',  member:'PD' },
+      { fund:'ICICI Pru Technology Fund',         cat:'Sectoral',  invested:100000, current:128000, xirr:21.4, units:732.93,  nav:174.64,broker:'Coin',   member:'PD' },
+    ];
+    const holdingsSP = [
+      { fund:'Canara Robeco Bluechip Equity Fund', cat:'Large Cap', invested:200000, current:228000, xirr:12.8, units:3654.18, nav:62.40, broker:'Groww',  member:'SP' },
+      { fund:'DSP Midcap Fund',                    cat:'Mid Cap',   invested:150000, current:175000, xirr:14.2, units:2031.62, nav:86.14, broker:'Kuvera', member:'SP' },
+      { fund:'Nippon India Small Cap Fund',        cat:'Small Cap', invested:100000, current:132000, xirr:22.4, units:1023.45, nav:128.97,broker:'Groww',  member:'SP' },
+      { fund:'Kotak Nifty 50 Index Fund',          cat:'Index',     invested:120000, current:134000, xirr:10.8, units:7444.44, nav:18.00, broker:'Kuvera', member:'SP' },
+      { fund:'Quant Active Fund',                  cat:'Flexi Cap', invested:80000,  current:98000,  xirr:19.6, units:462.78,  nav:211.76,broker:'Coin',   member:'SP' },
+    ];
+
+    const sipDataPD = [
+      { fund:'Axis Bluechip Fund',              amount:10000, freq:'Monthly - 5th', next:'Mar 05, 2026', broker:'Groww',  status:'Active', member:'PD' },
+      { fund:'Parag Parikh Flexi Cap Fund',     amount:10000, freq:'Monthly - 10th',next:'Mar 10, 2026', broker:'Coin',   status:'Active', member:'PD' },
+      { fund:'HDFC Mid-Cap Opportunities Fund', amount:7500,  freq:'Monthly - 15th',next:'Mar 15, 2026', broker:'Coin',   status:'Active', member:'PD' },
+      { fund:'Kotak Nifty 50 Index Fund',       amount:10000, freq:'Monthly - 1st', next:'Mar 01, 2026', broker:'Kuvera', status:'Active', member:'PD' },
+      { fund:'SBI Small Cap Fund',              amount:5000,  freq:'Monthly - 5th', next:'Mar 05, 2026', broker:'Groww',  status:'Active', member:'PD' },
+    ];
+    const sipDataSP = [
+      { fund:'Canara Robeco Bluechip Equity Fund', amount:7500, freq:'Monthly - 1st', next:'Mar 01, 2026', broker:'Groww',  status:'Active', member:'SP' },
+      { fund:'DSP Midcap Fund',                    amount:5000, freq:'Monthly - 10th',next:'Mar 10, 2026', broker:'Kuvera', status:'Active', member:'SP' },
+      { fund:'Nippon India Small Cap Fund',        amount:5000, freq:'Monthly - 5th', next:'Mar 05, 2026', broker:'Groww',  status:'Active', member:'SP' },
+      { fund:'Quant Active Fund',                  amount:3000, freq:'Monthly - 15th',next:'Mar 15, 2026', broker:'Coin',   status:'Active', member:'SP' },
+    ];
+
+    function getHoldings() { return isFamily() ? [...holdingsPD, ...holdingsSP] : holdingsPD; }
+    function getSips() { return isFamily() ? [...sipDataPD, ...sipDataSP] : sipDataPD; }
+    function fmtINR(v) { return '\u20B9' + v.toLocaleString('en-IN'); }
+    function fmtK(v) { return v >= 100000 ? '\u20B9' + (v/100000).toFixed(2) + 'L' : '\u20B9' + (v/1000).toFixed(1) + 'K'; }
+    function fmtL(v) { return '\u20B9' + (v/100000).toFixed(2) + 'L'; }
+
+    // ===== BANNER =====
+    function updateBanner() {
+      const h = getHoldings(), sips = getSips();
+      const totalInv = h.reduce((s,x) => s + x.invested, 0);
+      const totalCur = h.reduce((s,x) => s + x.current, 0);
+      const totalRet = totalCur - totalInv;
+      const retPct = ((totalRet / totalInv) * 100).toFixed(1);
+      const activeSips = sips.filter(s => s.status === 'Active');
+      const sipMonthly = activeSips.reduce((s,x) => s + x.amount, 0);
+      const xirr = isFamily() ? '13.6' : '14.2';
+
+      document.querySelector('.b-amount').textContent = fmtL(totalCur);
+      const chipSpans = document.querySelectorAll('.b-chip span');
+      if (chipSpans[0]) chipSpans[0].textContent = '+' + retPct + '%';
+      const budgetLabel = document.querySelector('.budget-label');
+      if (budgetLabel) budgetLabel.textContent = 'Invested ' + fmtL(totalInv);
+      const retSpan = document.querySelector('.mf-banner .text-emerald-400.font-semibold');
+      if (retSpan) retSpan.textContent = '+' + fmtL(totalRet) + ' returns';
+
+      const pills = document.querySelectorAll('.b-pill .b-pill-value');
+      if (pills.length >= 4) {
+        pills[0].textContent = h.length;
+        pills[1].textContent = xirr + '%';
+        pills[2].textContent = activeSips.length;
+        pills[3].textContent = fmtK(sipMonthly);
+      }
+      const tabBadges = document.querySelectorAll('.tab-btn span');
+      if (tabBadges[0]) tabBadges[0].textContent = h.length;
+      if (tabBadges[1]) tabBadges[1].textContent = sips.length;
+    }
+
+    // ===== RENDER HOLDINGS =====
+    let hPage = 1, hPerPage = 5;
+
+    function renderHoldings() {
+      const all = getHoldings();
+      const tbody = document.getElementById('holdingsBody');
+      const total = all.length, totalPages = Math.max(1, Math.ceil(total / hPerPage));
+      hPage = Math.min(hPage, totalPages);
+      const start = (hPage - 1) * hPerPage;
+      const slice = all.slice(start, start + hPerPage);
+      const fam = isFamily();
+
+      tbody.innerHTML = slice.map(h => {
+        const ret = h.current - h.invested;
+        const retPct = ((ret / h.invested) * 100).toFixed(1);
+        const bc = catBadge[h.cat] || 'gray';
+        const retClass = ret >= 0 ? 'text-emerald-400' : 'text-red-400';
+        return '<tr class="income-row">' +
+          '<td class="px-5 py-4"><p class="text-sm font-semibold">' + h.fund + '</p></td>' +
+          (fam ? '<td class="px-5 py-4">' + memberAvatar[h.member] + '</td>' : '') +
+          '<td class="px-5 py-4 whitespace-nowrap"><span class="badge bg-'+bc+'-500/10 text-'+bc+'-500">' + h.cat + '</span></td>' +
+          '<td class="px-5 py-4 text-sm text-right">' + fmtINR(h.invested) + '</td>' +
+          '<td class="px-5 py-4 text-sm font-semibold text-right">' + fmtINR(h.current) + '</td>' +
+          '<td class="px-5 py-4 text-sm text-right whitespace-nowrap '+retClass+'"><span class="font-semibold">' + (ret>=0?'+':'') + fmtINR(ret) + '</span><span class="text-xs ml-1 opacity-70">(' + retPct + '%)</span></td>' +
+          '<td class="px-5 py-4 text-sm text-right font-medium">' + h.xirr + '%</td>' +
+          '<td class="px-5 py-4 text-sm text-right dark:text-kosh-muted text-kosh-light-muted">' + h.units.toLocaleString('en-IN', {maximumFractionDigits:2}) + '</td>' +
+          '<td class="px-5 py-4 text-sm text-right dark:text-kosh-muted text-kosh-light-muted">\u20B9' + h.nav.toFixed(2) + '</td>' +
+          '<td class="px-5 py-4"><span class="text-xs px-2 py-0.5 rounded dark:bg-kosh-dark-border bg-kosh-cream/80 font-medium">' + h.broker + '</span></td>' +
+        '</tr>';
+      }).join('');
+      document.getElementById('holdingsPagInfo').textContent = 'Showing '+(start+1)+'\u2013'+Math.min(start+hPerPage, total)+' of '+total;
+      const btns = document.getElementById('holdingsPagBtns'); btns.innerHTML = '';
+      for (let i = 1; i <= totalPages; i++) {
+        const b = document.createElement('button'); b.textContent = i;
+        b.className = i === hPage ? 'w-7 h-7 rounded-md text-xs font-bold bg-kosh-gold text-kosh-slate' : 'w-7 h-7 rounded-md text-xs font-medium dark:text-kosh-muted text-kosh-light-muted dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors';
+        b.onclick = () => { hPage = i; renderHoldings(); }; btns.appendChild(b);
+      }
+    }
+
+    document.getElementById('holdingsPerPageDD').addEventListener('change', (e) => { hPerPage = parseInt(e.detail.value); hPage = 1; renderHoldings(); });
+
+    // ===== RENDER SIPS =====
+    function renderSips() {
+      const sips = getSips();
+      const fam = isFamily();
+      const tbody = document.getElementById('sipsBody');
+      tbody.innerHTML = sips.map((s, i) => {
+        const isOwner = s.member === ME;
+        const pauseBtn = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M15.75 5.25v13.5m-7.5-13.5v13.5"/></svg>Pause';
+        const resumeBtn = '<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z"/></svg>Resume';
+        return '<tr class="income-row">' +
+          '<td class="px-5 py-4 text-sm font-semibold">' + s.fund + '</td>' +
+          (fam ? '<td class="px-5 py-4">' + memberAvatar[s.member] + '</td>' : '') +
+          '<td class="px-5 py-4 text-sm font-semibold text-right">' + fmtINR(s.amount) + '</td>' +
+          '<td class="px-5 py-4 text-sm">' + s.freq + '</td>' +
+          '<td class="px-5 py-4 text-sm">' + s.next + '</td>' +
+          '<td class="px-5 py-4"><span class="text-xs px-2 py-0.5 rounded dark:bg-kosh-dark-border bg-kosh-cream/80 font-medium">' + s.broker + '</span></td>' +
+          '<td class="px-5 py-4">' + (s.status === 'Active' ? '<span class="badge bg-emerald-500/10 text-emerald-500">Active</span>' : '<span class="badge bg-amber-500/10 text-amber-500">Paused</span>') + '</td>' +
+          '<td class="px-5 py-4 text-right whitespace-nowrap">' + (isOwner ? '<button class="action-btn action-btn-pause" data-idx="'+i+'">' + (s.status === 'Active' ? pauseBtn : resumeBtn) + '</button>' : '<span class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">\u2014</span>') + '</td>' +
+        '</tr>';
+      }).join('');
+      tbody.querySelectorAll('.action-btn-pause').forEach(btn => { btn.addEventListener('click', (e) => { e.stopPropagation(); showPausePopover(btn, parseInt(btn.dataset.idx)); }); });
+      document.getElementById('sipsPagInfo').textContent = 'Showing 1\u2013' + sips.length + ' of ' + sips.length;
+    }
+
+    // ===== TREND CHART =====
+    const trendDataPD = [
+      { label: "Sep '25", invested: 1280000, current: 1490000 }, { label: "Oct '25", invested: 1320000, current: 1505000 },
+      { label: "Nov '25", invested: 1340000, current: 1485000 }, { label: "Dec '25", invested: 1350000, current: 1510000 },
+      { label: "Jan '26", invested: 1360000, current: 1520000 }, { label: "Feb '26", invested: 1380000, current: 1535000 },
+    ];
+    const trendDataFamily = [
+      { label: "Sep '25", invested: 1880000, current: 2200000 }, { label: "Oct '25", invested: 1940000, current: 2235000 },
+      { label: "Nov '25", invested: 1960000, current: 2185000 }, { label: "Dec '25", invested: 1985000, current: 2260000 },
+      { label: "Jan '26", invested: 2000000, current: 2295000 }, { label: "Feb '26", invested: 2030000, current: 2302000 },
+    ];
+
+    function initTrendChart() {
+      const container = document.getElementById('trendChart');
+      if (!container) return; container.innerHTML = '';
+      const isDark = html.classList.contains('dark');
+      const W = container.offsetWidth, H = container.offsetHeight;
+      if (!W || !H) return;
+      const data = isFamily() ? trendDataFamily : trendDataPD;
+      const pad = { top: 10, right: 10, bottom: 22, left: 48 };
+      const cw = W - pad.left - pad.right, ch = H - pad.top - pad.bottom;
+      const allVals = data.flatMap(d => [d.invested, d.current]);
+      const maxV = Math.max(...allVals) * 1.04, minV = Math.min(...allVals) * 0.96;
+      const toY = v => pad.top + (1 - (v - minV) / (maxV - minV)) * ch;
+      const toX = i => pad.left + (i / (data.length - 1)) * cw;
+      const curPts = data.map((d,i) => ({ x: toX(i), y: toY(d.current), ...d }));
+      const invPts = data.map((d,i) => ({ x: toX(i), y: toY(d.invested), ...d }));
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns,'svg'); svg.setAttribute('width',W); svg.setAttribute('height',H); svg.style.display='block';
+      const gc = isDark ? '#2A2A2A' : '#E8E4DC';
+      for (let i = 0; i < 3; i++) { const gy = pad.top + (i/2)*ch; const l = document.createElementNS(ns,'line'); l.setAttribute('x1',pad.left); l.setAttribute('x2',W-pad.right); l.setAttribute('y1',gy); l.setAttribute('y2',gy); l.setAttribute('stroke',gc); l.setAttribute('stroke-dasharray','3,3'); svg.appendChild(l); const t = document.createElementNS(ns,'text'); t.setAttribute('x',pad.left-6); t.setAttribute('y',gy+3); t.setAttribute('text-anchor','end'); t.setAttribute('fill',isDark?'#6B6B6B':'#8A8578'); t.setAttribute('font-size','10'); const v = Math.round(maxV - (i/2)*(maxV-minV)); t.textContent = '\u20B9'+(v/100000).toFixed(1)+'L'; svg.appendChild(t); }
+      function spline(p) { const n=p.length; if(n<2) return ''; if(n===2) return 'M'+p[0].x+','+p[0].y+'L'+p[1].x+','+p[1].y; const d=[]; for(let i=0;i<n-1;i++) d.push((p[i+1].y-p[i].y)/(p[i+1].x-p[i].x)); const m=[d[0]]; for(let i=1;i<n-1;i++) m.push((d[i-1]+d[i])/2); m.push(d[n-2]); let s='M'+p[0].x+','+p[0].y; for(let i=0;i<n-1;i++){const dx=(p[i+1].x-p[i].x)/3; s+='C'+(p[i].x+dx)+','+(p[i].y+m[i]*dx)+','+(p[i+1].x-dx)+','+(p[i+1].y-m[i+1]*dx)+','+p[i+1].x+','+p[i+1].y;} return s; }
+      const curD = spline(curPts), invD = spline(invPts);
+      const defs = document.createElementNS(ns,'defs'); const gapGrad = document.createElementNS(ns,'linearGradient'); gapGrad.setAttribute('id','gapFill'); gapGrad.setAttribute('x1','0'); gapGrad.setAttribute('y1','0'); gapGrad.setAttribute('x2','0'); gapGrad.setAttribute('y2','1'); const gs1 = document.createElementNS(ns,'stop'); gs1.setAttribute('offset','0%'); gs1.setAttribute('stop-color','#10B981'); gs1.setAttribute('stop-opacity','0.15'); const gs2 = document.createElementNS(ns,'stop'); gs2.setAttribute('offset','100%'); gs2.setAttribute('stop-color','#10B981'); gs2.setAttribute('stop-opacity','0.04'); gapGrad.appendChild(gs1); gapGrad.appendChild(gs2); defs.appendChild(gapGrad); svg.appendChild(defs);
+      const invReverse = [...invPts].reverse(); const gapD = curD + 'L'+invReverse[0].x+','+invReverse[0].y + invReverse.slice(1).map(p => 'L'+p.x+','+p.y).join('') + 'Z'; const gapArea = document.createElementNS(ns,'path'); gapArea.setAttribute('d',gapD); gapArea.setAttribute('fill','url(#gapFill)'); svg.appendChild(gapArea);
+      const invLine = document.createElementNS(ns,'path'); invLine.setAttribute('d',invD); invLine.setAttribute('fill','none'); invLine.setAttribute('stroke','#C9A84C'); invLine.setAttribute('stroke-width','2'); invLine.setAttribute('stroke-dasharray','6,4'); invLine.setAttribute('stroke-linecap','round'); invLine.setAttribute('opacity','0.7'); svg.appendChild(invLine);
+      const curLine = document.createElementNS(ns,'path'); curLine.setAttribute('d',curD); curLine.setAttribute('fill','none'); curLine.setAttribute('stroke','#8B5CF6'); curLine.setAttribute('stroke-width','2.5'); curLine.setAttribute('stroke-linecap','round'); svg.appendChild(curLine);
+      curPts.forEach(p => { const c=document.createElementNS(ns,'circle'); c.setAttribute('cx',p.x); c.setAttribute('cy',p.y); c.setAttribute('r','3'); c.setAttribute('fill','#8B5CF6'); c.setAttribute('opacity','0.5'); svg.appendChild(c); });
+      invPts.forEach(p => { const c=document.createElementNS(ns,'circle'); c.setAttribute('cx',p.x); c.setAttribute('cy',p.y); c.setAttribute('r','2.5'); c.setAttribute('fill','#C9A84C'); c.setAttribute('opacity','0.4'); svg.appendChild(c); });
+      curPts.forEach(p => { const t=document.createElementNS(ns,'text'); t.setAttribute('x',p.x); t.setAttribute('y',H-2); t.setAttribute('text-anchor','middle'); t.setAttribute('fill',isDark?'#6B6B6B':'#8A8578'); t.setAttribute('font-size','11'); t.textContent=p.label; svg.appendChild(t); });
+      const lgX = W - pad.right - 4, lgY = pad.top + 2;
+      [[lgY,'#8B5CF6','Current','2.5',''],[lgY+14,'#C9A84C','Invested','2','4,3']].forEach(function(arr) { const y=arr[0],clr=arr[1],lbl=arr[2],sw=arr[3],dash=arr[4]; const l=document.createElementNS(ns,'line'); l.setAttribute('x1',lgX-58); l.setAttribute('x2',lgX-44); l.setAttribute('y1',y); l.setAttribute('y2',y); l.setAttribute('stroke',clr); l.setAttribute('stroke-width',sw); if(dash) l.setAttribute('stroke-dasharray',dash); svg.appendChild(l); const t=document.createElementNS(ns,'text'); t.setAttribute('x',lgX-40); t.setAttribute('y',Number(y)+3); t.setAttribute('fill',isDark?'#999':'#777'); t.setAttribute('font-size','9'); t.textContent=lbl; svg.appendChild(t); });
+      const tooltip = document.createElement('div'); tooltip.className='chart-tooltip'; tooltip.style.cssText='background:'+(isDark?'#1E1E1E':'#fff')+';border:1px solid '+(isDark?'#333':'#E8E4DC')+';color:'+(isDark?'#fff':'#1A1A1A');
+      const cLine = document.createElementNS(ns,'line'); cLine.setAttribute('stroke',isDark?'#555':'#BBB'); cLine.setAttribute('stroke-width','1'); cLine.setAttribute('stroke-dasharray','4,3'); cLine.setAttribute('opacity','0'); svg.appendChild(cLine);
+      const aDotC = document.createElementNS(ns,'circle'); aDotC.setAttribute('r','5'); aDotC.setAttribute('fill','#8B5CF6'); aDotC.setAttribute('stroke',isDark?'#141414':'#fff'); aDotC.setAttribute('stroke-width','2.5'); aDotC.setAttribute('opacity','0'); svg.appendChild(aDotC);
+      const aDotI = document.createElementNS(ns,'circle'); aDotI.setAttribute('r','4'); aDotI.setAttribute('fill','#C9A84C'); aDotI.setAttribute('stroke',isDark?'#141414':'#fff'); aDotI.setAttribute('stroke-width','2'); aDotI.setAttribute('opacity','0'); svg.appendChild(aDotI);
+      container.appendChild(svg); container.appendChild(tooltip);
+      container.addEventListener('mousemove', function(e) {
+        const rect = container.getBoundingClientRect(), mx = e.clientX - rect.left;
+        let idx = 0, md = Infinity; curPts.forEach(function(p,i) { const d = Math.abs(p.x - mx); if (d < md) { md = d; idx = i; } });
+        const cp = curPts[idx], ip = invPts[idx], ret = cp.current - cp.invested, retPct = ((ret/cp.invested)*100).toFixed(1);
+        cLine.setAttribute('x1',cp.x); cLine.setAttribute('x2',cp.x); cLine.setAttribute('y1',pad.top); cLine.setAttribute('y2',pad.top+ch); cLine.setAttribute('opacity','0.3');
+        aDotC.setAttribute('cx',cp.x); aDotC.setAttribute('cy',cp.y); aDotC.setAttribute('opacity','1');
+        aDotI.setAttribute('cx',ip.x); aDotI.setAttribute('cy',ip.y); aDotI.setAttribute('opacity','1');
+        tooltip.innerHTML = '<div style="font-size:11px;opacity:0.6;margin-bottom:4px;">'+cp.label+'</div><div style="display:flex;align-items:center;gap:6px;margin-bottom:2px;"><span style="width:8px;height:2px;background:#8B5CF6;border-radius:1px;"></span><span style="font-size:12px;">Current</span><span style="font-size:13px;font-weight:700;margin-left:auto;">\u20B9'+(cp.current/100000).toFixed(2)+'L</span></div><div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;"><span style="width:8px;height:2px;background:#C9A84C;border-radius:1px;"></span><span style="font-size:12px;">Invested</span><span style="font-size:13px;font-weight:700;margin-left:auto;">\u20B9'+(cp.invested/100000).toFixed(2)+'L</span></div><div style="font-size:11px;color:#10B981;font-weight:600;border-top:1px solid '+(isDark?'#333':'#eee')+';padding-top:4px;">+\u20B9'+(ret/1000).toFixed(1)+'K ('+retPct+'%)</div>';
+        tooltip.classList.add('visible');
+        var tx = cp.x - 65; if(tx < 0) tx = 0; if(tx + 140 > W) tx = W - 140; tooltip.style.left = tx+'px'; tooltip.style.top = (Math.min(cp.y, ip.y) - 88) + 'px';
+      });
+      container.addEventListener('mouseleave', function() { tooltip.classList.remove('visible'); cLine.setAttribute('opacity','0'); aDotC.setAttribute('opacity','0'); aDotI.setAttribute('opacity','0'); });
+    }
+
+    // ===== ALLOC DONUT =====
+    const allocDataPD = [ { name:'Large Cap', value:550000, color:'#8B5CF6' }, { name:'Flexi Cap', value:310000, color:'#3B82F6' }, { name:'Mid Cap', value:238000, color:'#F59E0B' }, { name:'Index', value:224000, color:'#06B6D4' }, { name:'Small Cap', value:185000, color:'#F43F5E' }, { name:'Sectoral', value:128000, color:'#10B981' } ];
+    const allocDataFamily = [ { name:'Large Cap', value:778000, color:'#8B5CF6' }, { name:'Flexi Cap', value:408000, color:'#3B82F6' }, { name:'Mid Cap', value:413000, color:'#F59E0B' }, { name:'Index', value:358000, color:'#06B6D4' }, { name:'Small Cap', value:317000, color:'#F43F5E' }, { name:'Sectoral', value:128000, color:'#10B981' } ];
+
+    function initAllocChart() {
+      const container = document.getElementById('allocChart');
+      if (!container) return; container.innerHTML = '';
+      const allocData = isFamily() ? allocDataFamily : allocDataPD;
+      const total = allocData.reduce(function(s,d){return s+d.value;},0);
+      const isDark = html.classList.contains('dark');
+      const textClr = isDark ? '#fff' : '#1A1A1A', muted = isDark ? '#6B6B6B' : '#8A8578';
+      const W = container.offsetWidth, H = container.offsetHeight;
+      if (!W || !H) return;
+      const cx = W/2, cy = H/2, R = Math.min(cx,cy)-36, innerR = R*0.55;
+      const ns = 'http://www.w3.org/2000/svg';
+      const svg = document.createElementNS(ns,'svg'); svg.setAttribute('width',W); svg.setAttribute('height',H); svg.style.display='block';
+      const gap = 0.025*Math.PI*2, totalGap = gap*allocData.length, avail = Math.PI*2-totalGap;
+      var angle = -Math.PI/2;
+      allocData.forEach(function(src,i) {
+        const sweep = (src.value/total)*avail, sa = angle+gap/2, ea = sa+sweep, ma = (sa+ea)/2;
+        function arc(r1,r2,a1,a2){const lg=(a2-a1)>Math.PI?1:0;return'M'+(cx+r2*Math.cos(a1))+','+(cy+r2*Math.sin(a1))+' A'+r2+','+r2+' 0 '+lg+' 1 '+(cx+r2*Math.cos(a2))+','+(cy+r2*Math.sin(a2))+' L'+(cx+r1*Math.cos(a2))+','+(cy+r1*Math.sin(a2))+' A'+r1+','+r1+' 0 '+lg+' 0 '+(cx+r1*Math.cos(a1))+','+(cy+r1*Math.sin(a1))+' Z';}
+        const seg=document.createElementNS(ns,'path'); seg.setAttribute('d',arc(innerR,R,sa,ea)); seg.setAttribute('fill',src.color); seg.classList.add('donut-segment'); seg.dataset.idx=i; svg.appendChild(seg);
+        if (i < 6) { const lr=R+14,lor=R+30; const lx1=cx+lr*Math.cos(ma),ly1=cy+lr*Math.sin(ma); const lx2=cx+lor*Math.cos(ma),ly2=cy+lor*Math.sin(ma); const isR=Math.cos(ma)>=0; const lx3=isR?lx2+12:lx2-12;
+          const conn=document.createElementNS(ns,'path'); conn.setAttribute('d','M'+lx1+','+ly1+' L'+lx2+','+ly2+' L'+lx3+','+ly2); conn.setAttribute('fill','none'); conn.setAttribute('stroke',muted); conn.setAttribute('stroke-width','1'); svg.appendChild(conn);
+          const dot=document.createElementNS(ns,'circle'); dot.setAttribute('cx',lx1); dot.setAttribute('cy',ly1); dot.setAttribute('r','2'); dot.setAttribute('fill',src.color); svg.appendChild(dot);
+          const lbl=document.createElementNS(ns,'text'); lbl.setAttribute('x',isR?lx3+4:lx3-4); lbl.setAttribute('y',ly2+3); lbl.setAttribute('text-anchor',isR?'start':'end'); lbl.setAttribute('fill',muted); lbl.setAttribute('font-size','10'); lbl.textContent=src.name; svg.appendChild(lbl);
+        }
+        angle = ea + gap/2;
+      });
+      const cm=document.createElementNS(ns,'text'); cm.setAttribute('x',cx); cm.setAttribute('y',cy-4); cm.setAttribute('text-anchor','middle'); cm.setAttribute('fill',textClr); cm.setAttribute('font-size','15'); cm.setAttribute('font-weight','700'); cm.textContent=fmtL(total); svg.appendChild(cm);
+      const cs=document.createElementNS(ns,'text'); cs.setAttribute('x',cx); cs.setAttribute('y',cy+14); cs.setAttribute('text-anchor','middle'); cs.setAttribute('fill',muted); cs.setAttribute('font-size','11'); cs.textContent=isFamily()?'Family':'Portfolio'; svg.appendChild(cs);
+      container.appendChild(svg);
+      const tooltip=document.createElement('div'); tooltip.className='chart-tooltip'; tooltip.style.cssText='background:'+(isDark?'#1E1E1E':'#fff')+';border:1px solid '+(isDark?'#333':'#E8E4DC')+';color:'+(isDark?'#fff':'#1A1A1A'); container.appendChild(tooltip);
+      const segs=svg.querySelectorAll('.donut-segment');
+      segs.forEach(function(seg){ seg.addEventListener('mouseenter',function(){const idx=parseInt(seg.dataset.idx),src=allocData[idx]; segs.forEach(function(s,j){s.classList.toggle('dimmed',j!==idx);s.classList.toggle('active',j===idx);}); cm.textContent=fmtL(src.value); cs.textContent=src.name; tooltip.innerHTML='<div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:'+src.color+';"></span><span style="font-weight:600;">'+src.name+'</span></div><div style="margin-top:4px;">\u20B9'+src.value.toLocaleString('en-IN')+' \u00B7 '+Math.round(src.value/total*100)+'%</div>'; tooltip.classList.add('visible');});
+        seg.addEventListener('mousemove',function(e){const r=container.getBoundingClientRect(); tooltip.style.left=(e.clientX-r.left+12)+'px'; tooltip.style.top=(e.clientY-r.top-20)+'px';});
+        seg.addEventListener('mouseleave',function(){segs.forEach(function(s){s.classList.remove('dimmed','active');}); cm.textContent=fmtL(total); cs.textContent=isFamily()?'Family':'Portfolio'; tooltip.classList.remove('visible');});
+      });
+    }
+
+    // ===== SECTOR CHART =====
+    const sectorDataPD = [ {name:'Banking',pct:28,color:'#8B5CF6'},{name:'Technology',pct:18,color:'#3B82F6'},{name:'Healthcare',pct:12,color:'#10B981'},{name:'Consumer',pct:10,color:'#F59E0B'},{name:'Auto',pct:8,color:'#F97316'},{name:'Energy',pct:7,color:'#06B6D4'},{name:'Others',pct:17,color:'#6B7280'} ];
+    const sectorDataFamily = [ {name:'Banking',pct:26,color:'#8B5CF6'},{name:'Technology',pct:14,color:'#3B82F6'},{name:'Healthcare',pct:13,color:'#10B981'},{name:'Consumer',pct:12,color:'#F59E0B'},{name:'Auto',pct:9,color:'#F97316'},{name:'Energy',pct:8,color:'#06B6D4'},{name:'Others',pct:18,color:'#6B7280'} ];
+
+    function renderSectorChart() {
+      const container = document.getElementById('sectorChart'); if (!container) return; container.innerHTML = '';
+      const isDark = html.classList.contains('dark'), muted = isDark ? '#6B6B6B' : '#8A8578';
+      (isFamily() ? sectorDataFamily : sectorDataPD).forEach(function(s) {
+        const row = document.createElement('div'); row.className = 'hbar';
+        row.innerHTML = '<span class="hbar-label" style="color:'+muted+'">'+s.name+'</span><div class="hbar-track"><div class="hbar-fill" style="width:'+s.pct+'%;background:'+s.color+';"></div></div><span class="hbar-value" style="color:'+(isDark?'#fff':'#1A1A1A')+'">'+s.pct+'%</span>';
+        container.appendChild(row);
+      });
+    }
+
+    // ===== WEIGHT CHART =====
+    function renderWeightChart() {
+      const container = document.getElementById('weightChart'); if (!container) return; container.innerHTML = '';
+      const isDark = html.classList.contains('dark'), muted = isDark ? '#6B6B6B' : '#8A8578';
+      const h = getHoldings().slice().sort(function(a,b){return b.current-a.current;});
+      const total = h.reduce(function(s,x){return s+x.current;},0);
+      const colors = ['#8B5CF6','#3B82F6','#F59E0B','#06B6D4','#EC4899','#F43F5E','#10B981','#6366F1','#F97316','#14B8A6','#A855F7','#EF4444'];
+      h.forEach(function(f,i) {
+        const pct = Math.round(f.current / total * 100);
+        const shortName = f.fund.split(' Fund')[0].split(' Opportunities')[0].split(' Equity')[0];
+        const row = document.createElement('div'); row.className = 'hbar';
+        row.innerHTML = '<span class="hbar-label" style="color:'+muted+';width:100px;font-size:10px;">'+shortName+'</span><div class="hbar-track"><div class="hbar-fill" style="width:'+pct+'%;background:'+colors[i%colors.length]+';"></div></div><span class="hbar-value" style="color:'+(isDark?'#fff':'#1A1A1A')+'">'+pct+'%</span>';
+        container.appendChild(row);
+      });
+    }
+
+    // ===== INSIGHTS UPDATE =====
+    function updateInsights() {
+      const h = getHoldings(), sips = getSips();
+      const totalInv = h.reduce(function(s,x){return s+x.invested;},0), totalCur = h.reduce(function(s,x){return s+x.current;},0);
+      const ret = totalCur - totalInv, retPct = ((ret/totalInv)*100).toFixed(1);
+      const xirr = isFamily() ? '13.6' : '14.2';
+
+      // Trend footer
+      const trendCard = document.getElementById('trendChart').closest('.stat-card');
+      const trendIns = trendCard.querySelector('.border-t .text-sm');
+      const trendSub = trendCard.querySelector('.border-t .text-xs');
+      if (trendIns) trendIns.innerHTML = '<svg class="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22"/></svg><span>Returns gap widening \u2014 '+fmtL(ret)+' profit</span>';
+      if (trendSub) trendSub.textContent = 'Invested '+fmtL(totalInv)+' \u2192 Current '+fmtL(totalCur)+' (+'+retPct+'%)';
+
+      // Alloc footer
+      const allocCard = document.getElementById('allocChart').closest('.stat-card');
+      const allocIns = allocCard.querySelector('.border-t .text-sm');
+      const allocSub = allocCard.querySelector('.border-t .text-xs');
+      if (allocIns) allocIns.textContent = '6 fund categories across ' + h.length + ' schemes';
+      if (allocSub) allocSub.textContent = isFamily() ? 'Large Cap leads at 32% \u2014 well diversified' : 'Large Cap leads at 36% \u2014 well diversified';
+
+      // Highlights
+      const best = h.reduce(function(b,x) { return (x.current-x.invested)/x.invested > (b.current-b.invested)/b.invested ? x : b; });
+      const bestPct = (((best.current-best.invested)/best.invested)*100).toFixed(1);
+      const activeSips = sips.filter(function(s){return s.status === 'Active';});
+      const sipTotal = activeSips.reduce(function(s,x){return s+x.amount;},0);
+      const hlCards = document.querySelectorAll('.lg\\:col-span-1 .p-3.rounded-lg');
+      if (hlCards[0]) { hlCards[0].querySelector('.text-emerald-400').textContent = best.fund.split(' Fund')[0]; hlCards[0].querySelector('p:last-child').textContent = '+'+bestPct+'% \u00B7 XIRR '+best.xirr+'%'; }
+      if (hlCards[1]) { hlCards[1].querySelector('.text-violet-400').textContent = xirr+'%'; hlCards[1].querySelector('p:last-child').textContent = 'Beating FD by '+(parseFloat(xirr)-7).toFixed(1)+'%'; }
+      if (hlCards[2]) { hlCards[2].querySelector('.text-blue-500').textContent = fmtINR(sipTotal); hlCards[2].querySelector('p:last-child').textContent = activeSips.length+' active SIPs'; }
+    }
+
+    // ===== MASTER UPDATE =====
+    function refreshCharts() { initTrendChart(); initAllocChart(); renderSectorChart(); renderWeightChart(); }
+    function updateAll() { updateBanner(); renderHoldings(); renderSips(); refreshCharts(); updateInsights(); }
+
+    var rt; window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(refreshCharts, 150); });
+
+    // ===== INIT =====
+    initDropdowns();
+    initDatePickers();
+    updateAll();
+  </script>
+</body>
+</html>

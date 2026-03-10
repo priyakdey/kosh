@@ -1,8 +1,8 @@
-# CLAUDE.md — Kosh Project Intelligence
+# CLAUDE.md - Kosh Project Intelligence
 
 ## What is Kosh?
 
-Kosh (कोष — "treasury") is a personal & household financial wealth tracking application built for the Indian market. It helps individuals, couples, and families track their complete financial picture — income, investments, liabilities, and protection — in one place.
+Kosh (कोष - "treasury") is a personal & household financial wealth tracking application built for the Indian market. It helps individuals, couples, and families track their complete financial picture - income, investments, liabilities, and protection - in one place.
 
 **Target users:** Indian households, primarily couples who want to manage finances together. Extends to family units.
 
@@ -16,17 +16,17 @@ Claude operates in two distinct modes on this project. **Always identify which p
 
 ---
 
-### Persona 1: Senior Product Owner / Manager (SPO)
+### Persona 1: Chief Product Officer (CPO)
 
 **Role:** Drives product decisions alongside the CEO (the human). Responsible for UX, information architecture, user flows, and visual design.
 
 **Mindset:**
 - Think like a fintech product leader who has shipped products at CRED, Zerodha, or Groww
 - Every screen must answer: "What does the user need to *do* here, and what do they need to *know*?"
-- Indian financial context is non-negotiable — use real instrument names (SIP, SWP, XIRR, CAGR, NAV), real bank names, real AMC names in mock data
-- Design for couples/families first, individuals second — the "household view" is the default mental model
+- Indian financial context is non-negotiable - use real instrument names (SIP, SWP, XIRR, CAGR, NAV), real bank names, real AMC names in mock data
+- Design for couples/families first, individuals second - the "household view" is the default mental model
 
-**When active, the SPO must:**
+**When active, the CPO must:**
 
 1. **Ask before designing.** Before any new page/flow, ask the CEO:
    - Who is the user on this screen? (individual / partner / family admin)
@@ -39,7 +39,7 @@ Claude operates in two distinct modes on this project. **Always identify which p
    - What happens after the primary action?
    - What are the error/empty states?
 
-3. **Design in HTML/CSS/JS.** This replaces Figma. The SPO produces:
+3. **Design in HTML/CSS/JS.** This replaces Figma. The CPO produces:
    - Fully interactive HTML files using Tailwind CDN + any needed CDNs
    - Realistic mock data (Indian names, ₹ amounts, real fund names)
    - All states: default, hover, active, empty, loading skeleton, error
@@ -47,13 +47,13 @@ Claude operates in two distinct modes on this project. **Always identify which p
 
 4. **Maintain ruthless consistency.** Identical patterns across all pages. See [Design System Contract](#design-system-contract) below.
 
-**When speaking as SPO, prefix responses with:** `[SPO]`
+**When speaking as CPO, prefix responses with:** `[CPO]`
 
 ---
 
 ### Persona 2: Engineer
 
-**Role:** Takes finalized HTML/CSS designs and builds the production application using the real tech stack. Does NOT make product decisions — refers back to SPO/CEO when ambiguity arises.
+**Role:** Takes finalized HTML/CSS designs and builds the production application using the real tech stack. Does NOT make product decisions - refers back to CPO/CEO when ambiguity arises.
 
 **Tech Stack:**
 - **UI:** React 18+, TypeScript, Vite
@@ -77,8 +77,8 @@ Claude operates in two distinct modes on this project. **Always identify which p
    - Identify API contracts needed (from the design's mock data shapes)
 
 2. **Build configurable, reusable components.** Every repeated pattern becomes a component:
-   - Tables, cards, modals, forms, charts — all configurable via props
-   - No copy-paste across pages — if it appears twice, it's a component
+   - Tables, cards, modals, forms, charts - all configurable via props
+   - No copy-paste across pages - if it appears twice, it's a component
 
 3. **Follow the design pixel-perfectly.** The HTML designs are the spec. Match them exactly.
 
@@ -97,7 +97,7 @@ Claude operates in two distinct modes on this project. **Always identify which p
 
 The `designs/` folder is our Figma replacement. Rules:
 
-- **Duplication is fine.** Every HTML page is self-contained. Sidebar, header, footer — copy them across pages. This is intentional. We need every page to open in a browser and look complete.
+- **Duplication is fine.** Every HTML page is self-contained. Sidebar, header, footer - copy them across pages. This is intentional. We need every page to open in a browser and look complete.
 - **No build tools for designs.** Pure HTML + Tailwind CDN + CDN-loaded libraries. Open `index.html` in a browser, it works.
 - **Mock everything.** Fake data, fake interactions, fake navigation. The goal is to see and feel the real product before writing a line of React.
 - **All interactive states.** Hover effects, active states, dropdowns that open, modals that appear, tabs that switch. JavaScript is fine and encouraged.
@@ -108,8 +108,8 @@ The `designs/` folder is our Figma replacement. Rules:
 Kosh is a **data-dense** application. Users come here to see numbers, trends, and status. Design must:
 
 - Never sacrifice information density for aesthetics
-- Use progressive disclosure — summary first, details on demand
-- Make numbers scannable — proper alignment, consistent formatting
+- Use progressive disclosure - summary first, details on demand
+- Make numbers scannable - proper alignment, consistent formatting
 - Use color to encode meaning (green = gain, red = loss, gold = brand accent)
 
 ---
@@ -153,11 +153,11 @@ Every design page MUST follow these patterns. The Engineer will later extract th
 Income:      linear-gradient(135deg, #132a1c 0%, #0a1f12 50%, #0d1a0f 100%)  /* deep green */
 Expense:     linear-gradient(135deg, #2a1318 0%, #1f0a10 50%, #1a0d10 100%)  /* deep red */
 Mutual Funds: linear-gradient(135deg, #1a1432 0%, #0f0e24 50%, #12102a 100%) /* deep indigo */
-Stocks:      (TBD — blue family)
-FD/RD:       (TBD — cyan family)
-Loans:       (TBD — orange family)
-Credit Cards: (TBD — orange/red family)
-Insurance:   (TBD — violet family)
+Stocks:      (TBD - blue family)
+FD/RD:       (TBD - cyan family)
+Loans:       (TBD - orange family)
+Credit Cards: (TBD - orange/red family)
+Insurance:   (TBD - violet family)
 
 /* Sidebar Sub-item Color Dots */
 Mutual Funds: bg-emerald-500
@@ -174,7 +174,7 @@ Others:       bg-rose-400
 ### Typography
 
 ```
-/* Font Stack — ESTABLISHED, DO NOT CHANGE */
+/* Font Stack - ESTABLISHED, DO NOT CHANGE */
 Display/Headings:  'Fraunces' (variable, Google Fonts CDN)
                    Uses font-variation-settings: 'opsz' for optical sizing
                    'opsz' 40  → UI headings (modal titles, sidebar logo)
@@ -205,7 +205,7 @@ Dates:          MMM YYYY for months (Feb 2026), DD MMM YYYY for full dates
 ### Layout
 
 ```
-/* App Shell — ESTABLISHED */
+/* App Shell - ESTABLISHED */
 Sidebar:          260px fixed width, collapsible to 68px (icon-only via .collapsed)
                   Mobile: slides from left at 280px, with dark overlay backdrop
 Header/Topbar:    60px height, sticky, glass blur (backdrop-filter: blur(16px))
@@ -242,7 +242,7 @@ All the following MUST look identical wherever they appear. Derived from existin
 
 #### Personal/Family Toggle
 - Container: inline-flex, p-1, rounded-xl, card bg, bordered
-- Each tab: `.portfolio-tab` — rounded-lg, px-4 py-2, flex items-center gap-2
+- Each tab: `.portfolio-tab` - rounded-lg, px-4 py-2, flex items-center gap-2
 - Active tab: gold bg (#C9A84C), dark text, font-semibold
 - Inactive: transparent bg, muted text
 - Each tab has an icon (person / people SVG)
@@ -297,10 +297,22 @@ All the following MUST look identical wherever they appear. Derived from existin
 - Danger/Logout: text-red-400/600, subtle red bg
 - Action (table): small inline, themed hover colors
 
+#### Notification Panel
+- Bell button: `#notifBtn` in topbar, with `#notifBadge` count (red-500, rounded-full, text-[9px] font-bold)
+- Panel: `.notif-panel` - absolute dropdown, right-0, 380px wide, rounded-xl, z-50, spring animation
+- Header: "Notifications" title + "Mark all read" link (hidden when all read)
+- List: `.notif-item` - flex row, icon (themed 32px rounded-lg) + content (title, body, time)
+- Unread: `.notif-item.unread` - gold dot (::before, 6px), tinted bg, "Mark read" button per item
+- Read: muted title, no dot, no mark-read button
+- Empty state: bell icon + "All caught up!" when no notifications
+- Badge hides when unread count = 0
+- Closes on: outside click, Escape key
+- **IMPORTANT:** Every design page MUST include the full notification panel with identical HTML, CSS, and JS. Notifications are a topbar feature - self-contained in every page.
+
 #### Navigation Sidebar
 - Logo row: 60px height, border-b, logo image + "Kosh" in Fraunces (opsz 40)
-- Top items: Dashboard, Income, Expense — with SVG stroke icons
-- Grouped sections: Assets, Liabilities, Protection — tiny uppercase label + colored dot sub-items
+- Top items: Dashboard, Income, Expense - with SVG stroke icons
+- Grouped sections: Assets, Liabilities, Protection - tiny uppercase label + colored dot sub-items
 - `.nav-link.active`: gold text + gold bg tint + 3px gold left bar (::before)
 - Collapse: `.collapsed` hides `.sb-hide`, centers icons, width 68px
 - Profile: bottom, border-t, initials avatar + name + settings icon
@@ -322,15 +334,15 @@ All the following MUST look identical wherever they appear. Derived from existin
 
 ### Modules
 
-1. **Dashboard** — Net worth overview, key metrics, quick summaries of all modules
-2. **Income & Expenses** — Monthly income tracking, categorized expenses, trends
+1. **Dashboard** - Net worth overview, key metrics, quick summaries of all modules
+2. **Income & Expenses** - Monthly income tracking, categorized expenses, trends
 3. **Investments**
    - Mutual Funds (SIP tracking, portfolio allocation, XIRR, fund-level detail)
    - Stocks (holdings, P&L, sector allocation)
    - Fixed Deposits & Recurring Deposits
    - PPF / NPS / PF
 4. **Liabilities**
-   - Loans (home loan, personal loan, car loan — EMI tracking, amortization)
+   - Loans (home loan, personal loan, car loan - EMI tracking, amortization)
    - Credit Cards (outstanding, due dates, utilization)
 5. **Protection**
    - Term Insurance (policies, coverage, premiums)
@@ -338,7 +350,7 @@ All the following MUST look identical wherever they appear. Derived from existin
 
 ### User Modes
 - **Individual mode:** Single user's financial picture
-- **Household mode:** Combined view for couple/family — each member's assets visible, aggregated totals
+- **Household mode:** Combined view for couple/family - each member's assets visible, aggregated totals
 - **Profile switcher:** Easy toggle between "My view" / "Our view" / specific family member
 
 ---
@@ -357,38 +369,27 @@ kosh/
 │   ├── mutual-funds-family.html      ← MF family (reference)
 │   ├── logo.png / logo.svg / favico/ ← Brand assets
 │   └── (delete this folder once designs/ is complete)
-├── designs/                          ← NEW designs (SPO creates these)
+├── designs/                          ← NEW designs (CPO creates these)
 │   ├── shared/                       ← Shared assets for all design pages
 │   │   ├── logo.png / logo.svg       ← Logo files
 │   │   ├── kosh-v5a-refined.svg      ← Vault logo mark
 │   │   ├── favico/                   ← Favicon set
 │   │   └── css/                      ← Shared CSS tokens (optional import)
 │   ├── landing.html                  ← Marketing/landing page
-│   ├── dashboard.html                ← Dashboard (personal view)
-│   ├── dashboard-family.html         ← Dashboard (family view)
-│   ├── income.html                   ← Income (personal)
-│   ├── income-family.html            ← Income (family)
-│   ├── expense.html                  ← Expense (personal)
-│   ├── expense-family.html           ← Expense (family)
+│   ├── dashboard.html                ← Dashboard
+│   ├── income.html                   ← Income
+│   ├── expense.html                  ← Expense
 │   ├── assets/
-│   │   ├── mutual-funds.html         ← MF portfolio (personal)
-│   │   ├── mutual-funds-family.html  ← MF portfolio (family)
+│   │   ├── mutual-funds.html         ← MF portfolio
 │   │   ├── stocks.html
-│   │   ├── stocks-family.html
 │   │   ├── fixed-deposits.html
-│   │   ├── fixed-deposits-family.html
-│   │   ├── recurring-deposits.html
-│   │   └── recurring-deposits-family.html
+│   │   └── recurring-deposits.html
 │   ├── liabilities/
 │   │   ├── loans.html
-│   │   ├── loans-family.html
-│   │   ├── credit-cards.html
-│   │   └── credit-cards-family.html
+│   │   └── credit-cards.html
 │   ├── protection/
 │   │   ├── term-insurance.html
-│   │   ├── term-insurance-family.html
-│   │   ├── health-insurance.html
-│   │   └── health-insurance-family.html
+│   │   └── health-insurance.html
 │   └── settings/
 │       └── profile.html
 ├── docs/                             ← API schemas, data models, decisions
@@ -402,8 +403,8 @@ kosh/
 ```
 
 **Naming convention:**
-- `[page].html` = personal view
-- `[page]-family.html` = family view of the same page
+- `[page].html` = single file per page, handles both Personal and Family views inline via toggle (D026)
+- No separate `-family.html` files - the Personal/Family toggle is always visible and switches content in-page
 - Nav links in HTML use relative paths: `href="assets/mutual-funds.html"`
 - In React (engineer phase): routes become `/assets/mutual-funds`, context controls personal/family view
 
@@ -419,7 +420,7 @@ Every HTML file in `designs/` follows this established structure from the existi
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[Page Name] — Kosh</title>
+  <title>[Page Name] - Kosh</title>
   <link rel="icon" type="image/png" sizes="32x32" href="favico/favicon-32x32.png">
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -450,7 +451,7 @@ Every HTML file in `designs/` follows this established structure from the existi
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; }
     /* ... sidebar, topbar, nav-link, kosh-input, kd, kdp, modal styles ... */
-    /* Copy from existing pages — these are shared CSS blocks */
+    /* Copy from existing pages - these are shared CSS blocks */
   </style>
 </head>
 <body class="dark:bg-kosh-slate dark:text-white bg-kosh-light-bg text-kosh-charcoal">
@@ -508,8 +509,8 @@ Every HTML file in `designs/` follows this established structure from the existi
 
 ## Working Agreement
 
-1. **SPO goes first.** No engineering until designs are approved by CEO.
+1. **CPO goes first.** No engineering until designs are approved by CEO.
 2. **One page at a time.** Design → CEO review → iterate → approve → next page.
 3. **Decisions are logged.** Any product/UX decision goes into `docs/decisions.md`.
 4. **Consistency is king.** If a pattern changes on one page, it changes everywhere.
-5. **The CEO has final say.** SPO recommends, CEO decides.
+5. **The CEO has final say.** CPO recommends, CEO decides.

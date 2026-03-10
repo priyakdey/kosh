@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Income (Family) — Kosh</title>
+  <title>Income (Family) - Kosh</title>
   <link rel="apple-touch-icon" sizes="180x180" href="favico/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favico/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favico/favicon-16x16.png">
@@ -422,7 +422,7 @@
           <div class="flex-1 px-5 pt-4">
             <div id="trendChart" class="relative" style="height:140px;"></div>
           </div>
-          <!-- Card footer — Income Trend insights -->
+          <!-- Card footer - Income Trend insights -->
           <div id="trendFooter" class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
             <div class="flex items-center gap-1.5 text-sm font-medium">
               <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
@@ -439,7 +439,7 @@
           <div class="flex-1 px-2 pt-2">
             <div id="sourceChart" class="relative" style="height:180px;"></div>
           </div>
-          <!-- Card footer — By Source insights -->
+          <!-- Card footer - By Source insights -->
           <div id="sourceFooter" class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
             <div class="flex items-center gap-1.5 text-sm font-medium">
               <span id="sourceInsight">3 active income sources</span>
@@ -840,7 +840,7 @@
       const recurCheck = document.getElementById('recurringCheck');
 
       if (editingIndex >= 0) {
-        // Edit mode — pre-fill
+        // Edit mode - pre-fill
         const data = editingType === 'entries' ? incomeData[editingIndex] : recurringData[editingIndex];
         titleEl.textContent = 'Edit Income';
         subtitleEl.textContent = 'Update this income entry';
@@ -867,7 +867,7 @@
           recurCheck.dispatchEvent(new Event('change'));
         }
       } else {
-        // Add mode — reset
+        // Add mode - reset
         titleEl.textContent = 'Add Income';
         subtitleEl.textContent = 'Record a new income entry';
         saveBtn.textContent = 'Save Income';
@@ -1024,24 +1024,24 @@
 
     // Personal data (current user = PD)
     const personalEntries = [
-      { date:'Feb 15, 2026', source:'Freelance', color:'amber',   desc:'Consulting — Acme Corp',      amount:'₹5,000',  recurring:null,        member:'PD' },
-      { date:'Feb 10, 2026', source:'Salary',    color:'emerald', desc:'Monthly Salary — Visa',        amount:'₹63,750', recurring:'Monthly',   member:'PD' },
-      { date:'Feb 05, 2026', source:'Dividend',  color:'blue',    desc:'Quarterly Dividend — Axis MF', amount:'₹12,750', recurring:'Quarterly', member:'PD' },
-      { date:'Feb 01, 2026', source:'Rental',    color:'violet',  desc:'House Rent — Koramangala',     amount:'₹8,500',  recurring:'Monthly',   member:'PD' },
+      { date:'Feb 15, 2026', source:'Freelance', color:'amber',   desc:'Consulting - Acme Corp',      amount:'₹5,000',  recurring:null,        member:'PD' },
+      { date:'Feb 10, 2026', source:'Salary',    color:'emerald', desc:'Monthly Salary - Visa',        amount:'₹63,750', recurring:'Monthly',   member:'PD' },
+      { date:'Feb 05, 2026', source:'Dividend',  color:'blue',    desc:'Quarterly Dividend - Axis MF', amount:'₹12,750', recurring:'Quarterly', member:'PD' },
+      { date:'Feb 01, 2026', source:'Rental',    color:'violet',  desc:'House Rent - Koramangala',     amount:'₹8,500',  recurring:'Monthly',   member:'PD' },
     ];
     const personalRecurring = [
-      { source:'Salary',   color:'emerald', desc:'Monthly Salary — Visa',        amount:'₹63,750', freq:'Every month · 10th', next:'Mar 10, 2026', status:'Active', member:'PD' },
-      { source:'Dividend', color:'blue',    desc:'Quarterly Dividend — Axis MF',  amount:'₹12,750', freq:'Every quarter',      next:'May 05, 2026', status:'Active', member:'PD' },
-      { source:'Rental',   color:'violet',  desc:'House Rent — Koramangala',      amount:'₹8,500',  freq:'Every month · 1st',  next:'Mar 01, 2026', status:'Active', member:'PD' },
+      { source:'Salary',   color:'emerald', desc:'Monthly Salary - Visa',        amount:'₹63,750', freq:'Every month · 10th', next:'Mar 10, 2026', status:'Active', member:'PD' },
+      { source:'Dividend', color:'blue',    desc:'Quarterly Dividend - Axis MF',  amount:'₹12,750', freq:'Every quarter',      next:'May 05, 2026', status:'Active', member:'PD' },
+      { source:'Rental',   color:'violet',  desc:'House Rent - Koramangala',      amount:'₹8,500',  freq:'Every month · 1st',  next:'Mar 01, 2026', status:'Active', member:'PD' },
     ];
 
     // Spouse entries
     const spouseEntries = [
-      { date:'Feb 12, 2026', source:'Salary',    color:'emerald', desc:'Monthly Salary — JPMC',         amount:'₹58,000', recurring:'Monthly',   member:'SP' },
+      { date:'Feb 12, 2026', source:'Salary',    color:'emerald', desc:'Monthly Salary - JPMC',         amount:'₹58,000', recurring:'Monthly',   member:'SP' },
       { date:'Feb 08, 2026', source:'Dividend',  color:'blue',    desc:'SBI Blue Chip Fund',            amount:'₹4,200',  recurring:'Quarterly', member:'SP' },
     ];
     const spouseRecurring = [
-      { source:'Salary',   color:'emerald', desc:'Monthly Salary — JPMC',   amount:'₹58,000', freq:'Every month · 12th', next:'Mar 12, 2026', status:'Active', member:'SP' },
+      { source:'Salary',   color:'emerald', desc:'Monthly Salary - JPMC',   amount:'₹58,000', freq:'Every month · 12th', next:'Mar 12, 2026', status:'Active', member:'SP' },
       { source:'Dividend', color:'blue',    desc:'SBI Blue Chip Fund',       amount:'₹4,200',  freq:'Every quarter',      next:'May 08, 2026', status:'Active', member:'SP' },
     ];
 
@@ -1443,7 +1443,7 @@
       const H = container.offsetHeight;
       const cx = W / 2;
       const cy = H / 2;
-      const R = Math.min(cx, cy) - 36;    // outer radius — leave room for labels
+      const R = Math.min(cx, cy) - 36;    // outer radius - leave room for labels
       const innerR = R * 0.55;             // donut hole
       const hoverR = R + 4;
       const labelR = R + 14;               // where label line starts
@@ -1488,7 +1488,7 @@
         const lx2 = cx + labelOuterR * Math.cos(midA);
         const ly2 = cy + labelOuterR * Math.sin(midA);
 
-        // Horizontal tail — extend further left or right
+        // Horizontal tail - extend further left or right
         const isRight = Math.cos(midA) >= 0;
         const tailLen = 14;
         const tx = isRight ? lx2 + tailLen : lx2 - tailLen;

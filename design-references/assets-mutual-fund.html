@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mutual Funds — Kosh</title>
+  <title>Mutual Funds - Kosh</title>
   <link rel="apple-touch-icon" sizes="180x180" href="favico/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favico/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favico/favicon-16x16.png">
@@ -280,7 +280,7 @@
     .light .income-banner .b-pill { background: rgba(46,125,50,0.06); border-color: rgba(46,125,50,0.12); }
     .light .income-banner .b-pill-label { color: #558b2f; } .light .income-banner .b-pill-value { color: #1b5e20; }
 
-    /* MF banner — deep indigo gradient */
+    /* MF banner - deep indigo gradient */
     .mf-banner { background: linear-gradient(135deg, #1a1432 0%, #0f0e24 50%, #12102a 100%); position: relative; overflow: hidden; }
     .mf-banner::before { content: ''; position: absolute; inset: 0; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23C9A84C'/%3E%3C/svg%3E"); }
     .mf-banner .b-title { color: rgba(167,139,250,0.85); }
@@ -409,7 +409,7 @@
           <div class="p-5 pb-0"><h3 class="text-sm font-semibold">Portfolio Value</h3><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Last 6 months</p></div>
           <div class="flex-1 px-5 pt-4"><div id="trendChart" class="relative" style="height:160px;"></div></div>
           <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
-            <div class="flex items-center gap-1.5 text-sm font-medium"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22"/></svg><span>Returns gap widening — ₹1.55L profit</span></div>
+            <div class="flex items-center gap-1.5 text-sm font-medium"><svg class="w-3.5 h-3.5 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22"/></svg><span>Returns gap widening - ₹1.55L profit</span></div>
             <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Invested ₹13.8L → Current ₹15.35L (+11.2%)</p>
           </div>
         </div>
@@ -419,7 +419,7 @@
           <div class="flex-1 px-2 pt-2"><div id="allocChart" class="relative" style="height:180px;"></div></div>
           <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
             <div class="flex items-center gap-1.5 text-sm font-medium"><span>6 fund categories across 7 schemes</span></div>
-            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Large Cap leads at 36% — well diversified</p>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Large Cap leads at 36% - well diversified</p>
           </div>
         </div>
         <!-- Highlights -->
@@ -689,11 +689,11 @@
 
     // Fund search mock
     const fundList = [
-      'Axis Bluechip Fund — Direct Growth','Parag Parikh Flexi Cap Fund — Direct Growth','SBI Small Cap Fund — Direct Growth',
-      'HDFC Mid-Cap Opportunities Fund — Direct Growth','Mirae Asset Large Cap Fund — Direct Growth','ICICI Pru Technology Fund — Direct Growth',
-      'Kotak Nifty 50 Index Fund — Direct Growth','Nippon India Small Cap Fund — Direct Growth','UTI Nifty Next 50 Index Fund — Direct Growth',
-      'Motilal Oswal Nasdaq 100 FOF — Direct Growth','Canara Robeco Bluechip Equity Fund — Direct Growth','DSP Midcap Fund — Direct Growth',
-      'Tata Digital India Fund — Direct Growth','Quant Active Fund — Direct Growth','PPFAS Flexicap Fund — Direct Growth',
+      'Axis Bluechip Fund - Direct Growth','Parag Parikh Flexi Cap Fund - Direct Growth','SBI Small Cap Fund - Direct Growth',
+      'HDFC Mid-Cap Opportunities Fund - Direct Growth','Mirae Asset Large Cap Fund - Direct Growth','ICICI Pru Technology Fund - Direct Growth',
+      'Kotak Nifty 50 Index Fund - Direct Growth','Nippon India Small Cap Fund - Direct Growth','UTI Nifty Next 50 Index Fund - Direct Growth',
+      'Motilal Oswal Nasdaq 100 FOF - Direct Growth','Canara Robeco Bluechip Equity Fund - Direct Growth','DSP Midcap Fund - Direct Growth',
+      'Tata Digital India Fund - Direct Growth','Quant Active Fund - Direct Growth','PPFAS Flexicap Fund - Direct Growth',
     ];
     const searchInput = document.getElementById('fundSearch');
     const searchDD = document.getElementById('fundDropdown');
@@ -715,7 +715,7 @@
       pauseTarget = idx;
       const sip = sipData[idx], isPaused = sip.status === 'Paused';
       document.getElementById('pauseTitle').textContent = isPaused ? 'Resume SIP?' : 'Pause SIP?';
-      document.getElementById('pauseDesc').textContent = isPaused ? sip.fund.split(' — ')[0] + ' will resume.' : 'Next installment won\'t be debited.';
+      document.getElementById('pauseDesc').textContent = isPaused ? sip.fund.split(' - ')[0] + ' will resume.' : 'Next installment won\'t be debited.';
       const confirmBtn = document.getElementById('pauseConfirmBtn');
       confirmBtn.textContent = isPaused ? 'Resume' : 'Pause';
       confirmBtn.className = isPaused ? 'flex-1 py-2 rounded-lg bg-emerald-500 text-white text-xs font-semibold hover:bg-emerald-600 transition-colors' : 'flex-1 py-2 rounded-lg bg-amber-500 text-white text-xs font-semibold hover:bg-amber-600 transition-colors';
@@ -860,7 +860,7 @@
 
       const curD = spline(curPts), invD = spline(invPts);
 
-      // Defs — gradient for the returns gap area
+      // Defs - gradient for the returns gap area
       const defs = document.createElementNS(ns,'defs');
       const gapGrad = document.createElementNS(ns,'linearGradient'); gapGrad.setAttribute('id','gapFill'); gapGrad.setAttribute('x1','0'); gapGrad.setAttribute('y1','0'); gapGrad.setAttribute('x2','0'); gapGrad.setAttribute('y2','1');
       const gs1 = document.createElementNS(ns,'stop'); gs1.setAttribute('offset','0%'); gs1.setAttribute('stop-color','#10B981'); gs1.setAttribute('stop-opacity','0.15');
@@ -868,16 +868,16 @@
       gapGrad.appendChild(gs1); gapGrad.appendChild(gs2); defs.appendChild(gapGrad);
       svg.appendChild(defs);
 
-      // Area fill between current (top) and invested (bottom) — the "returns" gap
+      // Area fill between current (top) and invested (bottom) - the "returns" gap
       const gapPath = curD + 'L' + invPts[invPts.length-1].x + ',' + invPts[invPts.length-1].y;
       const invReverse = [...invPts].reverse();
       const gapD = curD + `L${invReverse[0].x},${invReverse[0].y}` + invReverse.slice(1).map(p => `L${p.x},${p.y}`).join('') + 'Z';
       const gapArea = document.createElementNS(ns,'path'); gapArea.setAttribute('d',gapD); gapArea.setAttribute('fill','url(#gapFill)'); svg.appendChild(gapArea);
 
-      // Invested line — dashed, muted gold
+      // Invested line - dashed, muted gold
       const invLine = document.createElementNS(ns,'path'); invLine.setAttribute('d',invD); invLine.setAttribute('fill','none'); invLine.setAttribute('stroke','#C9A84C'); invLine.setAttribute('stroke-width','2'); invLine.setAttribute('stroke-dasharray','6,4'); invLine.setAttribute('stroke-linecap','round'); invLine.setAttribute('opacity','0.7'); svg.appendChild(invLine);
 
-      // Current value line — solid violet
+      // Current value line - solid violet
       const curLine = document.createElementNS(ns,'path'); curLine.setAttribute('d',curD); curLine.setAttribute('fill','none'); curLine.setAttribute('stroke','#8B5CF6'); curLine.setAttribute('stroke-width','2.5'); curLine.setAttribute('stroke-linecap','round'); svg.appendChild(curLine);
 
       // Dots
@@ -887,7 +887,7 @@
       // X-axis labels
       curPts.forEach(p => { const t=document.createElementNS(ns,'text'); t.setAttribute('x',p.x); t.setAttribute('y',H-2); t.setAttribute('text-anchor','middle'); t.setAttribute('fill',isDark?'#6B6B6B':'#8A8578'); t.setAttribute('font-size','11'); t.textContent=p.label; svg.appendChild(t); });
 
-      // Legend — top right
+      // Legend - top right
       const lgX = W - pad.right - 4, lgY = pad.top + 2;
       [[lgY,'#8B5CF6','Current','2.5',''],[lgY+14,'#C9A84C','Invested','2','4,3']].forEach(([y,clr,lbl,sw,dash]) => {
         const l=document.createElementNS(ns,'line'); l.setAttribute('x1',lgX-58); l.setAttribute('x2',lgX-44); l.setAttribute('y1',y); l.setAttribute('y2',y); l.setAttribute('stroke',clr); l.setAttribute('stroke-width',sw); if(dash) l.setAttribute('stroke-dasharray',dash); svg.appendChild(l);

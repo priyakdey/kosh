@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Expenses — Kosh</title>
+  <title>Expenses - Kosh</title>
   <link rel="apple-touch-icon" sizes="180x180" href="favico/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favico/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favico/favicon-16x16.png">
@@ -280,7 +280,7 @@
     .light .income-banner .b-pill { background: rgba(46,125,50,0.06); border-color: rgba(46,125,50,0.12); }
     .light .income-banner .b-pill-label { color: #558b2f; } .light .income-banner .b-pill-value { color: #1b5e20; }
 
-    /* Expense banner — warm dark gradient */
+    /* Expense banner - warm dark gradient */
     .expense-banner { background: linear-gradient(135deg, #2a1818 0%, #1f1010 50%, #1a0f0f 100%); position: relative; overflow: hidden; }
     .expense-banner::before { content: ''; position: absolute; inset: 0; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23C9A84C'/%3E%3C/svg%3E"); }
     .expense-banner .b-title { color: rgba(253,186,116,0.9); }
@@ -415,9 +415,9 @@
           <div class="flex-1 min-w-0">
             <p class="text-sm font-semibold dark:text-kosh-gold text-amber-800">What counts as an expense?</p>
             <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-1.5 leading-relaxed">
-              Expenses are money that <strong class="dark:text-white text-kosh-light-text">actually left your bank</strong> and is gone. UPI payments, cash, CC bill payments, direct debits for utilities — all expenses.
+              Expenses are money that <strong class="dark:text-white text-kosh-light-text">actually left your bank</strong> and is gone. UPI payments, cash, CC bill payments, direct debits for utilities - all expenses.
             </p>
-            <!-- Yes — these are expenses -->
+            <!-- Yes - these are expenses -->
             <div class="mt-2.5 flex flex-wrap gap-1.5">
               <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium dark:bg-emerald-500/8 bg-emerald-50 dark:text-emerald-400 text-emerald-700 border dark:border-emerald-500/10 border-emerald-200/60">
                 <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M4.5 12.75l6 6 9-13.5"/></svg>
@@ -436,7 +436,7 @@
                 Rent / Subscriptions
               </span>
             </div>
-            <!-- No — these are NOT expenses -->
+            <!-- No - these are NOT expenses -->
             <div class="mt-2 flex flex-wrap gap-1.5">
               <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium dark:bg-red-500/8 bg-red-50 dark:text-red-400 text-red-700 border dark:border-red-500/10 border-red-200/60">
                 <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>
@@ -456,7 +456,7 @@
               </span>
             </div>
             <p class="text-[11px] dark:text-kosh-muted/70 text-kosh-light-muted mt-2.5 leading-relaxed">
-              Swiped your credit card at a restaurant? That's not an expense <em>yet</em> — it created a liability under your CC. When you pay the CC bill next month, <em>that's</em> the expense. Similarly, EMIs reduce debt (Liabilities), SIPs grow your portfolio (Assets), and premiums buy coverage (Protection).
+              Swiped your credit card at a restaurant? That's not an expense <em>yet</em> - it created a liability under your CC. When you pay the CC bill next month, <em>that's</em> the expense. Similarly, EMIs reduce debt (Liabilities), SIPs grow your portfolio (Assets), and premiums buy coverage (Protection).
             </p>
           </div>
           <button id="dismissInfoCard" class="w-6 h-6 rounded-md flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-amber-100 transition-colors flex-shrink-0" title="Dismiss">
@@ -578,7 +578,7 @@
 
         <!-- Recurring tab -->
         <div id="tab-recurring" class="hidden">
-          <div class="px-5 py-4"><p class="text-sm dark:text-kosh-muted text-kosh-light-muted">Fixed recurring expenses — rent, subscriptions, and regular bills.</p></div>
+          <div class="px-5 py-4"><p class="text-sm dark:text-kosh-muted text-kosh-light-muted">Fixed recurring expenses - rent, subscriptions, and regular bills.</p></div>
           <div class="overflow-x-auto">
             <table class="w-full">
               <thead><tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
@@ -938,23 +938,23 @@
 
     const personalEntries = [
       { date:'Feb 20, 2026', category:'Medical',       color:'rose',    desc:'Apollo Pharmacy',           amount:'₹1,200',  recurring:null,        member:'PD', payment:'UPI' },
-      { date:'Feb 18, 2026', category:'Groceries',     color:'emerald', desc:'Groceries — DMart',         amount:'₹3,600',  recurring:null,        member:'PD', payment:'UPI' },
-      { date:'Feb 12, 2026', category:'Dining',        color:'amber',   desc:'Dinner — Truffles',         amount:'₹1,800',  recurring:null,        member:'PD', payment:'UPI' },
-      { date:'Feb 08, 2026', category:'Transport',     color:'orange',  desc:'Petrol — Shell',            amount:'₹3,500',  recurring:null,        member:'PD', payment:'Cash' },
+      { date:'Feb 18, 2026', category:'Groceries',     color:'emerald', desc:'Groceries - DMart',         amount:'₹3,600',  recurring:null,        member:'PD', payment:'UPI' },
+      { date:'Feb 12, 2026', category:'Dining',        color:'amber',   desc:'Dinner - Truffles',         amount:'₹1,800',  recurring:null,        member:'PD', payment:'UPI' },
+      { date:'Feb 08, 2026', category:'Transport',     color:'orange',  desc:'Petrol - Shell',            amount:'₹3,500',  recurring:null,        member:'PD', payment:'Cash' },
       { date:'Feb 07, 2026', category:'Subscriptions', color:'indigo',  desc:'Netflix + Spotify',         amount:'₹699',    recurring:'Monthly',   member:'PD', payment:'Auto-debit' },
-      { date:'Feb 05, 2026', category:'Groceries',     color:'emerald', desc:'Groceries — BigBasket',     amount:'₹4,200',  recurring:null,        member:'PD', payment:'UPI' },
+      { date:'Feb 05, 2026', category:'Groceries',     color:'emerald', desc:'Groceries - BigBasket',     amount:'₹4,200',  recurring:null,        member:'PD', payment:'UPI' },
       { date:'Feb 04, 2026', category:'Shopping',      color:'pink',    desc:'Amazon Electronics (CC)',    amount:'₹5,200',  recurring:null,        member:'PD', payment:'CC Bill' },
       { date:'Feb 04, 2026', category:'Dining',        color:'amber',   desc:'Swiggy Orders (CC)',        amount:'₹3,200',  recurring:null,        member:'PD', payment:'CC Bill' },
-      { date:'Feb 03, 2026', category:'Utilities',     color:'cyan',    desc:'Electricity Bill — BESCOM', amount:'₹2,800',  recurring:null,        member:'PD', payment:'UPI' },
-      { date:'Feb 01, 2026', category:'Housing',       color:'violet',  desc:'House Rent — Koramangala',  amount:'₹25,000', recurring:'Monthly',   member:'PD', payment:'Auto-debit' },
+      { date:'Feb 03, 2026', category:'Utilities',     color:'cyan',    desc:'Electricity Bill - BESCOM', amount:'₹2,800',  recurring:null,        member:'PD', payment:'UPI' },
+      { date:'Feb 01, 2026', category:'Housing',       color:'violet',  desc:'House Rent - Koramangala',  amount:'₹25,000', recurring:'Monthly',   member:'PD', payment:'Auto-debit' },
     ];
     const personalRecurring = [
-      { category:'Housing',       color:'violet', desc:'House Rent — Koramangala', amount:'₹25,000', freq:'Every month · 1st',  next:'Mar 01, 2026', status:'Active', member:'PD' },
+      { category:'Housing',       color:'violet', desc:'House Rent - Koramangala', amount:'₹25,000', freq:'Every month · 1st',  next:'Mar 01, 2026', status:'Active', member:'PD' },
       { category:'Subscriptions', color:'indigo', desc:'Netflix + Spotify',        amount:'₹699',    freq:'Every month · 7th',  next:'Mar 07, 2026', status:'Active', member:'PD' },
     ];
 
     const spouseEntries = [
-      { date:'Feb 18, 2026', category:'Education',     color:'teal',    desc:'Coursera — UX Course',     amount:'₹1,500',  recurring:null,       member:'SP', payment:'UPI' },
+      { date:'Feb 18, 2026', category:'Education',     color:'teal',    desc:'Coursera - UX Course',     amount:'₹1,500',  recurring:null,       member:'SP', payment:'UPI' },
       { date:'Feb 10, 2026', category:'Subscriptions', color:'indigo',  desc:'Cult.fit Membership',      amount:'₹2,500',  recurring:'Monthly',  member:'SP', payment:'Auto-debit' },
       { date:'Feb 05, 2026', category:'Groceries',     color:'emerald', desc:'Swiggy Instamart',         amount:'₹2,800',  recurring:null,       member:'SP', payment:'UPI' },
       { date:'Feb 03, 2026', category:'Shopping',      color:'pink',    desc:'Myntra Clothing (CC)',      amount:'₹4,500',  recurring:null,       member:'SP', payment:'CC Bill' },
@@ -1138,7 +1138,7 @@
     document.getElementById('tabPersonal').addEventListener('click', () => switchPortfolio('personal'));
     document.getElementById('tabFamily').addEventListener('click', () => switchPortfolio('family'));
 
-    // ===== INTERACTIVE TREND CHART (reused from income — orange accent) =====
+    // ===== INTERACTIVE TREND CHART (reused from income - orange accent) =====
     function initTrendChart() {
       const container = document.getElementById('trendChart');
       if (!container) return;

@@ -1,20 +1,20 @@
-# Kosh — Product Requirements Document
+# Kosh - Product Requirements Document
 
-**Product:** Kosh (कोष — "treasury")
+**Product:** Kosh (कोष - "treasury")
 **Version:** MVP0
 **Last Updated:** 08 Mar 2026
-**Author:** SPO (Senior Product Owner)
+**Author:** CPO (Chief Product Officer)
 **Stakeholder:** CEO (Priyak Dey)
 
 ---
 
 ## 1. Product Vision
 
-Kosh is a personal and household financial wealth tracking application purpose-built for the Indian market. It gives individuals, couples, and families a single place to see their complete financial picture — income, expenses, investments, liabilities, and protection.
+Kosh is a personal and household financial wealth tracking application purpose-built for the Indian market. It gives individuals, couples, and families a single place to see their complete financial picture - income, expenses, investments, liabilities, and protection.
 
 **Core insight:** Indian households manage money collectively, but no tool treats the household as a first-class concept. Kosh does.
 
-**One-line pitch:** Your complete financial operating system — built for India, designed for families.
+**One-line pitch:** Your complete financial operating system - built for India, designed for families.
 
 ---
 
@@ -22,7 +22,7 @@ Kosh is a personal and household financial wealth tracking application purpose-b
 
 ### Primary
 - **Indian salaried professionals (25-45)** who have diversified finances across multiple instruments (MF SIPs, stocks, FDs, PPF, NPS, loans, insurance) and want a unified view.
-- **Couples** who want to manage finances together — see combined net worth, household income, shared goals — while keeping individual finances organized.
+- **Couples** who want to manage finances together - see combined net worth, household income, shared goals - while keeping individual finances organized.
 
 ### Secondary
 - **Families** (parents + adult children) who want visibility into the household's overall financial health.
@@ -37,10 +37,10 @@ Kosh is a personal and household financial wealth tracking application purpose-b
 
 ## 3. Product Principles
 
-1. **Household-first.** The family/couple view is not an afterthought — it's the primary design target. Individual view is a subset.
-2. **Data density over aesthetics.** Users come to see numbers. Never sacrifice information for visual flair. Use progressive disclosure — summary first, details on demand.
+1. **Household-first.** The family/couple view is not an afterthought - it's the primary design target. Individual view is a subset.
+2. **Data density over aesthetics.** Users come to see numbers. Never sacrifice information for visual flair. Use progressive disclosure - summary first, details on demand.
 3. **India-native.** Real instrument names (SIP, SWP, XIRR, NAV), real AMC names, amounts in lakhs/crores, Indian fiscal year (Apr-Mar). No "localized western app" feel.
-4. **Manual entry, by design.** Kosh does not connect to bank accounts. Users own their data completely. This is a feature, not a limitation — it means zero credential sharing and full data control.
+4. **Manual entry, by design.** Kosh does not connect to bank accounts. Users own their data completely. This is a feature, not a limitation - it means zero credential sharing and full data control.
 5. **Equality in the household.** Family members are equal participants. No "owner" vs "member" hierarchy. No percentage comparisons between partners. The household view celebrates the combined picture.
 6. **Privacy by design.** Data encrypted at rest and in transit. No bank credentials ever collected. Each family member controls what they share.
 
@@ -50,31 +50,30 @@ Kosh is a personal and household financial wealth tracking application purpose-b
 
 ### 4.1 Modules
 
-| Module | Personal View | Family View | Key Features |
-|--------|:---:|:---:|---|
-| **Dashboard** | Yes | Yes | Net worth overview, key metrics, quick summaries of all modules |
-| **Income** | Yes | Yes | Monthly income tracking, source categorization, trends |
-| **Expenses** | Yes | Yes | Categorized expenses, monthly trends, recurring expense tracking |
-| **Mutual Funds** | Yes | Yes | SIP tracking, portfolio allocation, fund-level detail, XIRR |
-| **Stocks** | Yes | Yes | Holdings, P&L, sector allocation |
-| **Fixed Deposits** | Yes | Yes | Bank, tenure, rate, maturity tracking |
-| **Recurring Deposits** | Yes | Yes | Monthly RD tracking, maturity projection |
-| **Loans** | Yes | Yes | Home/personal/car loan EMI tracking, outstanding balance |
-| **Credit Cards** | Yes | Yes | Outstanding amount, due dates, utilization |
-| **Term Insurance** | Yes | Yes | Policies, coverage, premium schedule |
-| **Health Insurance** | Yes | Yes | Policies, coverage, family members covered |
+| Module | Personal View | Family View | Key Features | Module PRD |
+|--------|:---:|:---:|---|---|
+| **Dashboard** | Yes | Yes | Net worth overview, key metrics, quick summaries of all modules | Pending |
+| **Income** | Yes | Yes | Monthly income tracking, source categorization, trends | Pending |
+| **Expenses** | Yes | Yes | Categorized expenses, monthly trends, recurring expense tracking | Pending |
+| **Mutual Funds** | Yes | Yes | SIP tracking, portfolio allocation, fund-level detail, XIRR, CAS import | [mutual-funds.md](mutual-funds.md) |
+| **Stocks** | Yes | Yes | Holdings, P&L, sector allocation | Pending |
+| **Fixed Deposits** | Yes | Yes | Bank, tenure, rate, maturity tracking | Pending |
+| **Recurring Deposits** | Yes | Yes | Monthly RD tracking, maturity projection | Pending |
+| **Loans** | Yes | Yes | Home/personal/car loan EMI tracking, outstanding balance | Pending |
+| **Credit Cards** | Yes | Yes | Outstanding amount, due dates, utilization | Pending |
+| **Term Insurance** | Yes | Yes | Policies, coverage, premium schedule | Pending |
+| **Health Insurance** | Yes | Yes | Policies, coverage, family members covered | Pending |
 
 ### 4.2 Cross-Cutting Features
 
-- **Personal/Family toggle** — pill switcher on every data page. Family tab only visible once a family has been formed.
-- **Add/Edit/Delete flows** — every data type has a modal-based entry form with smart defaults, dropdowns for known instruments, easy edit/delete.
-- **Dark mode (primary) / Light mode (secondary)** — theme toggle, persisted in localStorage.
-- **Auth** — Google Sign-In (MVP0). Email/password planned for future.
+- **Personal/Family toggle** - pill switcher on every data page. Always visible, even for solo users (D026). Solo users see an invite CTA on the Family tab (D028).
+- **Add/Edit/Delete flows** - every data type has a modal-based entry form with smart defaults, dropdowns for known instruments, easy edit/delete.
+- **Dark mode (primary) / Light mode (secondary)** - theme toggle, persisted in localStorage.
+- **Auth** - Google Sign-In (MVP0). Email/password planned for future.
 
 ### 4.3 Explicitly Out of Scope (MVP0)
 
 - Auto-sync with banks or investment platforms (Kosh is not a certified FIU)
-- MF CAS import
 - Tax computation or 80C tracking
 - Budget planning or alerts
 - Mobile app (web-first, responsive comes in engineering phase)
@@ -86,7 +85,7 @@ Kosh is a personal and household financial wealth tracking application purpose-b
 ## 5. User Modes & Family Model
 
 ### 5.1 Individual Mode
-Single user's financial picture. All data is theirs. No family tab visible.
+Single user's financial picture. All data is theirs. Personal/Family toggle is still visible - Family tab shows an empty state with an invite CTA (D026, D028).
 
 ### 5.2 Household Mode
 A user invites another user (via link) to form a "Family." This enables:
@@ -96,7 +95,7 @@ A user invites another user (via link) to form a "Family." This enables:
 - Each member's individual data remains private unless shared via the family view
 
 ### 5.3 Family Member Equality
-- All family members are equal — no "owner" or "admin" role labels displayed
+- All family members are equal - no "owner" or "admin" role labels displayed
 - No percentage breakdowns of "who owns what" in the household view
 - The household view shows combined totals and each member's contribution as a flat amount (not a comparison)
 
@@ -125,12 +124,12 @@ Sidebar (260px, collapsible to 68px)
 ```
 
 ### 6.2 Page Structure Pattern (every data page)
-1. **Page header** — Title (Fraunces) + subtitle + action buttons (month selector, Add button)
-2. **Portfolio toggle** — Personal/Family pill switcher (if family exists) + member avatars
-3. **Summary banner** — Module-themed gradient background, hero amount, change chip, stat pills
-4. **Analytics row** — Grid of chart cards (trend chart, donut/bar chart, highlights)
-5. **Data table** — Tabbed (e.g., All Entries / Recurring), sortable, with pagination
-6. **Add/Edit modal** — Triggered by Add button, blurred backdrop, form fields
+1. **Page header** - Title (Fraunces) + subtitle + action buttons (month selector, Add button)
+2. **Portfolio toggle** - Personal/Family pill switcher (if family exists) + member avatars
+3. **Summary banner** - Module-themed gradient background, hero amount, change chip, stat pills
+4. **Analytics row** - Grid of chart cards (trend chart, donut/bar chart, highlights)
+5. **Data table** - Tabbed (e.g., All Entries / Recurring), sortable, with pagination
+6. **Add/Edit modal** - Triggered by Add button, blurred backdrop, form fields
 
 ---
 
@@ -154,7 +153,7 @@ To make manual entry fast and painless:
 ## 8. Landing Page
 
 ### 8.1 Purpose
-Convert visitors into signed-up users. Communicate what Kosh is, why it's different, and why it's trustworthy — in that order.
+Convert visitors into signed-up users. Communicate what Kosh is, why it's different, and why it's trustworthy - in that order.
 
 ### 8.2 Section Flow (conversion funnel)
 | # | Section | Purpose |
@@ -162,13 +161,13 @@ Convert visitors into signed-up users. Communicate what Kosh is, why it's differ
 | 1 | Navbar | Navigation + Login CTA |
 | 2 | Hero | Value proposition + dashboard mockup for instant credibility |
 | 3 | Marquee | Breadth of features at a glance |
-| 4 | Features | "What does it do?" — 6 cards |
-| 5 | How It Works | "How easy is it?" — 3 steps |
-| 6 | Built for India | Differentiation — Indian instruments, INR-native, household model |
-| 7 | Family Tracking | Unique selling point — household mockup with equal member display |
-| 8 | Stats Strip | Credibility — ₹0 free, 15+ asset types, 2 min setup |
-| 9 | Trust/Security | Remove #1 objection — data ownership, no bank credentials, encryption |
-| 10 | Pricing | Remove cost objection — free early access, feature list |
+| 4 | Features | "What does it do?" - 6 cards |
+| 5 | How It Works | "How easy is it?" - 3 steps |
+| 6 | Built for India | Differentiation - Indian instruments, INR-native, household model |
+| 7 | Family Tracking | Unique selling point - household mockup with equal member display |
+| 8 | Stats Strip | Credibility - ₹0 free, 15+ asset types, 2 min setup |
+| 9 | Trust/Security | Remove #1 objection - data ownership, no bank credentials, encryption |
+| 10 | Pricing | Remove cost objection - free early access, feature list |
 | 11 | FAQ | Address remaining concerns |
 | 12 | Final CTA | Convert |
 | 13 | Footer | Navigation, legal, social links |
@@ -183,7 +182,7 @@ Convert visitors into signed-up users. Communicate what Kosh is, why it's differ
 6. What does "family tracking" mean?
 7. What happens when paid plans launch?
 
-**Rationale:** Security and bank connectivity are top concerns for Indian fintech users — they come before niche features like family tracking.
+**Rationale:** Security and bank connectivity are top concerns for Indian fintech users - they come before niche features like family tracking.
 
 ### 8.4 Auth
 - Google Sign-In (primary, active)
@@ -214,10 +213,14 @@ Detailed tokens and component specs live in CLAUDE.md. Key highlights:
 
 All product and UX decisions with rationale are tracked in `docs/decisions.md`. Key decisions that shape this PRD:
 
-- **D007:** Three view modes — My View, Our View, per-member view
-- **D008:** Family model — invite-based, Personal/Family tab on every page
-- **D009:** 100% manual entry for MVP0
+- **D007:** Three view modes - My View, Our View, per-member view
+- **D008:** Family model - invite-based, Personal/Family tab on every page
+- **D009:** 100% manual entry for MVP0 (CAS PDF import added for MF onboarding per D012)
 - **D011:** Design language calibrated from existing HTML work
+- **D012–D025:** Mutual Funds module decisions - see [docs/mutual-funds.md](mutual-funds.md) §8
+- **D026:** Personal/Family toggle always visible, even for solo users
+- **D027:** Notification panel in topbar, self-contained per page
+- **D028:** Family invite flow - email + relationship, no name field
 
 ---
 
@@ -225,10 +228,12 @@ All product and UX decisions with rationale are tracked in `docs/decisions.md`. 
 
 | # | Question | Status |
 |---|----------|--------|
-| OQ1 | Dashboard layout and key metrics — CEO + SPO to brainstorm | Open |
-| OQ2 | PPF / NPS / PF page designs — scope confirmed, design pending | Open |
-| OQ3 | Notification system — premium due dates, FD maturity alerts | Deferred post-MVP0 |
+| OQ1 | Dashboard layout and key metrics - CEO + CPO to brainstorm | Open |
+| OQ2 | PPF / NPS / PF page designs - scope confirmed, design pending | Open |
+| OQ3 | Notification system - notification panel designed (D027), backend implementation pending | Open |
 | OQ4 | Data export / reporting | Deferred post-MVP0 |
+
+**Note:** Mutual Funds module PRD is complete - see [docs/mutual-funds.md](mutual-funds.md).
 
 ---
 
@@ -237,9 +242,10 @@ All product and UX decisions with rationale are tracked in `docs/decisions.md`. 
 | File | Purpose |
 |------|---------|
 | `CLAUDE.md` | Complete design system contract, component specs, project intelligence |
-| `docs/prd.md` | This document — product requirements |
+| `docs/prd.md` | This document - product requirements |
 | `docs/decisions.md` | Decision log with rationale |
+| `docs/mutual-funds.md` | Mutual Funds module PRD |
 | `designs/landing.html` | Landing page design |
-| `designs/` | All HTML design pages (SPO creates) |
+| `designs/` | All HTML design pages (CPO creates) |
 | `ui/` | React frontend (Engineer phase) |
 | `src/` | Spring Boot backend |

@@ -6,7 +6,7 @@
     </linearGradient>
   </defs>
 
-  <!-- Lotus Mandala Icon — centered at (100, 100) -->
+  <!-- Lotus Mandala Icon - centered at (100, 100) -->
   <g transform="translate(100, 100)">
     <!-- Outer mandala circles -->
     <circle cx="0" cy="0" r="80" fill="none" stroke="#FF9933" stroke-width="0.7" opacity="0.25" />
@@ -22,7 +22,7 @@
     <line x1="-51.96" y1="30" x2="51.96" y2="-30" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
     <line x1="-30" y1="51.96" x2="30" y2="-51.96" stroke="#FF9933" stroke-width="0.4" opacity="0.15" />
 
-    <!-- Lotus petals — 8 directions (scaled up) -->
+    <!-- Lotus petals - 8 directions (scaled up) -->
     <g transform="rotate(0)">
       <path d="M 0 -12 C 12 -32 18 -46 0 -56 C -18 -46 -12 -32 0 -12Z" fill="none" stroke="url(#saffron)" stroke-width="1.6" opacity="0.6" />
     </g>

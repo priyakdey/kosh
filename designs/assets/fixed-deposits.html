@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,7 +11,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+    rel="stylesheet" />
   <script>
     tailwind.config = {
       darkMode: 'class',
@@ -34,213 +37,1111 @@
     }
   </script>
   <style>
-    body { font-family: 'Plus Jakarta Sans', sans-serif; }
-    * { transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
-    ::-webkit-scrollbar { width: 5px; height: 5px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    .dark ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
-    .light ::-webkit-scrollbar-thumb { background: #D4D0C8; border-radius: 3px; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .dark ::-webkit-scrollbar-thumb {
+      background: #2A2A2A;
+      border-radius: 3px;
+    }
+
+    .light ::-webkit-scrollbar-thumb {
+      background: #D4D0C8;
+      border-radius: 3px;
+    }
 
     /* ====== Sidebar ====== */
-    .sidebar { width: 260px; transition: width 0.3s cubic-bezier(0.16,1,0.3,1), transform 0.3s cubic-bezier(0.16,1,0.3,1); }
-    .sidebar.collapsed { width: 68px; }
-    .sidebar.collapsed .sb-hide { display: none; }
-    .sidebar.collapsed .sidebar-profile { justify-content: center; }
-    .sidebar.collapsed .nav-link { justify-content: center; padding-left: 0; padding-right: 0; }
-    .main-content { margin-left: 260px; transition: margin-left 0.3s cubic-bezier(0.16,1,0.3,1); }
-    .sidebar.collapsed ~ .main-content { margin-left: 68px; }
-    @media (max-width: 768px) {
-      .sidebar { position: fixed; transform: translateX(-100%); width: 280px; z-index: 40; }
-      .sidebar.mobile-open { transform: translateX(0); }
-      .main-content { margin-left: 0 !important; }
-      .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 35; }
-      .sidebar-overlay.active { display: block; }
+    .sidebar {
+      width: 260px;
+      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .nav-link { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.15s ease; position: relative; }
-    .dark .nav-link { color: #6B6B6B; } .light .nav-link { color: #8A8578; }
-    .dark .nav-link:hover { color: #fff; background: rgba(201,168,76,0.06); }
-    .light .nav-link:hover { color: #1A1A1A; background: rgba(201,168,76,0.06); }
-    .nav-link.active { color: #C9A84C !important; background: rgba(201,168,76,0.08) !important; }
-    .nav-link.active::before { content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; border-radius: 0 3px 3px 0; background: #C9A84C; }
-    .topbar { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-    .dark .topbar { background: rgba(15,15,15,0.85); border-bottom: 1px solid #2A2A2A; }
-    .light .topbar { background: rgba(250,250,247,0.9); border-bottom: 1px solid #E8E4DC; }
+
+    .sidebar.collapsed {
+      width: 68px;
+    }
+
+    .sidebar.collapsed .sb-hide {
+      display: none;
+    }
+
+    .sidebar.collapsed .sidebar-profile {
+      justify-content: center;
+    }
+
+    .sidebar.collapsed .nav-link {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .main-content {
+      margin-left: 260px;
+      transition: margin-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .sidebar.collapsed~.main-content {
+      margin-left: 68px;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        transform: translateX(-100%);
+        width: 280px;
+        z-index: 40;
+      }
+
+      .sidebar.mobile-open {
+        transform: translateX(0);
+      }
+
+      .main-content {
+        margin-left: 0 !important;
+      }
+
+      .sidebar-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 35;
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.15s ease;
+      position: relative;
+    }
+
+    .dark .nav-link {
+      color: #6B6B6B;
+    }
+
+    .light .nav-link {
+      color: #8A8578;
+    }
+
+    .dark .nav-link:hover {
+      color: #fff;
+      background: rgba(201, 168, 76, 0.06);
+    }
+
+    .light .nav-link:hover {
+      color: #1A1A1A;
+      background: rgba(201, 168, 76, 0.06);
+    }
+
+    .nav-link.active {
+      color: #C9A84C !important;
+      background: rgba(201, 168, 76, 0.08) !important;
+    }
+
+    .nav-link.active::before {
+      content: '';
+      position: absolute;
+      left: -12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 3px;
+      height: 20px;
+      border-radius: 0 3px 3px 0;
+      background: #C9A84C;
+    }
+
+    .topbar {
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .dark .topbar {
+      background: rgba(15, 15, 15, 0.85);
+      border-bottom: 1px solid #2A2A2A;
+    }
+
+    .light .topbar {
+      background: rgba(250, 250, 247, 0.9);
+      border-bottom: 1px solid #E8E4DC;
+    }
 
     /* ====== Form Controls ====== */
-    .kosh-input { width: 100%; padding: 10px 14px; border-radius: 10px; font-size: 14px; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-    .dark .kosh-input { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
-    .light .kosh-input { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
-    .kosh-input:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
-    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
-    input[type="number"] { -moz-appearance: textfield; }
-    .kosh-input::placeholder { color: #6B6B6B; } .light .kosh-input::placeholder { color: #8A8578; }
-    .kosh-label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    .kosh-input {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .dark .kosh-input {
+      background: #0F0F0F;
+      border: 1px solid #2A2A2A;
+      color: #fff;
+    }
+
+    .light .kosh-input {
+      background: #FAFAF7;
+      border: 1px solid #E8E4DC;
+      color: #1A1A1A;
+    }
+
+    .kosh-input:focus {
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="number"] {
+      -moz-appearance: textfield;
+    }
+
+    .kosh-input::placeholder {
+      color: #6B6B6B;
+    }
+
+    .light .kosh-input::placeholder {
+      color: #8A8578;
+    }
+
+    .kosh-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
 
     /* ====== CUSTOM DROPDOWN ====== */
-    .kd { position: relative; display: inline-block; }
-    .kd-trigger { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; border-radius: 10px; font-size: 14px; cursor: pointer; outline: none; width: 100%; text-align: left; transition: border-color 0.2s, box-shadow 0.2s; }
-    .dark .kd-trigger { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
-    .light .kd-trigger { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
-    .kd.open .kd-trigger, .kd-trigger:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
-    .kd-trigger .kd-placeholder { color: #6B6B6B; } .light .kd-trigger .kd-placeholder { color: #8A8578; }
-    .kd-caret { width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.2s cubic-bezier(0.16,1,0.3,1); }
-    .kd.open .kd-caret { transform: rotate(180deg); }
-    .dark .kd-caret { color: #6B6B6B; } .light .kd-caret { color: #8A8578; }
-    .kd-menu { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 50; border-radius: 12px; padding: 4px; max-height: 240px; overflow-y: auto; opacity: 0; visibility: hidden; transform: translateY(-8px) scale(0.98); transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1); box-shadow: 0 12px 40px -8px rgba(0,0,0,0.3); }
-    .dark .kd-menu { background: #1A1A1A; border: 1px solid #2A2A2A; }
-    .light .kd-menu { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 12px 40px -8px rgba(0,0,0,0.1); }
-    .kd.open .kd-menu { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
-    .kd-option { padding: 9px 12px; border-radius: 8px; font-size: 13px; cursor: pointer; transition: background 0.1s, color 0.1s; }
-    .dark .kd-option:hover { background: rgba(201,168,76,0.08); color: #fff; }
-    .light .kd-option:hover { background: rgba(201,168,76,0.06); color: #1A1A1A; }
-    .kd-option.selected { color: #C9A84C !important; font-weight: 600; }
-    .dark .kd-option.selected { background: rgba(201,168,76,0.08); }
-    .light .kd-option.selected { background: rgba(201,168,76,0.06); }
-    .kd-sm .kd-trigger { padding: 6px 10px; font-size: 12px; border-radius: 8px; }
-    .kd-sm .kd-menu { padding: 3px; }
-    .kd-sm .kd-option { padding: 7px 10px; font-size: 12px; border-radius: 6px; }
-    .kd-sm .kd-caret { width: 14px; height: 14px; }
-    .kd-auto { display: inline-block; }
-    .kd-auto .kd-menu { min-width: 100%; white-space: nowrap; }
-    .kd-up .kd-menu { top: auto; bottom: calc(100% + 6px); transform: translateY(8px) scale(0.98); }
-    .kd-up.open .kd-menu { transform: translateY(0) scale(1); }
+    .kd {
+      position: relative;
+      display: inline-block;
+    }
+
+    .kd-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+      width: 100%;
+      text-align: left;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .dark .kd-trigger {
+      background: #0F0F0F;
+      border: 1px solid #2A2A2A;
+      color: #fff;
+    }
+
+    .light .kd-trigger {
+      background: #FAFAF7;
+      border: 1px solid #E8E4DC;
+      color: #1A1A1A;
+    }
+
+    .kd.open .kd-trigger,
+    .kd-trigger:focus {
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+    }
+
+    .kd-trigger .kd-placeholder {
+      color: #6B6B6B;
+    }
+
+    .light .kd-trigger .kd-placeholder {
+      color: #8A8578;
+    }
+
+    .kd-caret {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .kd.open .kd-caret {
+      transform: rotate(180deg);
+    }
+
+    .dark .kd-caret {
+      color: #6B6B6B;
+    }
+
+    .light .kd-caret {
+      color: #8A8578;
+    }
+
+    .kd-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      z-index: 50;
+      border-radius: 12px;
+      padding: 4px;
+      max-height: 240px;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px) scale(0.98);
+      transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.3);
+    }
+
+    .dark .kd-menu {
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+    }
+
+    .light .kd-menu {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      box-shadow: 0 12px 40px -8px rgba(0, 0, 0, 0.1);
+    }
+
+    .kd.open .kd-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .kd-option {
+      padding: 9px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+
+    .dark .kd-option:hover {
+      background: rgba(201, 168, 76, 0.08);
+      color: #fff;
+    }
+
+    .light .kd-option:hover {
+      background: rgba(201, 168, 76, 0.06);
+      color: #1A1A1A;
+    }
+
+    .kd-option.selected {
+      color: #C9A84C !important;
+      font-weight: 600;
+    }
+
+    .dark .kd-option.selected {
+      background: rgba(201, 168, 76, 0.08);
+    }
+
+    .light .kd-option.selected {
+      background: rgba(201, 168, 76, 0.06);
+    }
+
+    .kd-sm .kd-trigger {
+      padding: 6px 10px;
+      font-size: 12px;
+      border-radius: 8px;
+    }
+
+    .kd-sm .kd-menu {
+      padding: 3px;
+    }
+
+    .kd-sm .kd-option {
+      padding: 7px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+    }
+
+    .kd-sm .kd-caret {
+      width: 14px;
+      height: 14px;
+    }
+
+    .kd-auto {
+      display: inline-block;
+    }
+
+    .kd-auto .kd-menu {
+      min-width: 100%;
+      white-space: nowrap;
+    }
+
+    .kd-up .kd-menu {
+      top: auto;
+      bottom: calc(100% + 6px);
+      transform: translateY(8px) scale(0.98);
+    }
+
+    .kd-up.open .kd-menu {
+      transform: translateY(0) scale(1);
+    }
 
     /* ====== CUSTOM DATE PICKER ====== */
-    .kdp { position: relative; display: inline-block; width: 100%; }
-    .kdp-trigger { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 14px; border-radius: 10px; font-size: 14px; cursor: pointer; outline: none; transition: border-color 0.2s, box-shadow 0.2s; }
-    .dark .kdp-trigger { background: #0F0F0F; border: 1px solid #2A2A2A; color: #fff; }
-    .light .kdp-trigger { background: #FAFAF7; border: 1px solid #E8E4DC; color: #1A1A1A; }
-    .kdp.open .kdp-trigger, .kdp-trigger:focus { border-color: #C9A84C; box-shadow: 0 0 0 3px rgba(201,168,76,0.1); }
-    .kdp-icon { width: 16px; height: 16px; flex-shrink: 0; }
-    .dark .kdp-icon { color: #6B6B6B; } .light .kdp-icon { color: #8A8578; }
-    .kdp-caret { margin-left: auto; width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.2s; }
-    .kdp.open .kdp-caret { transform: rotate(180deg); }
-    .dark .kdp-caret { color: #6B6B6B; } .light .kdp-caret { color: #8A8578; }
-    .kdp-popup { position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 200; border-radius: 14px; padding: 12px; opacity: 0; visibility: hidden; transform: translateY(-8px) scale(0.98); transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1); box-shadow: 0 16px 50px -10px rgba(0,0,0,0.3); }
-    .dark .kdp-popup { background: #1A1A1A; border: 1px solid #2A2A2A; }
-    .light .kdp-popup { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 16px 50px -10px rgba(0,0,0,0.1); }
-    .kdp.open .kdp-popup { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
-    .kdp-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-    .kdp-nav button { width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; cursor: pointer; border: none; background: transparent; }
-    .dark .kdp-nav button { color: #6B6B6B; } .dark .kdp-nav button:hover { background: #2A2A2A; color: #fff; }
-    .light .kdp-nav button { color: #8A8578; } .light .kdp-nav button:hover { background: #E8E4DC; color: #1A1A1A; }
-    .kdp-nav span { font-size: 11px; font-weight: 600; }
-    .kdp-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; text-align: center; }
-    .kdp-grid .kdp-hdr { font-size: 9px; font-weight: 600; padding: 4px 0; text-transform: uppercase; letter-spacing: 0.05em; }
-    .dark .kdp-hdr { color: #6B6B6B; } .light .kdp-hdr { color: #8A8578; }
-    .kdp-day { font-size: 11px; padding: 5px 0; border-radius: 6px; cursor: pointer; transition: background 0.1s, color 0.1s; }
-    .dark .kdp-day:hover { background: rgba(201,168,76,0.1); color: #fff; }
-    .light .kdp-day:hover { background: rgba(201,168,76,0.08); }
-    .kdp-day.selected { background: #C9A84C !important; color: #0F0F0F !important; font-weight: 700; }
-    .kdp-day.today { font-weight: 700; color: #C9A84C; }
-    .kdp-day.other-month { opacity: 0.25; }
+    .kdp {
+      position: relative;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .kdp-trigger {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 14px;
+      cursor: pointer;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .dark .kdp-trigger {
+      background: #0F0F0F;
+      border: 1px solid #2A2A2A;
+      color: #fff;
+    }
+
+    .light .kdp-trigger {
+      background: #FAFAF7;
+      border: 1px solid #E8E4DC;
+      color: #1A1A1A;
+    }
+
+    .kdp.open .kdp-trigger,
+    .kdp-trigger:focus {
+      border-color: #C9A84C;
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+    }
+
+    .kdp-icon {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    .dark .kdp-icon {
+      color: #6B6B6B;
+    }
+
+    .light .kdp-icon {
+      color: #8A8578;
+    }
+
+    .kdp-caret {
+      margin-left: auto;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.2s;
+    }
+
+    .kdp.open .kdp-caret {
+      transform: rotate(180deg);
+    }
+
+    .dark .kdp-caret {
+      color: #6B6B6B;
+    }
+
+    .light .kdp-caret {
+      color: #8A8578;
+    }
+
+    .kdp-popup {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      z-index: 200;
+      border-radius: 14px;
+      padding: 12px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px) scale(0.98);
+      transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 16px 50px -10px rgba(0, 0, 0, 0.3);
+    }
+
+    .dark .kdp-popup {
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+    }
+
+    .light .kdp-popup {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      box-shadow: 0 16px 50px -10px rgba(0, 0, 0, 0.1);
+    }
+
+    .kdp.open .kdp-popup {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .kdp-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .kdp-nav button {
+      width: 24px;
+      height: 24px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+    }
+
+    .dark .kdp-nav button {
+      color: #6B6B6B;
+    }
+
+    .dark .kdp-nav button:hover {
+      background: #2A2A2A;
+      color: #fff;
+    }
+
+    .light .kdp-nav button {
+      color: #8A8578;
+    }
+
+    .light .kdp-nav button:hover {
+      background: #E8E4DC;
+      color: #1A1A1A;
+    }
+
+    .kdp-nav span {
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .kdp-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+      text-align: center;
+    }
+
+    .kdp-grid .kdp-hdr {
+      font-size: 9px;
+      font-weight: 600;
+      padding: 4px 0;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .dark .kdp-hdr {
+      color: #6B6B6B;
+    }
+
+    .light .kdp-hdr {
+      color: #8A8578;
+    }
+
+    .kdp-day {
+      font-size: 11px;
+      padding: 5px 0;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.1s, color 0.1s;
+    }
+
+    .dark .kdp-day:hover {
+      background: rgba(201, 168, 76, 0.1);
+      color: #fff;
+    }
+
+    .light .kdp-day:hover {
+      background: rgba(201, 168, 76, 0.08);
+    }
+
+    .kdp-day.selected {
+      background: #C9A84C !important;
+      color: #0F0F0F !important;
+      font-weight: 700;
+    }
+
+    .kdp-day.today {
+      font-weight: 700;
+      color: #C9A84C;
+    }
+
+    .kdp-day.other-month {
+      opacity: 0.25;
+    }
 
     /* ====== Modal ====== */
-    .modal-overlay { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s; }
-    .modal-overlay.open { opacity: 1; visibility: visible; }
-    .modal-backdrop { position: absolute; inset: 0; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
-    .dark .modal-backdrop { background: rgba(10,10,10,0.7); }
-    .light .modal-backdrop { background: rgba(250,250,247,0.8); }
-    .modal-panel { position: relative; z-index: 1; transform: scale(0.95) translateY(12px); opacity: 0; transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), opacity 0.3s; }
-    .modal-overlay.open .modal-panel { transform: scale(1) translateY(0); opacity: 1; }
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+
+    .modal-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-backdrop {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .dark .modal-backdrop {
+      background: rgba(10, 10, 10, 0.7);
+    }
+
+    .light .modal-backdrop {
+      background: rgba(250, 250, 247, 0.8);
+    }
+
+    .modal-panel {
+      position: relative;
+      z-index: 1;
+      transform: scale(0.95) translateY(12px);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s;
+    }
+
+    .modal-overlay.open .modal-panel {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
 
     /* ====== Misc ====== */
-    .stat-card { transition: transform 0.2s ease, box-shadow 0.2s ease; }
-    .stat-card:hover { transform: translateY(-2px); }
-    .dark .stat-card:hover { box-shadow: 0 8px 30px -10px rgba(201,168,76,0.06); }
-    .light .stat-card:hover { box-shadow: 0 8px 30px -10px rgba(0,0,0,0.06); }
-    .fd-row { transition: background 0.1s; cursor: pointer; }
-    .dark .fd-row:hover { background: rgba(201,168,76,0.03); }
-    .light .fd-row:hover { background: rgba(201,168,76,0.03); }
-    .tab-btn { position: relative; padding: 12px 16px; font-weight: 600; font-size: 13px; transition: color 0.2s; cursor: pointer; background: none; border: none; }
-    .tab-btn::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; border-radius: 2px; background: transparent; transition: background 0.2s; }
-    .tab-btn.active { color: #C9A84C; } .tab-btn.active::after { background: #C9A84C; }
-    .dark .tab-btn:not(.active) { color: #6B6B6B; } .dark .tab-btn:not(.active):hover { color: #999; }
-    .light .tab-btn:not(.active) { color: #8A8578; } .light .tab-btn:not(.active):hover { color: #5A5548; }
-    .badge { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; }
-    .badge-cat { min-width: 90px; justify-content: center; text-align: center; }
-    .bar-tooltip { position: absolute; z-index: 50; padding: 10px 14px; border-radius: 10px; font-size: 12px; pointer-events: none; opacity: 0; transition: opacity 0.15s; white-space: nowrap; box-shadow: 0 8px 24px -4px rgba(0,0,0,0.3); }
-    .dark .bar-tooltip { background: #1E1E1E; border: 1px solid #333; color: #fff; }
-    .light .bar-tooltip { background: #fff; border: 1px solid #E8E4DC; color: #1A1A1A; box-shadow: 0 8px 24px -4px rgba(0,0,0,0.1); }
-    .bar-tooltip.visible { opacity: 1; }
-    .sort-icon { font-size: 10px; opacity: 0.4; margin-left: 2px; }
-    .sort-icon.asc::after { content: '▲'; }
-    .sort-icon.desc::after { content: '▼'; }
-    th[data-sort]:hover .sort-icon:not(.asc):not(.desc)::after { content: '▲'; opacity: 0.25; }
-    th[data-sort].active-sort { color: #C9A84C !important; }
-    th[data-sort].active-sort .sort-icon { opacity: 1; }
+    .stat-card {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .dark .stat-card:hover {
+      box-shadow: 0 8px 30px -10px rgba(201, 168, 76, 0.06);
+    }
+
+    .light .stat-card:hover {
+      box-shadow: 0 8px 30px -10px rgba(0, 0, 0, 0.06);
+    }
+
+    .fd-row {
+      transition: background 0.1s;
+      cursor: pointer;
+    }
+
+    .dark .fd-row:hover {
+      background: rgba(201, 168, 76, 0.03);
+    }
+
+    .light .fd-row:hover {
+      background: rgba(201, 168, 76, 0.03);
+    }
+
+    .tab-btn {
+      position: relative;
+      padding: 12px 16px;
+      font-weight: 600;
+      font-size: 13px;
+      transition: color 0.2s;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+
+    .tab-btn::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      border-radius: 2px;
+      background: transparent;
+      transition: background 0.2s;
+    }
+
+    .tab-btn.active {
+      color: #C9A84C;
+    }
+
+    .tab-btn.active::after {
+      background: #C9A84C;
+    }
+
+    .dark .tab-btn:not(.active) {
+      color: #6B6B6B;
+    }
+
+    .dark .tab-btn:not(.active):hover {
+      color: #999;
+    }
+
+    .light .tab-btn:not(.active) {
+      color: #8A8578;
+    }
+
+    .light .tab-btn:not(.active):hover {
+      color: #5A5548;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .badge-cat {
+      min-width: 90px;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .bar-tooltip {
+      position: absolute;
+      z-index: 50;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.3);
+    }
+
+    .dark .bar-tooltip {
+      background: #1E1E1E;
+      border: 1px solid #333;
+      color: #fff;
+    }
+
+    .light .bar-tooltip {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      color: #1A1A1A;
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.1);
+    }
+
+    .bar-tooltip.visible {
+      opacity: 1;
+    }
+
+    .sort-icon {
+      font-size: 10px;
+      opacity: 0.4;
+      margin-left: 2px;
+    }
+
+    .sort-icon.asc::after {
+      content: '▲';
+    }
+
+    .sort-icon.desc::after {
+      content: '▼';
+    }
+
+    th[data-sort]:hover .sort-icon:not(.asc):not(.desc)::after {
+      content: '▲';
+      opacity: 0.25;
+    }
+
+    th[data-sort].active-sort {
+      color: #C9A84C !important;
+    }
+
+    th[data-sort].active-sort .sort-icon {
+      opacity: 1;
+    }
 
     /* ====== Notification Panel ====== */
-    .notif-panel { opacity: 0; visibility: hidden; transform: translateY(-8px) scale(0.98); transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1); }
-    .notif-panel.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
-    .notif-item { display: flex; gap: 12px; padding: 12px 16px; transition: background 0.1s; cursor: pointer; }
-    .dark .notif-item:hover { background: rgba(201,168,76,0.03); }
-    .light .notif-item:hover { background: rgba(201,168,76,0.03); }
-    .notif-item.unread { position: relative; }
-    .dark .notif-item.unread { background: rgba(201,168,76,0.04); }
-    .light .notif-item.unread { background: rgba(201,168,76,0.03); }
-    .notif-item.unread::before { content: ''; position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background: #C9A84C; }
+    .notif-panel {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px) scale(0.98);
+      transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .notif-panel.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .notif-item {
+      display: flex;
+      gap: 12px;
+      padding: 12px 16px;
+      transition: background 0.1s;
+      cursor: pointer;
+    }
+
+    .dark .notif-item:hover {
+      background: rgba(201, 168, 76, 0.03);
+    }
+
+    .light .notif-item:hover {
+      background: rgba(201, 168, 76, 0.03);
+    }
+
+    .notif-item.unread {
+      position: relative;
+    }
+
+    .dark .notif-item.unread {
+      background: rgba(201, 168, 76, 0.04);
+    }
+
+    .light .notif-item.unread {
+      background: rgba(201, 168, 76, 0.03);
+    }
+
+    .notif-item.unread::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #C9A84C;
+    }
 
     /* ====== Portfolio Toggle ====== */
-    .portfolio-toggle { display: inline-flex; padding: 4px; border-radius: 12px; }
-    .dark .portfolio-toggle { background: #161616; border: 1px solid #2A2A2A; }
-    .light .portfolio-toggle { background: #fff; border: 1px solid #E8E4DC; }
-    .portfolio-tab { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 10px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; border: none; background: transparent; }
-    .dark .portfolio-tab { color: #6B6B6B; }
-    .light .portfolio-tab { color: #8A8578; }
-    .portfolio-tab.active { background: #C9A84C; color: #0F0F0F; font-weight: 600; }
-    .portfolio-tab:not(.active):hover { opacity: 0.8; }
-    .member-avatars { display: flex; align-items: center; }
-    .member-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; border: 2px solid; }
-    .dark .member-avatar { border-color: #161616; } .light .member-avatar { border-color: #fff; }
-    .member-avatars .member-avatar + .member-avatar { margin-left: -8px; }
+    .portfolio-toggle {
+      display: inline-flex;
+      padding: 4px;
+      border-radius: 12px;
+    }
+
+    .dark .portfolio-toggle {
+      background: #161616;
+      border: 1px solid #2A2A2A;
+    }
+
+    .light .portfolio-toggle {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+    }
+
+    .portfolio-tab {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      background: transparent;
+    }
+
+    .dark .portfolio-tab {
+      color: #6B6B6B;
+    }
+
+    .light .portfolio-tab {
+      color: #8A8578;
+    }
+
+    .portfolio-tab.active {
+      background: #C9A84C;
+      color: #0F0F0F;
+      font-weight: 600;
+    }
+
+    .portfolio-tab:not(.active):hover {
+      opacity: 0.8;
+    }
+
+    .member-avatars {
+      display: flex;
+      align-items: center;
+    }
+
+    .member-avatar {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      border: 2px solid;
+    }
+
+    .dark .member-avatar {
+      border-color: #161616;
+    }
+
+    .light .member-avatar {
+      border-color: #fff;
+    }
+
+    .member-avatars .member-avatar+.member-avatar {
+      margin-left: -8px;
+    }
 
     /* ====== FD Banner ====== */
-    .fd-banner { background: linear-gradient(135deg, #0f2a2e 0%, #0a1f24 50%, #0d1a1f 100%); position: relative; overflow: hidden; }
-    .fd-banner::before { content: ''; position: absolute; inset: 0; opacity: 0.04; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23C9A84C'/%3E%3C/svg%3E"); }
-    .fd-banner .b-title { color: rgba(94,234,212,0.85); }
-    .fd-banner .b-pill-label { color: rgba(94,234,212,0.65); }
-    .fd-banner .b-pill-value { color: #fff; }
-    .fd-banner .b-pill { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.07); }
-    .light .fd-banner { background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 50%, #e0f7fa 100%); }
-    .light .fd-banner .b-title { color: #00695c; }
-    .light .fd-banner .b-amount { color: #004d40; }
-    .light .fd-banner .b-chip { background: rgba(0,105,92,0.1); }
-    .light .fd-banner .b-pill { background: rgba(0,77,64,0.06); border-color: rgba(0,77,64,0.1); }
-    .light .fd-banner .b-pill-label { color: #00695c; }
-    .light .fd-banner .b-pill-value { color: #004d40; }
+    .fd-banner {
+      background: linear-gradient(135deg, #0f2a2e 0%, #0a1f24 50%, #0d1a1f 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .fd-banner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Ccircle cx='20' cy='20' r='1' fill='%23C9A84C'/%3E%3C/svg%3E");
+    }
+
+    .fd-banner .b-title {
+      color: rgba(94, 234, 212, 0.85);
+    }
+
+    .fd-banner .b-pill-label {
+      color: rgba(94, 234, 212, 0.65);
+    }
+
+    .fd-banner .b-pill-value {
+      color: #fff;
+    }
+
+    .fd-banner .b-pill {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: rgba(255, 255, 255, 0.07);
+    }
+
+    .light .fd-banner {
+      background: linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 50%, #e0f7fa 100%);
+    }
+
+    .light .fd-banner .b-title {
+      color: #00695c;
+    }
+
+    .light .fd-banner .b-amount {
+      color: #004d40;
+    }
+
+    .light .fd-banner .b-chip {
+      background: rgba(0, 105, 92, 0.1);
+    }
+
+    .light .fd-banner .b-pill {
+      background: rgba(0, 77, 64, 0.06);
+      border-color: rgba(0, 77, 64, 0.1);
+    }
+
+    .light .fd-banner .b-pill-label {
+      color: #00695c;
+    }
+
+    .light .fd-banner .b-pill-value {
+      color: #004d40;
+    }
 
     /* ====== Interactive Chart ====== */
-    .chart-tooltip { position: absolute; pointer-events: none; z-index: 10; padding: 10px 14px; border-radius: 10px; font-size: 12px; white-space: nowrap; opacity: 0; transform: translateY(6px); transition: opacity 0.15s ease, transform 0.15s ease; }
-    .chart-tooltip.visible { opacity: 1; transform: translateY(0); }
-    .dark .chart-tooltip { background: #1A1A1A; border: 1px solid #2A2A2A; box-shadow: 0 10px 30px -6px rgba(0,0,0,0.6); }
-    .light .chart-tooltip { background: #fff; border: 1px solid #E8E4DC; box-shadow: 0 10px 30px -6px rgba(0,0,0,0.12); }
-    .donut-segment { transition: opacity 0.15s ease, filter 0.15s ease; cursor: pointer; }
-    .donut-segment.dimmed { opacity: 0.25; }
-    .donut-segment.active { filter: brightness(1.12) drop-shadow(0 2px 8px rgba(0,0,0,0.25)); }
+    .chart-tooltip {
+      position: absolute;
+      pointer-events: none;
+      z-index: 10;
+      padding: 10px 14px;
+      border-radius: 10px;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.15s ease, transform 0.15s ease;
+    }
+
+    .chart-tooltip.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .dark .chart-tooltip {
+      background: #1A1A1A;
+      border: 1px solid #2A2A2A;
+      box-shadow: 0 10px 30px -6px rgba(0, 0, 0, 0.6);
+    }
+
+    .light .chart-tooltip {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      box-shadow: 0 10px 30px -6px rgba(0, 0, 0, 0.12);
+    }
+
+    .donut-segment {
+      transition: opacity 0.15s ease, filter 0.15s ease;
+      cursor: pointer;
+    }
+
+    .donut-segment.dimmed {
+      opacity: 0.25;
+    }
+
+    .donut-segment.active {
+      filter: brightness(1.12) drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+    }
 
     /* ====== Time Range Buttons ====== */
-    .time-btn { padding: 3px 10px; border-radius: 6px; font-size: 11px; font-weight: 600; cursor: pointer; border: none; background: transparent; transition: all 0.15s; }
-    .dark .time-btn { color: #6B6B6B; } .light .time-btn { color: #8A8578; }
-    .dark .time-btn:hover { color: #fff; background: rgba(201,168,76,0.06); }
-    .light .time-btn:hover { color: #1A1A1A; background: rgba(201,168,76,0.06); }
-    .time-btn.active { background: rgba(201,168,76,0.12) !important; color: #C9A84C !important; }
+    .time-btn {
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      transition: all 0.15s;
+    }
+
+    .dark .time-btn {
+      color: #6B6B6B;
+    }
+
+    .light .time-btn {
+      color: #8A8578;
+    }
+
+    .dark .time-btn:hover {
+      color: #fff;
+      background: rgba(201, 168, 76, 0.06);
+    }
+
+    .light .time-btn:hover {
+      color: #1A1A1A;
+      background: rgba(201, 168, 76, 0.06);
+    }
+
+    .time-btn.active {
+      background: rgba(201, 168, 76, 0.12) !important;
+      color: #C9A84C !important;
+    }
 
     /* ====== Tenure Presets ====== */
-    .tenure-preset { padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600; cursor: pointer; border: 1px solid transparent; background: transparent; transition: all 0.15s; }
-    .dark .tenure-preset { color: #6B6B6B; border-color: #2A2A2A; }
-    .light .tenure-preset { color: #8A8578; border-color: #E8E4DC; }
-    .tenure-preset:hover { border-color: #C9A84C; color: #C9A84C; }
-    .tenure-preset.active { background: rgba(201,168,76,0.12); border-color: #C9A84C; color: #C9A84C; }
+    .tenure-preset {
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      background: transparent;
+      transition: all 0.15s;
+    }
+
+    .dark .tenure-preset {
+      color: #6B6B6B;
+      border-color: #2A2A2A;
+    }
+
+    .light .tenure-preset {
+      color: #8A8578;
+      border-color: #E8E4DC;
+    }
+
+    .tenure-preset:hover {
+      border-color: #C9A84C;
+      color: #C9A84C;
+    }
+
+    .tenure-preset.active {
+      background: rgba(201, 168, 76, 0.12);
+      border-color: #C9A84C;
+      color: #C9A84C;
+    }
 
     /* ====== Progress Bar ====== */
-    .progress-bar { height: 8px; border-radius: 4px; overflow: hidden; }
-    .dark .progress-bar { background: #2A2A2A; }
-    .light .progress-bar { background: #E8E4DC; }
-    .progress-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #06B6D4, #C9A84C); transition: width 0.5s ease; }
+    .progress-bar {
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .dark .progress-bar {
+      background: #2A2A2A;
+    }
+
+    .light .progress-bar {
+      background: #E8E4DC;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #06B6D4, #C9A84C);
+      transition: width 0.5s ease;
+    }
 
     /* ====== Kosh Checkbox ====== */
-    .kosh-checkbox { width: 18px; height: 18px; border-radius: 5px; cursor: pointer; accent-color: #C9A84C; }
+    .kosh-checkbox {
+      width: 18px;
+      height: 18px;
+      border-radius: 5px;
+      cursor: pointer;
+      accent-color: #C9A84C;
+    }
   </style>
 </head>
 
@@ -248,37 +1149,100 @@
   <div id="sidebarOverlay" class="sidebar-overlay"></div>
 
   <!-- ====== SIDEBAR ====== -->
-  <aside id="sidebar" class="sidebar fixed left-0 top-0 h-full z-30 dark:bg-kosh-dark-card bg-white border-r dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
-    <div class="flex items-center justify-between px-4 h-[60px] border-b dark:border-kosh-dark-border border-kosh-light-border flex-shrink-0">
+  <aside id="sidebar"
+    class="sidebar fixed left-0 top-0 h-full z-30 dark:bg-kosh-dark-card bg-white border-r dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+    <div
+      class="flex items-center justify-between px-4 h-[60px] border-b dark:border-kosh-dark-border border-kosh-light-border flex-shrink-0">
       <a href="../dashboard.html" class="flex items-center gap-2.5">
         <img src="../shared/logo.png" width="30" height="30" alt="Kosh" class="flex-shrink-0">
         <span class="sb-hide font-display text-lg tracking-tight" style="font-variation-settings:'opsz' 40;">Kosh</span>
       </a>
-      <button id="sidebarToggle" class="w-7 h-7 rounded-md flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
-        <svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      <button id="sidebarToggle"
+        class="w-7 h-7 rounded-md flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
+        <svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24"
+          stroke="currentColor" stroke-width="1.5">
+          <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
       </button>
     </div>
     <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
-      <a href="../dashboard.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg><span class="sb-hide">Dashboard</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
-      <a href="../income.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg><span class="sb-hide">Income</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
-      <a href="../expense.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg><span class="sb-hide">Expense</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
-      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Assets</p></div>
-      <a href="mutual-funds.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span class="sb-hide">Mutual Funds</span></a>
-      <a href="stocks.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span><span class="sb-hide">Stocks</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
-      <a href="fixed-deposits.html" class="nav-link active"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></span><span class="sb-hide">Fixed Deposits</span></a>
-      <a href="recurring-deposits.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0"></span><span class="sb-hide">Recurring Deposits</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
-      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Liabilities</p></div>
-      <a href="../liabilities/credit-cards.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span><span class="sb-hide">Credit Cards</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
-      <a href="../liabilities/loans.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span><span class="sb-hide">Loans</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
-      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Protection</p></div>
-      <a href="../protection/term-insurance.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0"></span><span class="sb-hide">Term Insurance</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
-      <a href="../protection/health-insurance.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span><span class="sb-hide">Health Insurance</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="../dashboard.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path
+            d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z" />
+        </svg><span class="sb-hide">Dashboard</span><span
+          class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="../income.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path
+            d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
+        </svg><span class="sb-hide">Income</span><span
+          class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="../expense.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path
+            d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z" />
+        </svg><span class="sb-hide">Expense</span><span
+          class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <div class="pt-5 pb-1">
+        <p
+          class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">
+          Assets</p>
+      </div>
+      <a href="mutual-funds.html" class="nav-link"><span
+          class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span class="sb-hide">Mutual
+          Funds</span></a>
+      <a href="stocks.html" class="nav-link"><span
+          class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span><span class="sb-hide">Stocks</span><span
+          class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="fixed-deposits.html" class="nav-link active"><span
+          class="w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></span><span class="sb-hide">Fixed
+          Deposits</span></a>
+      <a href="recurring-deposits.html" class="nav-link"><span
+          class="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0"></span><span class="sb-hide">Recurring
+          Deposits</span></a>
+      <div class="pt-5 pb-1">
+        <p
+          class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">
+          Liabilities</p>
+      </div>
+      <a href="../liabilities/credit-cards.html" class="nav-link"><span
+          class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span><span class="sb-hide">Credit
+          Cards</span><span
+          class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="../liabilities/loans.html" class="nav-link"><span
+          class="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span><span class="sb-hide">Loans</span><span
+          class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <div class="pt-5 pb-1">
+        <p
+          class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">
+          Protection</p>
+      </div>
+      <a href="../protection/term-insurance.html" class="nav-link"><span
+          class="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0"></span><span class="sb-hide">Term
+          Insurance</span><span
+          class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="../protection/health-insurance.html" class="nav-link"><span
+          class="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span><span class="sb-hide">Health
+          Insurance</span><span
+          class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
     </nav>
     <div class="border-t dark:border-kosh-dark-border border-kosh-light-border p-3 flex-shrink-0">
-      <a href="../settings/profile.html" class="sidebar-profile flex items-center gap-3 px-2 py-2 rounded-lg dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
-        <div class="w-8 h-8 rounded-full bg-kosh-gold/20 flex items-center justify-center text-xs font-bold text-kosh-gold flex-shrink-0">PD</div>
-        <div class="sb-hide flex-1 min-w-0"><p class="text-sm font-semibold truncate">Priyak Dey</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted truncate">Settings</p></div>
-        <svg class="sb-hide w-4 h-4 dark:text-kosh-muted text-kosh-light-muted flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      <a href="../settings/profile.html"
+        class="sidebar-profile flex items-center gap-3 px-2 py-2 rounded-lg dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
+        <div
+          class="w-8 h-8 rounded-full bg-kosh-gold/20 flex items-center justify-center text-xs font-bold text-kosh-gold flex-shrink-0">
+          PD</div>
+        <div class="sb-hide flex-1 min-w-0">
+          <p class="text-sm font-semibold truncate">Priyak Dey</p>
+          <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted truncate">Settings</p>
+        </div>
+        <svg class="sb-hide w-4 h-4 dark:text-kosh-muted text-kosh-light-muted flex-shrink-0" fill="none"
+          viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path
+            d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+          <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
       </a>
     </div>
   </aside>
@@ -286,25 +1250,65 @@
   <!-- ====== MAIN ====== -->
   <div class="main-content min-h-screen flex flex-col">
     <header class="topbar sticky top-0 z-20 h-[60px] flex items-center justify-between px-6 gap-4 flex-shrink-0">
-      <button id="mobileMenuBtn" class="md:hidden w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
-      <div class="flex-1 max-w-md"><div class="relative"><svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-kosh-muted text-kosh-light-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg><input type="text" placeholder="Search..." class="w-full py-2 pl-10 pr-4 text-sm rounded-lg outline-none transition-all dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border dark:text-white text-kosh-charcoal focus:border-kosh-gold focus:ring-1 focus:ring-kosh-gold/20" /></div></div>
+      <button id="mobileMenuBtn"
+        class="md:hidden w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border"><svg
+          class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg></button>
+      <div class="flex-1 max-w-md">
+        <div class="relative"><svg
+            class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-kosh-muted text-kosh-light-muted pointer-events-none"
+            fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+          </svg><input type="text" placeholder="Search..."
+            class="w-full py-2 pl-10 pr-4 text-sm rounded-lg outline-none transition-all dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border dark:text-white text-kosh-charcoal focus:border-kosh-gold focus:ring-1 focus:ring-kosh-gold/20" />
+        </div>
+      </div>
       <div class="flex items-center gap-1.5">
         <div class="relative">
-          <button id="notifBtn" class="relative w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-[18px] h-[18px] dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg><span id="notifBadge" class="absolute top-1 right-1 min-w-[16px] h-[16px] flex items-center justify-center rounded-full bg-red-500 text-white text-[9px] font-bold ring-2 dark:ring-kosh-slate ring-kosh-light-bg px-1">4</span></button>
-          <div id="notifPanel" class="notif-panel absolute right-0 top-full mt-2 w-[380px] rounded-xl border shadow-2xl z-50 dark:bg-kosh-dark-card bg-white dark:border-kosh-dark-border border-kosh-light-border dark:shadow-[0_20px_60px_-10px_rgba(0,0,0,0.5)]">
-            <div class="flex items-center justify-between px-4 py-3 border-b dark:border-kosh-dark-border border-kosh-light-border">
+          <button id="notifBtn"
+            class="relative w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg
+              class="w-[18px] h-[18px] dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
+              <path
+                d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+            </svg><span id="notifBadge"
+              class="absolute top-1 right-1 min-w-[16px] h-[16px] flex items-center justify-center rounded-full bg-red-500 text-white text-[9px] font-bold ring-2 dark:ring-kosh-slate ring-kosh-light-bg px-1">4</span></button>
+          <div id="notifPanel"
+            class="notif-panel absolute right-0 top-full mt-2 w-[380px] rounded-xl border shadow-2xl z-50 dark:bg-kosh-dark-card bg-white dark:border-kosh-dark-border border-kosh-light-border dark:shadow-[0_20px_60px_-10px_rgba(0,0,0,0.5)]">
+            <div
+              class="flex items-center justify-between px-4 py-3 border-b dark:border-kosh-dark-border border-kosh-light-border">
               <h3 class="text-sm font-semibold">Notifications</h3>
-              <button id="markAllReadBtn" class="text-[11px] text-kosh-gold hover:text-kosh-gold-light transition-colors font-medium">Mark all read</button>
+              <button id="markAllReadBtn"
+                class="text-[11px] text-kosh-gold hover:text-kosh-gold-light transition-colors font-medium">Mark all
+                read</button>
             </div>
-            <div id="notifList" class="max-h-[400px] overflow-y-auto divide-y dark:divide-kosh-dark-border/50 divide-kosh-light-border/50"></div>
+            <div id="notifList"
+              class="max-h-[400px] overflow-y-auto divide-y dark:divide-kosh-dark-border/50 divide-kosh-light-border/50">
+            </div>
             <div id="notifEmpty" class="hidden px-4 py-10 text-center">
-              <svg class="w-8 h-8 mx-auto mb-2 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+              <svg class="w-8 h-8 mx-auto mb-2 dark:text-kosh-muted text-kosh-light-muted" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
+                <path
+                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+              </svg>
               <p class="text-xs dark:text-kosh-muted text-kosh-light-muted">All caught up!</p>
             </div>
           </div>
         </div>
-        <button id="themeToggle" class="w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-[18px] h-[18px] dark:block hidden text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="w-[18px] h-[18px] dark:hidden block text-kosh-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
-        <button class="ml-1 px-4 py-2 rounded-lg text-sm font-medium dark:text-red-400 text-red-600 dark:bg-red-500/8 bg-red-50 dark:hover:bg-red-500/15 hover:bg-red-100 transition-colors">Logout</button>
+        <button id="themeToggle"
+          class="w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg
+            class="w-[18px] h-[18px] dark:block hidden text-kosh-gold" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="5" />
+            <path
+              d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" />
+          </svg><svg class="w-[18px] h-[18px] dark:hidden block text-kosh-charcoal" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" stroke-width="1.5">
+            <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
+          </svg></button>
+        <button
+          class="ml-1 px-4 py-2 rounded-lg text-sm font-medium dark:text-red-400 text-red-600 dark:bg-red-500/8 bg-red-50 dark:hover:bg-red-500/15 hover:bg-red-100 transition-colors">Logout</button>
       </div>
     </header>
 
@@ -312,12 +1316,16 @@
       <!-- Header -->
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
         <div>
-          <h1 class="font-display text-2xl sm:text-3xl tracking-tight" style="font-variation-settings:'opsz' 72;">Fixed Deposits</h1>
+          <h1 class="font-display text-2xl sm:text-3xl tracking-tight" style="font-variation-settings:'opsz' 72;">Fixed
+            Deposits</h1>
           <p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-1">Track and manage your fixed deposits</p>
         </div>
         <div class="flex items-center gap-3">
-          <button id="addFDBtn" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-all whitespace-nowrap">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 4.5v15m7.5-7.5h-15"/></svg>Add FD
+          <button id="addFDBtn"
+            class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-all whitespace-nowrap">
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>Add FD
           </button>
         </div>
       </div>
@@ -326,11 +1334,17 @@
       <div class="flex items-center gap-4 mb-5">
         <div class="portfolio-toggle">
           <button class="portfolio-tab active" id="personalTab" onclick="switchPortfolio('personal')">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/></svg>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path
+                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
             Personal
           </button>
           <button class="portfolio-tab" id="familyTab" onclick="switchPortfolio('family')">
-            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path
+                d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+            </svg>
             Family
           </button>
         </div>
@@ -346,124 +1360,216 @@
       <!-- ===== PERSONAL VIEW ===== -->
       <div id="personalView">
 
-      <!-- Summary Banner -->
-      <div class="fd-banner rounded-2xl p-6 mb-6">
-        <div class="relative z-10 flex flex-wrap items-end justify-between gap-6">
-          <div>
-            <p class="b-title text-sm font-medium mb-1">Total FD Value</p>
-            <div class="flex items-end gap-3 flex-wrap">
-              <h2 class="b-amount font-display text-4xl sm:text-5xl text-white" style="font-variation-settings:'opsz' 144;" id="bannerTotalValue">₹22,67,428</h2>
-              <div class="b-chip flex items-center gap-1.5 mb-1.5 bg-emerald-500/15 px-2.5 py-1 rounded-full">
-                <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22"/><path d="M18.75 8.25H22.5V12"/></svg>
-                <span class="text-emerald-300 text-xs font-semibold" id="bannerInterestChip">+₹1,37,428 interest earned</span>
+        <!-- Summary Banner -->
+        <div class="fd-banner rounded-2xl p-6 mb-6">
+          <div class="relative z-10 flex flex-wrap items-end justify-between gap-6">
+            <div>
+              <p class="b-title text-sm font-medium mb-1">Total FD Value</p>
+              <div class="flex items-end gap-3 flex-wrap">
+                <h2 class="b-amount font-display text-4xl sm:text-5xl text-white"
+                  style="font-variation-settings:'opsz' 144;" id="bannerTotalValue">₹22,67,428</h2>
+                <div class="b-chip flex items-center gap-1.5 mb-1.5 bg-emerald-500/15 px-2.5 py-1 rounded-full">
+                  <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    stroke-width="2.5">
+                    <path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22" />
+                    <path d="M18.75 8.25H22.5V12" />
+                  </svg>
+                  <span class="text-emerald-300 text-xs font-semibold" id="bannerInterestChip">+₹1,37,428 interest
+                    earned</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex flex-wrap gap-2.5">
+              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border">
+                <p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">FDs</p>
+                <p class="b-pill-value text-lg font-bold mt-0.5" id="bannerFDCount">8</p>
+              </div>
+              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border">
+                <p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Avg Rate</p>
+                <p class="b-pill-value text-lg font-bold mt-0.5" id="bannerAvgRate">7.24%</p>
+              </div>
+              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border">
+                <p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Invested</p>
+                <p class="b-pill-value text-lg font-bold mt-0.5" id="bannerInvested">₹21.3L</p>
+              </div>
+              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border">
+                <p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Interest</p>
+                <p class="b-pill-value text-lg font-bold mt-0.5 text-emerald-400" id="bannerInterest">+₹1.4L</p>
               </div>
             </div>
           </div>
-          <div class="flex flex-wrap gap-2.5">
-            <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">FDs</p><p class="b-pill-value text-lg font-bold mt-0.5" id="bannerFDCount">8</p></div>
-            <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Avg Rate</p><p class="b-pill-value text-lg font-bold mt-0.5" id="bannerAvgRate">7.24%</p></div>
-            <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Invested</p><p class="b-pill-value text-lg font-bold mt-0.5" id="bannerInvested">₹21.3L</p></div>
-            <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Interest</p><p class="b-pill-value text-lg font-bold mt-0.5 text-emerald-400" id="bannerInterest">+₹1.4L</p></div>
-          </div>
         </div>
-      </div>
 
-      <!-- Analytics Row -->
-      <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-5">
-        <!-- Maturity Timeline -->
-        <div class="lg:col-span-3 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
-          <div class="p-5 pb-0 flex items-center justify-between">
-            <div><h3 class="text-sm font-semibold">Maturity Timeline</h3><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">When your FDs mature</p></div>
-            <div class="flex gap-1" id="maturityTimeRange">
-              <button class="time-btn" data-range="6M">6M</button>
-              <button class="time-btn active" data-range="1Y">1Y</button>
-              <button class="time-btn" data-range="2Y">2Y</button>
-              <button class="time-btn" data-range="5Y">5Y</button>
-              <button class="time-btn" data-range="All">All</button>
+        <!-- Analytics Row -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-5 mb-5">
+          <!-- Maturity Timeline -->
+          <div
+            class="lg:col-span-3 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+            <div class="p-5 pb-0 flex items-center justify-between">
+              <div>
+                <h3 class="text-sm font-semibold">Maturity Timeline</h3>
+                <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">When your FDs mature</p>
+              </div>
+              <div class="flex gap-1" id="maturityTimeRange">
+                <button class="time-btn" data-range="6M">6M</button>
+                <button class="time-btn active" data-range="1Y">1Y</button>
+                <button class="time-btn" data-range="2Y">2Y</button>
+                <button class="time-btn" data-range="5Y">5Y</button>
+                <button class="time-btn" data-range="All">All</button>
+              </div>
+            </div>
+            <div class="flex-1 px-5 pt-4">
+              <div id="maturityChart" class="relative" style="height:200px;"></div>
+            </div>
+            <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
+              <div class="flex items-center gap-1.5 text-sm font-medium" id="maturityInsight"><svg
+                  class="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  stroke-width="2">
+                  <path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg><span>Next maturity: HDFC Bank FD on Apr 2026 — ₹3,23,625</span></div>
+              <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">₹3.24L maturing within 90 days</p>
             </div>
           </div>
-          <div class="flex-1 px-5 pt-4"><div id="maturityChart" class="relative" style="height:200px;"></div></div>
-          <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
-            <div class="flex items-center gap-1.5 text-sm font-medium" id="maturityInsight"><svg class="w-3.5 h-3.5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg><span>Next maturity: HDFC Bank FD on Apr 2026 — ₹3,23,625</span></div>
-            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">₹3.24L maturing within 90 days</p>
-          </div>
-        </div>
 
-        <!-- Bank-wise Allocation -->
-        <div class="lg:col-span-2 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
-          <div class="p-5 pb-0"><h3 class="text-sm font-semibold">Bank-wise Allocation</h3><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Principal distribution</p></div>
-          <div class="flex-1 px-2 pt-2"><div id="bankAllocChart" class="relative" style="height:220px;"></div></div>
-          <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
-            <div class="flex items-center gap-1.5 text-sm font-medium" id="bankAllocInsight"><span>—</span></div>
-            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5" id="bankAllocSubInsight">—</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Highlights -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-        <div class="stat-card rounded-xl p-4 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
-          <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider font-medium">Highest Rate</p>
-          <div id="highlightHighestRate"></div>
-        </div>
-        <div class="stat-card rounded-xl p-4 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
-          <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider font-medium">Next Maturing</p>
-          <div id="highlightNextMaturing"></div>
-        </div>
-        <div class="stat-card rounded-xl p-4 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
-          <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider font-medium">Largest FD</p>
-          <div id="highlightLargestFD"></div>
-        </div>
-        <div class="stat-card rounded-xl p-4 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
-          <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider font-medium">Interest This FY</p>
-          <div id="highlightInterestFY"></div>
-        </div>
-      </div>
-
-      <!-- FD Table -->
-      <div class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
-        <div class="flex items-center border-b dark:border-kosh-dark-border border-kosh-light-border px-5">
-          <button class="tab-btn active">Active FDs <span class="ml-1 text-[10px] w-5 h-5 inline-flex items-center justify-center rounded-full bg-kosh-gold/10 text-kosh-gold" id="fdCountBadge">8</span></button>
-        </div>
-        <!-- Filters -->
-        <div class="flex items-center gap-3 px-5 py-3 border-b dark:border-kosh-dark-border border-kosh-light-border">
-          <div class="kd kd-sm kd-auto" id="filterBankDD" style="width:140px;">
-            <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">All Banks</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
-            <div class="kd-menu"><div class="kd-option selected" data-value="">All Banks</div><div class="kd-option" data-value="SBI">SBI</div><div class="kd-option" data-value="HDFC Bank">HDFC Bank</div><div class="kd-option" data-value="ICICI Bank">ICICI Bank</div><div class="kd-option" data-value="Kotak">Kotak</div><div class="kd-option" data-value="Axis">Axis</div><div class="kd-option" data-value="Bajaj Finance">Bajaj Finance</div><div class="kd-option" data-value="Federal Bank">Federal Bank</div></div>
-          </div>
-          <div class="kd kd-sm kd-auto" id="filterTypeDD" style="width:130px;">
-            <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">All Types</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
-            <div class="kd-menu"><div class="kd-option selected" data-value="">All Types</div><div class="kd-option" data-value="Regular">Regular</div><div class="kd-option" data-value="Tax-saving">Tax-saving</div><div class="kd-option" data-value="Senior Citizen">Senior Citizen</div><div class="kd-option" data-value="Corporate">Corporate</div></div>
-          </div>
-          <button id="clearFiltersBtn" class="hidden text-[11px] text-kosh-gold hover:text-kosh-gold-light transition-colors font-medium">Clear filters</button>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full">
-            <thead><tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
-              <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors" data-sort="bank">Bank <span class="sort-icon"></span></th>
-              <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Type</th>
-              <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors" data-sort="principal">Principal <span class="sort-icon"></span></th>
-              <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors" data-sort="rate">Rate <span class="sort-icon"></span></th>
-              <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Tenure</th>
-              <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors" data-sort="maturityDate">Maturity Date <span class="sort-icon"></span></th>
-              <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors" data-sort="maturityAmt">Maturity Amt <span class="sort-icon"></span></th>
-            </tr></thead>
-            <tbody id="fdTableBody" class="divide-y dark:divide-kosh-dark-border divide-kosh-light-border"></tbody>
-          </table>
-        </div>
-        <!-- Pagination -->
-        <div class="flex items-center justify-between px-5 py-3 border-t dark:border-kosh-dark-border border-kosh-light-border">
-          <div class="flex items-center gap-3">
-            <span class="text-xs dark:text-kosh-muted text-kosh-light-muted">Rows per page</span>
-            <div class="kd kd-sm kd-auto kd-up" id="fdPerPageDD" style="width:70px;">
-              <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">10</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
-              <div class="kd-menu"><div class="kd-option" data-value="5">5</div><div class="kd-option selected" data-value="10">10</div><div class="kd-option" data-value="25">25</div></div>
+          <!-- Bank-wise Allocation -->
+          <div
+            class="lg:col-span-2 stat-card rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+            <div class="p-5 pb-0">
+              <h3 class="text-sm font-semibold">Bank-wise Allocation</h3>
+              <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Principal distribution</p>
+            </div>
+            <div class="flex-1 px-2 pt-2">
+              <div id="bankAllocChart" class="relative" style="height:220px;"></div>
+            </div>
+            <div class="px-5 py-3.5 border-t dark:border-kosh-dark-border border-kosh-light-border">
+              <div class="flex items-center gap-1.5 text-sm font-medium" id="bankAllocInsight"><span>—</span></div>
+              <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5" id="bankAllocSubInsight">—</p>
             </div>
           </div>
-          <span id="fdPagInfo" class="text-xs dark:text-kosh-muted text-kosh-light-muted"></span>
-          <div id="fdPagBtns" class="flex items-center gap-1"></div>
         </div>
-      </div>
+
+        <!-- Highlights -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <div
+            class="stat-card rounded-xl p-4 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+            <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider font-medium">
+              Highest Rate</p>
+            <div id="highlightHighestRate"></div>
+          </div>
+          <div
+            class="stat-card rounded-xl p-4 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+            <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider font-medium">Next
+              Maturing</p>
+            <div id="highlightNextMaturing"></div>
+          </div>
+          <div
+            class="stat-card rounded-xl p-4 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+            <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider font-medium">
+              Largest FD</p>
+            <div id="highlightLargestFD"></div>
+          </div>
+          <div
+            class="stat-card rounded-xl p-4 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+            <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider font-medium">
+              Interest This FY</p>
+            <div id="highlightInterestFY"></div>
+          </div>
+        </div>
+
+        <!-- FD Table -->
+        <div
+          class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <div class="flex items-center border-b dark:border-kosh-dark-border border-kosh-light-border px-5">
+            <button class="tab-btn active">Active FDs <span
+                class="ml-1 text-[10px] w-5 h-5 inline-flex items-center justify-center rounded-full bg-kosh-gold/10 text-kosh-gold"
+                id="fdCountBadge">8</span></button>
+          </div>
+          <!-- Filters -->
+          <div class="flex items-center gap-3 px-5 py-3 border-b dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="kd kd-sm kd-auto" id="filterBankDD" style="width:140px;">
+              <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">All Banks</span><svg
+                  class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg></button>
+              <div class="kd-menu">
+                <div class="kd-option selected" data-value="">All Banks</div>
+                <div class="kd-option" data-value="SBI">SBI</div>
+                <div class="kd-option" data-value="HDFC Bank">HDFC Bank</div>
+                <div class="kd-option" data-value="ICICI Bank">ICICI Bank</div>
+                <div class="kd-option" data-value="Kotak">Kotak</div>
+                <div class="kd-option" data-value="Axis">Axis</div>
+                <div class="kd-option" data-value="Bajaj Finance">Bajaj Finance</div>
+                <div class="kd-option" data-value="Federal Bank">Federal Bank</div>
+              </div>
+            </div>
+            <div class="kd kd-sm kd-auto" id="filterTypeDD" style="width:130px;">
+              <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">All Types</span><svg
+                  class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg></button>
+              <div class="kd-menu">
+                <div class="kd-option selected" data-value="">All Types</div>
+                <div class="kd-option" data-value="Regular">Regular</div>
+                <div class="kd-option" data-value="Tax-saving">Tax-saving</div>
+                <div class="kd-option" data-value="Senior Citizen">Senior Citizen</div>
+                <div class="kd-option" data-value="Corporate">Corporate</div>
+              </div>
+            </div>
+            <button id="clearFiltersBtn"
+              class="hidden text-[11px] text-kosh-gold hover:text-kosh-gold-light transition-colors font-medium">Clear
+              filters</button>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead>
+                <tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
+                  <th
+                    class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors"
+                    data-sort="bank">Bank <span class="sort-icon"></span></th>
+                  <th
+                    class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Type</th>
+                  <th
+                    class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors"
+                    data-sort="principal">Principal <span class="sort-icon"></span></th>
+                  <th
+                    class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors"
+                    data-sort="rate">Rate <span class="sort-icon"></span></th>
+                  <th
+                    class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Tenure</th>
+                  <th
+                    class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors"
+                    data-sort="maturityDate">Maturity Date <span class="sort-icon"></span></th>
+                  <th
+                    class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted cursor-pointer select-none hover:text-kosh-gold transition-colors"
+                    data-sort="maturityAmt">Maturity Amt <span class="sort-icon"></span></th>
+                </tr>
+              </thead>
+              <tbody id="fdTableBody" class="divide-y dark:divide-kosh-dark-border divide-kosh-light-border"></tbody>
+            </table>
+          </div>
+          <!-- Pagination -->
+          <div
+            class="flex items-center justify-between px-5 py-3 border-t dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center gap-3">
+              <span class="text-xs dark:text-kosh-muted text-kosh-light-muted">Rows per page</span>
+              <div class="kd kd-sm kd-auto kd-up" id="fdPerPageDD" style="width:70px;">
+                <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">10</span><svg
+                    class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg></button>
+                <div class="kd-menu">
+                  <div class="kd-option" data-value="5">5</div>
+                  <div class="kd-option selected" data-value="10">10</div>
+                  <div class="kd-option" data-value="25">25</div>
+                </div>
+              </div>
+            </div>
+            <span id="fdPagInfo" class="text-xs dark:text-kosh-muted text-kosh-light-muted"></span>
+            <div id="fdPagBtns" class="flex items-center gap-1"></div>
+          </div>
+        </div>
 
       </div><!-- /personalView -->
 
@@ -471,16 +1577,30 @@
       <div id="familyEmptyView" class="hidden">
         <div class="flex items-center justify-center min-h-[500px]">
           <div class="text-center max-w-md mx-auto px-6">
-            <div class="w-20 h-20 rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex items-center justify-center mx-auto mb-6">
-              <svg class="w-10 h-10 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"/></svg>
+            <div
+              class="w-20 h-20 rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex items-center justify-center mx-auto mb-6">
+              <svg class="w-10 h-10 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="1">
+                <path
+                  d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+              </svg>
             </div>
-            <h3 class="font-display text-xl tracking-tight mb-2" style="font-variation-settings:'opsz' 40;">Track finances together</h3>
-            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted mb-6 leading-relaxed">Invite your partner or family members to see a combined FD portfolio with aggregated totals and individual breakdowns.</p>
-            <button class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-all" onclick="openInviteModal()">
-              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z"/></svg>
+            <h3 class="font-display text-xl tracking-tight mb-2" style="font-variation-settings:'opsz' 40;">Track
+              finances together</h3>
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted mb-6 leading-relaxed">Invite your partner or
+              family members to see a combined FD portfolio with aggregated totals and individual breakdowns.</p>
+            <button
+              class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-all"
+              onclick="openInviteModal()">
+              <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path
+                  d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+              </svg>
               Invite Family Member
             </button>
-            <p class="mt-4"><a href="https://docs.kosh.app/family-portfolios" target="_blank" class="text-xs text-kosh-gold hover:text-kosh-gold-light transition-colors">Learn more about Family portfolios</a></p>
+            <p class="mt-4"><a href="https://docs.kosh.app/family-portfolios" target="_blank"
+                class="text-xs text-kosh-gold hover:text-kosh-gold-light transition-colors">Learn more about Family
+                portfolios</a></p>
           </div>
         </div>
       </div>
@@ -493,18 +1613,35 @@
             <div>
               <p class="b-title text-sm font-medium mb-1">Family FD Value</p>
               <div class="flex items-end gap-3 flex-wrap">
-                <h2 id="famBannerValue" class="b-amount font-display text-4xl sm:text-5xl text-white" style="font-variation-settings:'opsz' 144;">—</h2>
+                <h2 id="famBannerValue" class="b-amount font-display text-4xl sm:text-5xl text-white"
+                  style="font-variation-settings:'opsz' 144;">—</h2>
                 <div class="b-chip flex items-center gap-1.5 mb-1.5 bg-emerald-500/15 px-2.5 py-1 rounded-full">
-                  <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22"/><path d="M18.75 8.25H22.5V12"/></svg>
+                  <svg class="w-3 h-3 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    stroke-width="2.5">
+                    <path d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22" />
+                    <path d="M18.75 8.25H22.5V12" />
+                  </svg>
                   <span id="famBannerInterestChip" class="text-emerald-300 text-xs font-semibold"></span>
                 </div>
               </div>
             </div>
             <div class="flex flex-wrap gap-2.5">
-              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">FDs</p><p id="famBannerCount" class="b-pill-value text-lg font-bold mt-0.5">—</p></div>
-              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Avg Rate</p><p id="famBannerAvgRate" class="b-pill-value text-lg font-bold mt-0.5">—</p></div>
-              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Invested</p><p id="famBannerInvested" class="b-pill-value text-lg font-bold mt-0.5">—</p></div>
-              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border"><p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Interest</p><p id="famBannerInterest" class="b-pill-value text-lg font-bold mt-0.5 text-emerald-400">—</p></div>
+              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border">
+                <p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">FDs</p>
+                <p id="famBannerCount" class="b-pill-value text-lg font-bold mt-0.5">—</p>
+              </div>
+              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border">
+                <p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Avg Rate</p>
+                <p id="famBannerAvgRate" class="b-pill-value text-lg font-bold mt-0.5">—</p>
+              </div>
+              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border">
+                <p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Invested</p>
+                <p id="famBannerInvested" class="b-pill-value text-lg font-bold mt-0.5">—</p>
+              </div>
+              <div class="b-pill rounded-xl px-4 py-2.5 text-center min-w-[80px] backdrop-blur-sm border">
+                <p class="b-pill-label text-[11px] uppercase tracking-wider font-medium">Interest</p>
+                <p id="famBannerInterest" class="b-pill-value text-lg font-bold mt-0.5 text-emerald-400">—</p>
+              </div>
             </div>
           </div>
           <!-- Member Breakdown -->
@@ -512,31 +1649,58 @@
         </div>
 
         <!-- Family Table -->
-        <div class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+        <div
+          class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
           <div class="flex items-center border-b dark:border-kosh-dark-border border-kosh-light-border px-5">
-            <button class="tab-btn active">All FDs <span id="famFDCountBadge" class="ml-1 text-[10px] w-5 h-5 inline-flex items-center justify-center rounded-full bg-kosh-gold/10 text-kosh-gold">—</span></button>
+            <button class="tab-btn active">All FDs <span id="famFDCountBadge"
+                class="ml-1 text-[10px] w-5 h-5 inline-flex items-center justify-center rounded-full bg-kosh-gold/10 text-kosh-gold">—</span></button>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full">
-              <thead><tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
-                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Member</th>
-                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Bank</th>
-                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Type</th>
-                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Principal</th>
-                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Rate</th>
-                <th class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Maturity</th>
-                <th class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Maturity Amt</th>
-              </tr></thead>
-              <tbody id="familyFDTableBody" class="divide-y dark:divide-kosh-dark-border divide-kosh-light-border"></tbody>
+              <thead>
+                <tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
+                  <th
+                    class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Member</th>
+                  <th
+                    class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Bank</th>
+                  <th
+                    class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Type</th>
+                  <th
+                    class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Principal</th>
+                  <th
+                    class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Rate</th>
+                  <th
+                    class="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Maturity</th>
+                  <th
+                    class="px-5 py-3 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Maturity Amt</th>
+                </tr>
+              </thead>
+              <tbody id="familyFDTableBody" class="divide-y dark:divide-kosh-dark-border divide-kosh-light-border">
+              </tbody>
             </table>
           </div>
           <!-- Family Pagination -->
-          <div class="flex items-center justify-between px-5 py-3 border-t dark:border-kosh-dark-border border-kosh-light-border">
+          <div
+            class="flex items-center justify-between px-5 py-3 border-t dark:border-kosh-dark-border border-kosh-light-border">
             <div class="flex items-center gap-3">
               <span class="text-xs dark:text-kosh-muted text-kosh-light-muted">Rows per page</span>
               <div class="kd kd-sm kd-auto kd-up" id="familyPerPageDD" style="width:70px;">
-                <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">10</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
-                <div class="kd-menu"><div class="kd-option" data-value="5">5</div><div class="kd-option selected" data-value="10">10</div><div class="kd-option" data-value="25">25</div></div>
+                <button class="kd-trigger !py-1.5 !text-xs" type="button"><span class="kd-value">10</span><svg
+                    class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg></button>
+                <div class="kd-menu">
+                  <div class="kd-option" data-value="5">5</div>
+                  <div class="kd-option selected" data-value="10">10</div>
+                  <div class="kd-option" data-value="25">25</div>
+                </div>
               </div>
             </div>
             <span id="familyPagInfo" class="text-xs dark:text-kosh-muted text-kosh-light-muted"></span>
@@ -552,25 +1716,62 @@
   <div id="addFDModal" class="modal-overlay">
     <div class="modal-backdrop" id="addFDBackdrop"></div>
     <div class="modal-panel w-[92vw] max-w-[540px]">
-      <div class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] max-h-[90vh] overflow-y-auto">
-        <div class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
-          <div><h2 class="font-display text-xl tracking-tight" style="font-variation-settings:'opsz' 40;">Add Fixed Deposit</h2><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Enter your FD details</p></div>
-          <button id="addFDClose" class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+      <div
+        class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] max-h-[90vh] overflow-y-auto">
+        <div
+          class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
+          <div>
+            <h2 class="font-display text-xl tracking-tight" style="font-variation-settings:'opsz' 40;">Add Fixed Deposit
+            </h2>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Enter your FD details</p>
+          </div>
+          <button id="addFDClose"
+            class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg
+              class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg></button>
         </div>
         <div class="px-6 py-5 space-y-5">
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="kosh-label">Bank <span class="text-red-400">*</span></label>
               <div class="kd" id="addBankDD" style="width:100%;">
-                <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select bank...</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
-                <div class="kd-menu"><div class="kd-option" data-value="SBI">SBI</div><div class="kd-option" data-value="HDFC Bank">HDFC Bank</div><div class="kd-option" data-value="ICICI Bank">ICICI Bank</div><div class="kd-option" data-value="Kotak">Kotak</div><div class="kd-option" data-value="Axis">Axis</div><div class="kd-option" data-value="PNB">PNB</div><div class="kd-option" data-value="BoB">BoB</div><div class="kd-option" data-value="Federal Bank">Federal Bank</div><div class="kd-option" data-value="IDBI">IDBI</div><div class="kd-option" data-value="IndusInd">IndusInd</div><div class="kd-option" data-value="Yes Bank">Yes Bank</div><div class="kd-option" data-value="Bajaj Finance">Bajaj Finance</div><div class="kd-option" data-value="Other">Other</div></div>
+                <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select bank...</span><svg
+                    class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg></button>
+                <div class="kd-menu">
+                  <div class="kd-option" data-value="SBI">SBI</div>
+                  <div class="kd-option" data-value="HDFC Bank">HDFC Bank</div>
+                  <div class="kd-option" data-value="ICICI Bank">ICICI Bank</div>
+                  <div class="kd-option" data-value="Kotak">Kotak</div>
+                  <div class="kd-option" data-value="Axis">Axis</div>
+                  <div class="kd-option" data-value="PNB">PNB</div>
+                  <div class="kd-option" data-value="BoB">BoB</div>
+                  <div class="kd-option" data-value="Federal Bank">Federal Bank</div>
+                  <div class="kd-option" data-value="IDBI">IDBI</div>
+                  <div class="kd-option" data-value="IndusInd">IndusInd</div>
+                  <div class="kd-option" data-value="Yes Bank">Yes Bank</div>
+                  <div class="kd-option" data-value="Bajaj Finance">Bajaj Finance</div>
+                  <div class="kd-option" data-value="Other">Other</div>
+                </div>
               </div>
             </div>
             <div>
               <label class="kosh-label">FD Type <span class="text-red-400">*</span></label>
               <div class="kd" id="addTypeDD" style="width:100%;">
-                <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select type...</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
-                <div class="kd-menu"><div class="kd-option" data-value="Regular">Regular</div><div class="kd-option" data-value="Tax-saving">Tax-saving</div><div class="kd-option" data-value="Senior Citizen">Senior Citizen</div><div class="kd-option" data-value="Corporate">Corporate</div><div class="kd-option" data-value="Flexi/Sweep">Flexi/Sweep</div></div>
+                <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select type...</span><svg
+                    class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                  </svg></button>
+                <div class="kd-menu">
+                  <div class="kd-option" data-value="Regular">Regular</div>
+                  <div class="kd-option" data-value="Tax-saving">Tax-saving</div>
+                  <div class="kd-option" data-value="Senior Citizen">Senior Citizen</div>
+                  <div class="kd-option" data-value="Corporate">Corporate</div>
+                  <div class="kd-option" data-value="Flexi/Sweep">Flexi/Sweep</div>
+                </div>
               </div>
             </div>
           </div>
@@ -587,17 +1788,31 @@
           <div>
             <label class="kosh-label">Interest Payout <span class="text-red-400">*</span></label>
             <div class="kd" id="addPayoutDD" style="width:100%;">
-              <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select payout type...</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
-              <div class="kd-menu"><div class="kd-option" data-value="Cumulative">Cumulative (at maturity)</div><div class="kd-option" data-value="Monthly">Monthly</div><div class="kd-option" data-value="Quarterly">Quarterly</div><div class="kd-option" data-value="Annually">Annually</div></div>
+              <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select payout
+                  type...</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  stroke-width="2">
+                  <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg></button>
+              <div class="kd-menu">
+                <div class="kd-option" data-value="Cumulative">Cumulative (at maturity)</div>
+                <div class="kd-option" data-value="Monthly">Monthly</div>
+                <div class="kd-option" data-value="Quarterly">Quarterly</div>
+                <div class="kd-option" data-value="Annually">Annually</div>
+              </div>
             </div>
           </div>
           <div>
             <label class="kosh-label">Start Date <span class="text-red-400">*</span></label>
             <div class="kdp" id="addStartDatePicker">
               <button class="kdp-trigger" type="button">
-                <svg class="kdp-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/></svg>
+                <svg class="kdp-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                </svg>
                 <span class="kdp-value kdp-placeholder">Select date</span>
-                <svg class="kdp-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg>
+                <svg class="kdp-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg>
               </button>
               <div class="kdp-popup"></div>
             </div>
@@ -614,17 +1829,20 @@
             </div>
             <div class="grid grid-cols-2 gap-4" id="tenureCustom">
               <div>
-                <label class="text-[11px] dark:text-kosh-muted text-kosh-light-muted font-medium mb-1 block">Years</label>
+                <label
+                  class="text-[11px] dark:text-kosh-muted text-kosh-light-muted font-medium mb-1 block">Years</label>
                 <input id="addTenureYears" type="number" min="0" max="10" placeholder="0" class="kosh-input" />
               </div>
               <div>
-                <label class="text-[11px] dark:text-kosh-muted text-kosh-light-muted font-medium mb-1 block">Months</label>
+                <label
+                  class="text-[11px] dark:text-kosh-muted text-kosh-light-muted font-medium mb-1 block">Months</label>
                 <input id="addTenureMonths" type="number" min="0" max="11" placeholder="0" class="kosh-input" />
               </div>
             </div>
           </div>
           <!-- Auto-computed fields -->
-          <div class="grid grid-cols-2 gap-4 p-3 rounded-lg dark:bg-kosh-slate/50 bg-kosh-cream/30 border dark:border-kosh-dark-border/50 border-kosh-light-border/50">
+          <div
+            class="grid grid-cols-2 gap-4 p-3 rounded-lg dark:bg-kosh-slate/50 bg-kosh-cream/30 border dark:border-kosh-dark-border/50 border-kosh-light-border/50">
             <div>
               <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted font-medium">Maturity Date</p>
               <p id="addMaturityDate" class="text-sm font-semibold mt-0.5">—</p>
@@ -640,18 +1858,23 @@
           </div>
           <div class="grid grid-cols-2 gap-4">
             <div>
-              <label class="kosh-label">FD Number <span class="text-xs font-normal dark:text-kosh-muted text-kosh-light-muted">(optional)</span></label>
+              <label class="kosh-label">FD Number <span
+                  class="text-xs font-normal dark:text-kosh-muted text-kosh-light-muted">(optional)</span></label>
               <input id="addFDNumber" type="text" placeholder="e.g., FD123456" class="kosh-input" />
             </div>
             <div>
-              <label class="kosh-label">Notes <span class="text-xs font-normal dark:text-kosh-muted text-kosh-light-muted">(optional)</span></label>
+              <label class="kosh-label">Notes <span
+                  class="text-xs font-normal dark:text-kosh-muted text-kosh-light-muted">(optional)</span></label>
               <input id="addNotes" type="text" placeholder="Optional note..." maxlength="200" class="kosh-input" />
             </div>
           </div>
         </div>
         <div class="px-6 py-4 border-t dark:border-kosh-dark-border border-kosh-light-border flex gap-3">
-          <button id="addFDCancel" class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
-          <button id="addFDSave" class="flex-1 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-colors">Save FD</button>
+          <button id="addFDCancel"
+            class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
+          <button id="addFDSave"
+            class="flex-1 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-colors">Save
+            FD</button>
         </div>
       </div>
     </div>
@@ -661,17 +1884,26 @@
   <div id="fdDetailModal" class="modal-overlay">
     <div class="modal-backdrop" id="fdDetailBackdrop"></div>
     <div class="modal-panel w-[92vw] max-w-[720px]">
-      <div class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] max-h-[90vh] overflow-y-auto">
-        <div class="flex items-start justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
+      <div
+        class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] max-h-[90vh] overflow-y-auto">
+        <div
+          class="flex items-start justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
           <div class="min-w-0 flex-1 mr-4">
-            <h2 id="detailTitle" class="font-display text-xl tracking-tight" style="font-variation-settings:'opsz' 40;"></h2>
+            <h2 id="detailTitle" class="font-display text-xl tracking-tight" style="font-variation-settings:'opsz' 40;">
+            </h2>
             <div class="flex items-center gap-3 mt-2 flex-wrap">
-              <span id="detailType" class="text-xs px-2.5 py-0.5 rounded-full dark:bg-cyan-500/10 bg-cyan-100 text-cyan-500 font-semibold"></span>
+              <span id="detailType"
+                class="text-xs px-2.5 py-0.5 rounded-full dark:bg-cyan-500/10 bg-cyan-100 text-cyan-500 font-semibold"></span>
               <span id="detailPayout" class="text-xs dark:text-kosh-muted text-kosh-light-muted"></span>
               <span id="detailFDNum" class="text-xs dark:text-kosh-muted text-kosh-light-muted"></span>
             </div>
           </div>
-          <button id="fdDetailClose" class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+          <button id="fdDetailClose"
+            class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg
+              class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg></button>
         </div>
 
         <!-- Compact Summary Banner -->
@@ -679,14 +1911,33 @@
           <div class="relative z-10 grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
             <div class="col-span-2">
               <p class="b-title text-[10px] font-medium mb-0.5">Current Value</p>
-              <h2 id="detailCurrentValue" class="b-amount font-display text-2xl text-white" style="font-variation-settings:'opsz' 144;"></h2>
+              <h2 id="detailCurrentValue" class="b-amount font-display text-2xl text-white"
+                style="font-variation-settings:'opsz' 144;"></h2>
             </div>
-            <div><p class="b-pill-label text-[10px] uppercase tracking-wider">Interest</p><p id="detailInterest" class="text-sm font-bold mt-0.5 text-emerald-400"></p></div>
-            <div><p class="b-pill-label text-[10px] uppercase tracking-wider">Principal</p><p id="detailPrincipal" class="b-pill-value text-sm font-bold mt-0.5"></p></div>
-            <div><p class="b-pill-label text-[10px] uppercase tracking-wider">Rate</p><p id="detailRate" class="b-pill-value text-sm font-bold mt-0.5"></p></div>
-            <div><p class="b-pill-label text-[10px] uppercase tracking-wider">Tenure</p><p id="detailTenure" class="b-pill-value text-sm font-bold mt-0.5"></p></div>
-            <div><p class="b-pill-label text-[10px] uppercase tracking-wider">Maturity</p><p id="detailMaturityDate" class="b-pill-value text-sm font-bold mt-0.5"></p></div>
-            <div><p class="b-pill-label text-[10px] uppercase tracking-wider">Days Left</p><p id="detailDaysLeft" class="b-pill-value text-sm font-bold mt-0.5"></p></div>
+            <div>
+              <p class="b-pill-label text-[10px] uppercase tracking-wider">Interest</p>
+              <p id="detailInterest" class="text-sm font-bold mt-0.5 text-emerald-400"></p>
+            </div>
+            <div>
+              <p class="b-pill-label text-[10px] uppercase tracking-wider">Principal</p>
+              <p id="detailPrincipal" class="b-pill-value text-sm font-bold mt-0.5"></p>
+            </div>
+            <div>
+              <p class="b-pill-label text-[10px] uppercase tracking-wider">Rate</p>
+              <p id="detailRate" class="b-pill-value text-sm font-bold mt-0.5"></p>
+            </div>
+            <div>
+              <p class="b-pill-label text-[10px] uppercase tracking-wider">Tenure</p>
+              <p id="detailTenure" class="b-pill-value text-sm font-bold mt-0.5"></p>
+            </div>
+            <div>
+              <p class="b-pill-label text-[10px] uppercase tracking-wider">Maturity</p>
+              <p id="detailMaturityDate" class="b-pill-value text-sm font-bold mt-0.5"></p>
+            </div>
+            <div>
+              <p class="b-pill-label text-[10px] uppercase tracking-wider">Days Left</p>
+              <p id="detailDaysLeft" class="b-pill-value text-sm font-bold mt-0.5"></p>
+            </div>
           </div>
         </div>
 
@@ -697,30 +1948,49 @@
             <span id="detailProgressPct" class="text-xs font-semibold text-cyan-400"></span>
             <span id="detailEndLabel" class="text-[11px] dark:text-kosh-muted text-kosh-light-muted"></span>
           </div>
-          <div class="progress-bar"><div id="detailProgressFill" class="progress-fill"></div></div>
+          <div class="progress-bar">
+            <div id="detailProgressFill" class="progress-fill"></div>
+          </div>
         </div>
 
         <!-- Interest Breakdown Table -->
         <div class="mx-6 mt-4">
           <h3 class="text-sm font-semibold mb-3">Interest Breakdown</h3>
-          <div class="rounded-xl dark:bg-kosh-slate/30 bg-kosh-cream/20 border dark:border-kosh-dark-border/50 border-kosh-light-border/50 overflow-hidden">
+          <div
+            class="rounded-xl dark:bg-kosh-slate/30 bg-kosh-cream/20 border dark:border-kosh-dark-border/50 border-kosh-light-border/50 overflow-hidden">
             <table class="w-full">
-              <thead><tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
-                <th class="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Quarter</th>
-                <th class="px-4 py-2.5 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Opening</th>
-                <th class="px-4 py-2.5 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Interest</th>
-                <th class="px-4 py-2.5 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Closing</th>
-              </tr></thead>
-              <tbody id="detailBreakdownBody" class="divide-y dark:divide-kosh-dark-border/30 divide-kosh-light-border/30 text-sm"></tbody>
+              <thead>
+                <tr class="dark:bg-kosh-slate/50 bg-kosh-cream/40">
+                  <th
+                    class="px-4 py-2.5 text-left text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Quarter</th>
+                  <th
+                    class="px-4 py-2.5 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Opening</th>
+                  <th
+                    class="px-4 py-2.5 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Interest</th>
+                  <th
+                    class="px-4 py-2.5 text-right text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">
+                    Closing</th>
+                </tr>
+              </thead>
+              <tbody id="detailBreakdownBody"
+                class="divide-y dark:divide-kosh-dark-border/30 divide-kosh-light-border/30 text-sm"></tbody>
             </table>
           </div>
         </div>
 
         <!-- Actions -->
         <div class="mx-6 mt-5 mb-6 flex gap-3">
-          <button id="detailEditBtn" class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Edit FD</button>
-          <button id="detailBreakBtn" class="flex-1 py-2.5 rounded-lg border border-amber-500/30 text-amber-500 text-sm font-semibold hover:bg-amber-500/10 transition-colors">Mark as Broken</button>
-          <button id="detailDeleteBtn" class="flex-1 py-2.5 rounded-lg border border-red-500/30 text-red-400 text-sm font-semibold hover:bg-red-500/10 transition-colors">Delete</button>
+          <button id="detailEditBtn"
+            class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Edit
+            FD</button>
+          <button id="detailBreakBtn"
+            class="flex-1 py-2.5 rounded-lg border border-amber-500/30 text-amber-500 text-sm font-semibold hover:bg-amber-500/10 transition-colors">Mark
+            as Broken</button>
+          <button id="detailDeleteBtn"
+            class="flex-1 py-2.5 rounded-lg border border-red-500/30 text-red-400 text-sm font-semibold hover:bg-red-500/10 transition-colors">Delete</button>
         </div>
       </div>
     </div>
@@ -730,28 +2000,51 @@
   <div id="breakFDModal" class="modal-overlay">
     <div class="modal-backdrop" id="breakFDBackdrop"></div>
     <div class="modal-panel w-[92vw] max-w-[480px]">
-      <div class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)]">
-        <div class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
-          <div><h2 class="font-display text-xl tracking-tight text-amber-400" style="font-variation-settings:'opsz' 40;">Mark FD as Broken</h2><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Record premature withdrawal in Kosh</p></div>
-          <button id="breakFDClose" class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+      <div
+        class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)]">
+        <div
+          class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
+          <div>
+            <h2 class="font-display text-xl tracking-tight text-amber-400" style="font-variation-settings:'opsz' 40;">
+              Mark FD as Broken</h2>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Record premature withdrawal in Kosh</p>
+          </div>
+          <button id="breakFDClose"
+            class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg
+              class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg></button>
         </div>
         <div class="px-6 py-5 space-y-4">
           <div class="p-3 rounded-lg bg-amber-500/5 border border-amber-500/10 space-y-2">
             <div class="flex items-start gap-2">
-              <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+              <svg class="w-4 h-4 text-amber-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path
+                  d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+              </svg>
               <div>
                 <p class="text-xs text-amber-400 font-semibold">This only updates your Kosh records</p>
-                <p class="text-xs text-amber-400/80 mt-1">To actually break this FD, visit your bank's net banking portal or branch. Once broken, use this to remove it from your Kosh portfolio.</p>
+                <p class="text-xs text-amber-400/80 mt-1">To actually break this FD, visit your bank's net banking
+                  portal or branch. Once broken, use this to remove it from your Kosh portfolio.</p>
               </div>
             </div>
           </div>
-          <div class="p-3 rounded-lg dark:bg-kosh-slate/30 bg-kosh-cream/20 border dark:border-kosh-dark-border/50 border-kosh-light-border/50">
-            <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Below is an estimate of the penalty impact. Actual penalty terms may vary by bank.</p>
+          <div
+            class="p-3 rounded-lg dark:bg-kosh-slate/30 bg-kosh-cream/20 border dark:border-kosh-dark-border/50 border-kosh-light-border/50">
+            <p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted">Below is an estimate of the penalty
+              impact. Actual penalty terms may vary by bank.</p>
           </div>
           <div id="breakLockInWarning" class="hidden p-3 rounded-lg bg-red-500/5 border border-red-500/10">
             <div class="flex items-start gap-2">
-              <svg class="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"/></svg>
-              <p class="text-xs text-red-400">This is a Tax-saving FD with a 5-year lock-in period. Banks do not allow premature withdrawal for this FD type.</p>
+              <svg class="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor" stroke-width="2">
+                <path
+                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+              </svg>
+              <p class="text-xs text-red-400">This is a Tax-saving FD with a 5-year lock-in period. Banks do not allow
+                premature withdrawal for this FD type.</p>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-4">
@@ -778,8 +2071,11 @@
           </div>
         </div>
         <div class="px-6 py-4 border-t dark:border-kosh-dark-border border-kosh-light-border flex gap-3">
-          <button id="breakFDCancel" class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
-          <button id="breakFDConfirm" class="flex-1 py-2.5 rounded-lg bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-colors">Remove from Portfolio</button>
+          <button id="breakFDCancel"
+            class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
+          <button id="breakFDConfirm"
+            class="flex-1 py-2.5 rounded-lg bg-red-500 text-white text-sm font-semibold hover:bg-red-600 transition-colors">Remove
+            from Portfolio</button>
         </div>
       </div>
     </div>
@@ -789,10 +2085,22 @@
   <div id="inviteModal" class="modal-overlay">
     <div class="modal-backdrop" id="inviteBackdrop"></div>
     <div class="modal-panel w-[92vw] max-w-[480px]">
-      <div class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)]">
-        <div class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
-          <div><h2 class="font-display text-xl tracking-tight" style="font-variation-settings:'opsz' 40;">Invite Family Member</h2><p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Send an invitation to join your family portfolio</p></div>
-          <button id="inviteClose" class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M6 18L18 6M6 6l12 12"/></svg></button>
+      <div
+        class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)]">
+        <div
+          class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border">
+          <div>
+            <h2 class="font-display text-xl tracking-tight" style="font-variation-settings:'opsz' 40;">Invite Family
+              Member</h2>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5">Send an invitation to join your family
+              portfolio</p>
+          </div>
+          <button id="inviteClose"
+            class="w-8 h-8 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg
+              class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24"
+              stroke="currentColor" stroke-width="1.5">
+              <path d="M6 18L18 6M6 6l12 12" />
+            </svg></button>
         </div>
         <div class="px-6 py-5 space-y-5">
           <div>
@@ -802,15 +2110,30 @@
           <div>
             <label class="kosh-label">Relationship <span class="text-red-400">*</span></label>
             <div class="kd" id="inviteRelDD" style="width:100%;">
-              <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select relationship...</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5"/></svg></button>
-              <div class="kd-menu"><div class="kd-option" data-value="Spouse">Spouse/Partner</div><div class="kd-option" data-value="Parent">Parent</div><div class="kd-option" data-value="Sibling">Sibling</div><div class="kd-option" data-value="Child">Child</div><div class="kd-option" data-value="Other">Other</div></div>
+              <button class="kd-trigger" type="button"><span class="kd-value kd-placeholder">Select
+                  relationship...</span><svg class="kd-caret" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                  stroke-width="2">
+                  <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                </svg></button>
+              <div class="kd-menu">
+                <div class="kd-option" data-value="Spouse">Spouse/Partner</div>
+                <div class="kd-option" data-value="Parent">Parent</div>
+                <div class="kd-option" data-value="Sibling">Sibling</div>
+                <div class="kd-option" data-value="Child">Child</div>
+                <div class="kd-option" data-value="Other">Other</div>
+              </div>
             </div>
           </div>
-          <p class="text-xs dark:text-kosh-muted text-kosh-light-muted"><a href="https://docs.kosh.app/family-portfolios" target="_blank" class="text-kosh-gold hover:text-kosh-gold-light">Learn more</a> about how family portfolios work.</p>
+          <p class="text-xs dark:text-kosh-muted text-kosh-light-muted"><a
+              href="https://docs.kosh.app/family-portfolios" target="_blank"
+              class="text-kosh-gold hover:text-kosh-gold-light">Learn more</a> about how family portfolios work.</p>
         </div>
         <div class="px-6 py-4 border-t dark:border-kosh-dark-border border-kosh-light-border flex gap-3">
-          <button id="inviteCancel" class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
-          <button id="inviteSend" class="flex-1 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-colors">Send Invite</button>
+          <button id="inviteCancel"
+            class="flex-1 py-2.5 rounded-lg border dark:border-kosh-dark-border border-kosh-light-border text-sm font-semibold dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">Cancel</button>
+          <button id="inviteSend"
+            class="flex-1 py-2.5 rounded-lg bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-colors">Send
+            Invite</button>
         </div>
       </div>
     </div>
@@ -821,7 +2144,7 @@
     // ===== THEME =====
     const html = document.documentElement;
     const saved = localStorage.getItem('kosh-theme');
-    if (saved) { html.classList.remove('dark','light'); html.classList.add(saved); }
+    if (saved) { html.classList.remove('dark', 'light'); html.classList.add(saved); }
     document.getElementById('themeToggle').addEventListener('click', () => {
       html.classList.toggle('dark'); html.classList.toggle('light');
       localStorage.setItem('kosh-theme', html.classList.contains('dark') ? 'dark' : 'light');
@@ -840,12 +2163,12 @@
     sOverlay.addEventListener('click', () => { sidebar.classList.remove('mobile-open'); sOverlay.classList.remove('active'); });
 
     // ===== UTILITIES =====
-    function fmtINR(v) { return '₹' + Math.abs(v).toLocaleString('en-IN', {maximumFractionDigits:0}); }
-    function fmtL(v) { return v >= 100000 ? '₹' + (v/100000).toFixed(1) + 'L' : '₹' + (v/1000).toFixed(1) + 'K'; }
-    const m3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    function fmtINR(v) { return '₹' + Math.abs(v).toLocaleString('en-IN', { maximumFractionDigits: 0 }); }
+    function fmtL(v) { return v >= 100000 ? '₹' + (v / 100000).toFixed(1) + 'L' : '₹' + (v / 1000).toFixed(1) + 'K'; }
+    const m3 = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     function fmtDate(d) { return m3[d.getMonth()] + ' ' + d.getFullYear(); }
     function fmtDateFull(d) { return d.getDate() + ' ' + m3[d.getMonth()] + ' ' + d.getFullYear(); }
-    function daysBetween(a, b) { return Math.round((b - a) / (1000*60*60*24)); }
+    function daysBetween(a, b) { return Math.round((b - a) / (1000 * 60 * 60 * 24)); }
 
     // ===== FD COMPUTATIONS =====
     function computeMaturityAmount(principal, rate, tenureMonths) {
@@ -882,14 +2205,14 @@
     // FD7: Bajaj Corporate, Jun 2024 + 24mo = Jun 2026
     // FD8: Federal Regular, Nov 2024 + 18mo = May 2026
     const fds = [
-      { id:1, bank:'SBI', type:'Regular', principal:500000, rate:7.10, payout:'Cumulative', startDate:'2023-10-15', tenureMonths:36, autoRenewal:true, fdNumber:'FD100234', notes:'' },
-      { id:2, bank:'SBI', type:'Tax-saving', principal:150000, rate:6.50, payout:'Cumulative', startDate:'2024-01-10', tenureMonths:60, autoRenewal:false, fdNumber:'FD100567', notes:'5yr lock-in' },
-      { id:3, bank:'HDFC Bank', type:'Regular', principal:300000, rate:7.25, payout:'Quarterly', startDate:'2024-04-01', tenureMonths:24, autoRenewal:false, fdNumber:'FD200123', notes:'' },
-      { id:4, bank:'ICICI Bank', type:'Regular', principal:250000, rate:6.90, payout:'Cumulative', startDate:'2024-11-10', tenureMonths:18, autoRenewal:true, fdNumber:'IC400891', notes:'' },
-      { id:5, bank:'Kotak', type:'Senior Citizen', principal:400000, rate:7.75, payout:'Monthly', startDate:'2024-03-01', tenureMonths:36, autoRenewal:false, fdNumber:'FD300456', notes:'' },
-      { id:6, bank:'Axis', type:'Regular', principal:200000, rate:7.00, payout:'Cumulative', startDate:'2025-01-15', tenureMonths:18, autoRenewal:true, fdNumber:'AX600312', notes:'' },
-      { id:7, bank:'Bajaj Finance', type:'Corporate', principal:350000, rate:8.10, payout:'Cumulative', startDate:'2024-06-01', tenureMonths:24, autoRenewal:false, fdNumber:'BF789012', notes:'' },
-      { id:8, bank:'Federal Bank', type:'Regular', principal:180000, rate:7.30, payout:'Annually', startDate:'2024-11-01', tenureMonths:18, autoRenewal:false, fdNumber:'FB800445', notes:'' },
+      { id: 1, bank: 'SBI', type: 'Regular', principal: 500000, rate: 7.10, payout: 'Cumulative', startDate: '2023-10-15', tenureMonths: 36, autoRenewal: true, fdNumber: 'FD100234', notes: '' },
+      { id: 2, bank: 'SBI', type: 'Tax-saving', principal: 150000, rate: 6.50, payout: 'Cumulative', startDate: '2024-01-10', tenureMonths: 60, autoRenewal: false, fdNumber: 'FD100567', notes: '5yr lock-in' },
+      { id: 3, bank: 'HDFC Bank', type: 'Regular', principal: 300000, rate: 7.25, payout: 'Quarterly', startDate: '2024-04-01', tenureMonths: 24, autoRenewal: false, fdNumber: 'FD200123', notes: '' },
+      { id: 4, bank: 'ICICI Bank', type: 'Regular', principal: 250000, rate: 6.90, payout: 'Cumulative', startDate: '2024-11-10', tenureMonths: 18, autoRenewal: true, fdNumber: 'IC400891', notes: '' },
+      { id: 5, bank: 'Kotak', type: 'Senior Citizen', principal: 400000, rate: 7.75, payout: 'Monthly', startDate: '2024-03-01', tenureMonths: 36, autoRenewal: false, fdNumber: 'FD300456', notes: '' },
+      { id: 6, bank: 'Axis', type: 'Regular', principal: 200000, rate: 7.00, payout: 'Cumulative', startDate: '2025-01-15', tenureMonths: 18, autoRenewal: true, fdNumber: 'AX600312', notes: '' },
+      { id: 7, bank: 'Bajaj Finance', type: 'Corporate', principal: 350000, rate: 8.10, payout: 'Cumulative', startDate: '2024-06-01', tenureMonths: 24, autoRenewal: false, fdNumber: 'BF789012', notes: '' },
+      { id: 8, bank: 'Federal Bank', type: 'Regular', principal: 180000, rate: 7.30, payout: 'Annually', startDate: '2024-11-01', tenureMonths: 18, autoRenewal: false, fdNumber: 'FB800445', notes: '' },
     ];
 
     // Compute derived fields
@@ -911,10 +2234,10 @@
     // FD11: Kotak, Feb 2024 + 36mo = Feb 2027
     // FD12: ICICI Tax-saving, Apr 2024 + 60mo = Apr 2029
     const familyFDs = [
-      { id:9, bank:'HDFC Bank', type:'Regular', principal:400000, rate:7.25, payout:'Cumulative', startDate:'2024-05-01', tenureMonths:24, member:'Arjun' },
-      { id:10, bank:'SBI', type:'Regular', principal:200000, rate:7.10, payout:'Cumulative', startDate:'2024-08-01', tenureMonths:24, member:'Arjun' },
-      { id:11, bank:'Kotak', type:'Regular', principal:300000, rate:7.50, payout:'Quarterly', startDate:'2024-02-01', tenureMonths:36, member:'Arjun' },
-      { id:12, bank:'ICICI Bank', type:'Tax-saving', principal:150000, rate:6.90, payout:'Cumulative', startDate:'2024-04-01', tenureMonths:60, member:'Arjun' },
+      { id: 9, bank: 'HDFC Bank', type: 'Regular', principal: 400000, rate: 7.25, payout: 'Cumulative', startDate: '2024-05-01', tenureMonths: 24, member: 'Arjun' },
+      { id: 10, bank: 'SBI', type: 'Regular', principal: 200000, rate: 7.10, payout: 'Cumulative', startDate: '2024-08-01', tenureMonths: 24, member: 'Arjun' },
+      { id: 11, bank: 'Kotak', type: 'Regular', principal: 300000, rate: 7.50, payout: 'Quarterly', startDate: '2024-02-01', tenureMonths: 36, member: 'Arjun' },
+      { id: 12, bank: 'ICICI Bank', type: 'Tax-saving', principal: 150000, rate: 6.90, payout: 'Cumulative', startDate: '2024-04-01', tenureMonths: 60, member: 'Arjun' },
     ];
     familyFDs.forEach(fd => {
       const start = new Date(fd.startDate);
@@ -1002,7 +2325,7 @@
     let filterBank = '', filterType = '';
 
     function getSortValue(fd, key) {
-      switch(key) {
+      switch (key) {
         case 'bank': return fd.bank.toLowerCase();
         case 'principal': return fd.principal;
         case 'rate': return fd.rate;
@@ -1037,7 +2360,7 @@
 
       tbody.innerHTML = slice.map(fd => {
         const tc = typeColors[fd.type] || typeColors['Regular'];
-        const tenureStr = fd.tenureMonths >= 12 ? (fd.tenureMonths % 12 === 0 ? (fd.tenureMonths/12) + 'Y' : Math.floor(fd.tenureMonths/12) + 'Y ' + (fd.tenureMonths%12) + 'M') : fd.tenureMonths + 'M';
+        const tenureStr = fd.tenureMonths >= 12 ? (fd.tenureMonths % 12 === 0 ? (fd.tenureMonths / 12) + 'Y' : Math.floor(fd.tenureMonths / 12) + 'Y ' + (fd.tenureMonths % 12) + 'M') : fd.tenureMonths + 'M';
         const matDate = new Date(fd.maturityDate);
         const matDateStr = fmtDate(matDate);
         const maturingSoonBadge = fd.maturingSoon ? '<span class="ml-2 text-[10px] px-1.5 py-0.5 rounded-full bg-amber-500/10 text-amber-400 font-semibold">Maturing Soon</span>' : '';
@@ -1056,7 +2379,7 @@
       document.getElementById('fdCountBadge').textContent = all.length;
 
       // Pagination — always render controls, disable nav when single page
-      document.getElementById('fdPagInfo').textContent = total > 0 ? `Showing ${start+1}–${Math.min(start+fdPerPage, total)} of ${total}` : 'No results';
+      document.getElementById('fdPagInfo').textContent = total > 0 ? `Showing ${start + 1}–${Math.min(start + fdPerPage, total)} of ${total}` : 'No results';
       const btns = document.getElementById('fdPagBtns'); btns.innerHTML = '';
       const navBtnClass = 'w-7 h-7 rounded-md text-xs font-medium dark:text-kosh-muted text-kosh-light-muted dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors disabled:opacity-30 disabled:cursor-not-allowed';
 
@@ -1138,7 +2461,7 @@
       if (!W || !H) return;
 
       const today = new Date(2026, 2, 10);
-      const rangeMonths = { '6M':6, '1Y':12, '2Y':24, '5Y':60, 'All':120 };
+      const rangeMonths = { '6M': 6, '1Y': 12, '2Y': 24, '5Y': 60, 'All': 120 };
       const maxMonths = rangeMonths[maturityRange] || 12;
       const endDate = new Date(today); endDate.setMonth(endDate.getMonth() + maxMonths);
 
@@ -1147,7 +2470,7 @@
       fds.forEach(fd => {
         const mat = new Date(fd.maturityDate);
         if (mat >= today && mat <= endDate) {
-          const key = mat.getFullYear() + '-' + String(mat.getMonth()+1).padStart(2,'0');
+          const key = mat.getFullYear() + '-' + String(mat.getMonth() + 1).padStart(2, '0');
           if (!buckets[key]) buckets[key] = { label: fmtDate(mat), principal: 0, interest: 0, fds: [] };
           buckets[key].principal += fd.principal;
           buckets[key].interest += (fd.maturityAmt - fd.principal);
@@ -1170,15 +2493,15 @@
       const gap = (cw - barW * data.length) / (data.length + 1);
 
       const ns = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(ns,'svg'); svg.setAttribute('width',W); svg.setAttribute('height',H); svg.style.display='block';
+      const svg = document.createElementNS(ns, 'svg'); svg.setAttribute('width', W); svg.setAttribute('height', H); svg.style.display = 'block';
 
       // Grid
       const gc = isDark ? '#2A2A2A' : '#E8E4DC';
       for (let i = 0; i < 3; i++) {
-        const gy = pad.top + (i/2)*ch;
-        const l = document.createElementNS(ns,'line'); l.setAttribute('x1',pad.left); l.setAttribute('x2',W-pad.right); l.setAttribute('y1',gy); l.setAttribute('y2',gy); l.setAttribute('stroke',gc); l.setAttribute('stroke-dasharray','3,3'); svg.appendChild(l);
-        const t = document.createElementNS(ns,'text'); t.setAttribute('x',pad.left-6); t.setAttribute('y',gy+3); t.setAttribute('text-anchor','end'); t.setAttribute('fill',isDark?'#6B6B6B':'#8A8578'); t.setAttribute('font-size','10');
-        const v = Math.round(maxV - (i/2)*maxV); t.textContent = fmtL(v); svg.appendChild(t);
+        const gy = pad.top + (i / 2) * ch;
+        const l = document.createElementNS(ns, 'line'); l.setAttribute('x1', pad.left); l.setAttribute('x2', W - pad.right); l.setAttribute('y1', gy); l.setAttribute('y2', gy); l.setAttribute('stroke', gc); l.setAttribute('stroke-dasharray', '3,3'); svg.appendChild(l);
+        const t = document.createElementNS(ns, 'text'); t.setAttribute('x', pad.left - 6); t.setAttribute('y', gy + 3); t.setAttribute('text-anchor', 'end'); t.setAttribute('fill', isDark ? '#6B6B6B' : '#8A8578'); t.setAttribute('font-size', '10');
+        const v = Math.round(maxV - (i / 2) * maxV); t.textContent = fmtL(v); svg.appendChild(t);
       }
 
       // Stacked Bars — principal (bottom) + interest (top)
@@ -1192,43 +2515,43 @@
 
         // Principal bar (bottom) — teal
         const principalColor = isDark ? '#0E7490' : '#0891B2';
-        const pRect = document.createElementNS(ns,'rect');
-        pRect.setAttribute('x',x); pRect.setAttribute('y',yBase - principalH); pRect.setAttribute('width',barW); pRect.setAttribute('height',principalH);
-        pRect.setAttribute('rx', interestH > 0 ? '0' : '4'); pRect.setAttribute('fill',principalColor); pRect.setAttribute('opacity','0.9');
+        const pRect = document.createElementNS(ns, 'rect');
+        pRect.setAttribute('x', x); pRect.setAttribute('y', yBase - principalH); pRect.setAttribute('width', barW); pRect.setAttribute('height', principalH);
+        pRect.setAttribute('rx', interestH > 0 ? '0' : '4'); pRect.setAttribute('fill', principalColor); pRect.setAttribute('opacity', '0.9');
         svg.appendChild(pRect);
 
         // Interest bar (top) — emerald green (contrasting)
         if (interestH > 1) {
           const interestColor = isDark ? '#34D399' : '#10B981';
-          const iRect = document.createElementNS(ns,'rect');
-          iRect.setAttribute('x',x); iRect.setAttribute('y',yBase - totalH); iRect.setAttribute('width',barW); iRect.setAttribute('height',interestH);
-          iRect.setAttribute('fill',interestColor); iRect.setAttribute('opacity','0.85');
-          iRect.setAttribute('rx','4');
+          const iRect = document.createElementNS(ns, 'rect');
+          iRect.setAttribute('x', x); iRect.setAttribute('y', yBase - totalH); iRect.setAttribute('width', barW); iRect.setAttribute('height', interestH);
+          iRect.setAttribute('fill', interestColor); iRect.setAttribute('opacity', '0.85');
+          iRect.setAttribute('rx', '4');
           svg.appendChild(iRect);
           // Cover the gap between interest and principal with a thin overlap rect
           if (principalH > 0) {
-            const join = document.createElementNS(ns,'rect');
-            join.setAttribute('x',x); join.setAttribute('y',yBase - principalH - 1); join.setAttribute('width',barW); join.setAttribute('height',2);
-            join.setAttribute('fill',interestColor); join.setAttribute('opacity','0.85');
+            const join = document.createElementNS(ns, 'rect');
+            join.setAttribute('x', x); join.setAttribute('y', yBase - principalH - 1); join.setAttribute('width', barW); join.setAttribute('height', 2);
+            join.setAttribute('fill', interestColor); join.setAttribute('opacity', '0.85');
             svg.appendChild(join);
           }
         } else {
           // Only principal — round top corners
-          pRect.setAttribute('rx','4');
+          pRect.setAttribute('rx', '4');
         }
 
         // Total amount on top
-        const amt = document.createElementNS(ns,'text');
-        amt.setAttribute('x',x + barW/2); amt.setAttribute('y',yBase - totalH - 4);
-        amt.setAttribute('text-anchor','middle'); amt.setAttribute('fill',isDark?'#fff':'#1A1A1A');
-        amt.setAttribute('font-size','10'); amt.setAttribute('font-weight','600');
+        const amt = document.createElementNS(ns, 'text');
+        amt.setAttribute('x', x + barW / 2); amt.setAttribute('y', yBase - totalH - 4);
+        amt.setAttribute('text-anchor', 'middle'); amt.setAttribute('fill', isDark ? '#fff' : '#1A1A1A');
+        amt.setAttribute('font-size', '10'); amt.setAttribute('font-weight', '600');
         amt.textContent = fmtL(total); svg.appendChild(amt);
 
         // X label
-        const lbl = document.createElementNS(ns,'text');
-        lbl.setAttribute('x',x + barW/2); lbl.setAttribute('y',H-4);
-        lbl.setAttribute('text-anchor','middle'); lbl.setAttribute('fill',isDark?'#6B6B6B':'#8A8578');
-        lbl.setAttribute('font-size','10'); lbl.textContent = d.label; svg.appendChild(lbl);
+        const lbl = document.createElementNS(ns, 'text');
+        lbl.setAttribute('x', x + barW / 2); lbl.setAttribute('y', H - 4);
+        lbl.setAttribute('text-anchor', 'middle'); lbl.setAttribute('fill', isDark ? '#6B6B6B' : '#8A8578');
+        lbl.setAttribute('font-size', '10'); lbl.textContent = d.label; svg.appendChild(lbl);
       });
 
       // Legend
@@ -1239,15 +2562,15 @@
       ];
       let lx = W - pad.right;
       legendItems.reverse().forEach(item => {
-        const txt = document.createElementNS(ns,'text');
+        const txt = document.createElementNS(ns, 'text');
         txt.setAttribute('x', lx); txt.setAttribute('y', legendY + 3);
-        txt.setAttribute('text-anchor','end'); txt.setAttribute('fill',isDark?'#6B6B6B':'#8A8578');
-        txt.setAttribute('font-size','9'); txt.textContent = item.label; svg.appendChild(txt);
+        txt.setAttribute('text-anchor', 'end'); txt.setAttribute('fill', isDark ? '#6B6B6B' : '#8A8578');
+        txt.setAttribute('font-size', '9'); txt.textContent = item.label; svg.appendChild(txt);
         lx -= (item.label.length * 5.5 + 6);
-        const swatch = document.createElementNS(ns,'rect');
+        const swatch = document.createElementNS(ns, 'rect');
         swatch.setAttribute('x', lx); swatch.setAttribute('y', legendY - 3);
-        swatch.setAttribute('width','8'); swatch.setAttribute('height','8');
-        swatch.setAttribute('rx','2'); swatch.setAttribute('fill',item.color); swatch.setAttribute('opacity',item.opacity);
+        swatch.setAttribute('width', '8'); swatch.setAttribute('height', '8');
+        swatch.setAttribute('rx', '2'); swatch.setAttribute('fill', item.color); swatch.setAttribute('opacity', item.opacity);
         svg.appendChild(swatch);
         lx -= 12;
       });
@@ -1281,7 +2604,7 @@
             <div style="display:flex;justify-content:space-between;gap:16px;padding:0 0 6px;font-size:11px;opacity:0.7;">
               <span>${fmtDateFull(new Date(fd.startDate))} → ${fmtDateFull(new Date(fd.maturityDate))}</span>
             </div>
-            <div style="display:flex;justify-content:space-between;gap:16px;padding:0 0 4px;border-bottom:1px solid ${isDark?'#333':'#eee'};margin-bottom:4px;">
+            <div style="display:flex;justify-content:space-between;gap:16px;padding:0 0 4px;border-bottom:1px solid ${isDark ? '#333' : '#eee'};margin-bottom:4px;">
               <span>Principal: <b>${fmtINR(fd.principal)}</b></span>
               <span style="color:#34D399;">Interest: <b>+${fmtINR(interest)}</b></span>
             </div>`;
@@ -1313,43 +2636,43 @@
       fds.forEach(fd => { bankMap[fd.bank] = (bankMap[fd.bank] || 0) + fd.principal; });
       const allocData = Object.entries(bankMap).map(([name, value]) => ({
         name, value, color: bankColors[name] || '#6B7280'
-      })).sort((a,b) => b.value - a.value);
+      })).sort((a, b) => b.value - a.value);
 
-      const total = allocData.reduce((s,d) => s+d.value, 0);
-      const cx = W/2, cy = H/2, R = Math.min(cx,cy)-36, innerR = R*0.55;
+      const total = allocData.reduce((s, d) => s + d.value, 0);
+      const cx = W / 2, cy = H / 2, R = Math.min(cx, cy) - 36, innerR = R * 0.55;
       const ns = 'http://www.w3.org/2000/svg';
-      const svg = document.createElementNS(ns,'svg'); svg.setAttribute('width',W); svg.setAttribute('height',H); svg.style.display='block';
-      const gap = 0.025*Math.PI*2, totalGap = gap*allocData.length, avail = Math.PI*2-totalGap;
-      let angle = -Math.PI/2;
+      const svg = document.createElementNS(ns, 'svg'); svg.setAttribute('width', W); svg.setAttribute('height', H); svg.style.display = 'block';
+      const gap = 0.025 * Math.PI * 2, totalGap = gap * allocData.length, avail = Math.PI * 2 - totalGap;
+      let angle = -Math.PI / 2;
 
-      allocData.forEach((src,i) => {
-        const sweep = (src.value/total)*avail, sa = angle+gap/2, ea = sa+sweep;
-        function arc(r1,r2,a1,a2){const lg=(a2-a1)>Math.PI?1:0;return`M${cx+r2*Math.cos(a1)},${cy+r2*Math.sin(a1)} A${r2},${r2} 0 ${lg} 1 ${cx+r2*Math.cos(a2)},${cy+r2*Math.sin(a2)} L${cx+r1*Math.cos(a2)},${cy+r1*Math.sin(a2)} A${r1},${r1} 0 ${lg} 0 ${cx+r1*Math.cos(a1)},${cy+r1*Math.sin(a1)} Z`;}
-        const seg=document.createElementNS(ns,'path'); seg.setAttribute('d',arc(innerR,R,sa,ea)); seg.setAttribute('fill',src.color); seg.classList.add('donut-segment'); seg.dataset.idx=i; svg.appendChild(seg);
+      allocData.forEach((src, i) => {
+        const sweep = (src.value / total) * avail, sa = angle + gap / 2, ea = sa + sweep;
+        function arc(r1, r2, a1, a2) { const lg = (a2 - a1) > Math.PI ? 1 : 0; return `M${cx + r2 * Math.cos(a1)},${cy + r2 * Math.sin(a1)} A${r2},${r2} 0 ${lg} 1 ${cx + r2 * Math.cos(a2)},${cy + r2 * Math.sin(a2)} L${cx + r1 * Math.cos(a2)},${cy + r1 * Math.sin(a2)} A${r1},${r1} 0 ${lg} 0 ${cx + r1 * Math.cos(a1)},${cy + r1 * Math.sin(a1)} Z`; }
+        const seg = document.createElementNS(ns, 'path'); seg.setAttribute('d', arc(innerR, R, sa, ea)); seg.setAttribute('fill', src.color); seg.classList.add('donut-segment'); seg.dataset.idx = i; svg.appendChild(seg);
 
         // Labels
-        const ma = (sa+ea)/2, lr=R+14, lor=R+26;
-        const lx1=cx+lr*Math.cos(ma),ly1=cy+lr*Math.sin(ma);
-        const lx2=cx+lor*Math.cos(ma),ly2=cy+lor*Math.sin(ma);
-        const isR=Math.cos(ma)>=0; const lx3=isR?lx2+10:lx2-10;
-        const conn=document.createElementNS(ns,'path'); conn.setAttribute('d',`M${lx1},${ly1} L${lx2},${ly2} L${lx3},${ly2}`); conn.setAttribute('fill','none'); conn.setAttribute('stroke',muted); conn.setAttribute('stroke-width','1'); svg.appendChild(conn);
-        const dot=document.createElementNS(ns,'circle'); dot.setAttribute('cx',lx1); dot.setAttribute('cy',ly1); dot.setAttribute('r','2'); dot.setAttribute('fill',src.color); svg.appendChild(dot);
-        const lbl=document.createElementNS(ns,'text'); lbl.setAttribute('x',isR?lx3+4:lx3-4); lbl.setAttribute('y',ly2+3); lbl.setAttribute('text-anchor',isR?'start':'end'); lbl.setAttribute('fill',muted); lbl.setAttribute('font-size','10'); lbl.textContent=src.name; svg.appendChild(lbl);
+        const ma = (sa + ea) / 2, lr = R + 14, lor = R + 26;
+        const lx1 = cx + lr * Math.cos(ma), ly1 = cy + lr * Math.sin(ma);
+        const lx2 = cx + lor * Math.cos(ma), ly2 = cy + lor * Math.sin(ma);
+        const isR = Math.cos(ma) >= 0; const lx3 = isR ? lx2 + 10 : lx2 - 10;
+        const conn = document.createElementNS(ns, 'path'); conn.setAttribute('d', `M${lx1},${ly1} L${lx2},${ly2} L${lx3},${ly2}`); conn.setAttribute('fill', 'none'); conn.setAttribute('stroke', muted); conn.setAttribute('stroke-width', '1'); svg.appendChild(conn);
+        const dot = document.createElementNS(ns, 'circle'); dot.setAttribute('cx', lx1); dot.setAttribute('cy', ly1); dot.setAttribute('r', '2'); dot.setAttribute('fill', src.color); svg.appendChild(dot);
+        const lbl = document.createElementNS(ns, 'text'); lbl.setAttribute('x', isR ? lx3 + 4 : lx3 - 4); lbl.setAttribute('y', ly2 + 3); lbl.setAttribute('text-anchor', isR ? 'start' : 'end'); lbl.setAttribute('fill', muted); lbl.setAttribute('font-size', '10'); lbl.textContent = src.name; svg.appendChild(lbl);
 
-        angle = ea + gap/2;
+        angle = ea + gap / 2;
       });
 
-      const cm=document.createElementNS(ns,'text'); cm.setAttribute('x',cx); cm.setAttribute('y',cy-4); cm.setAttribute('text-anchor','middle'); cm.setAttribute('fill',textClr); cm.setAttribute('font-size','15'); cm.setAttribute('font-weight','700'); cm.textContent=fmtL(total); svg.appendChild(cm);
-      const cs=document.createElementNS(ns,'text'); cs.setAttribute('x',cx); cs.setAttribute('y',cy+14); cs.setAttribute('text-anchor','middle'); cs.setAttribute('fill',muted); cs.setAttribute('font-size','11'); cs.textContent='Principal'; svg.appendChild(cs);
+      const cm = document.createElementNS(ns, 'text'); cm.setAttribute('x', cx); cm.setAttribute('y', cy - 4); cm.setAttribute('text-anchor', 'middle'); cm.setAttribute('fill', textClr); cm.setAttribute('font-size', '15'); cm.setAttribute('font-weight', '700'); cm.textContent = fmtL(total); svg.appendChild(cm);
+      const cs = document.createElementNS(ns, 'text'); cs.setAttribute('x', cx); cs.setAttribute('y', cy + 14); cs.setAttribute('text-anchor', 'middle'); cs.setAttribute('fill', muted); cs.setAttribute('font-size', '11'); cs.textContent = 'Principal'; svg.appendChild(cs);
       container.appendChild(svg);
 
       // Donut hover
-      const tooltip=document.createElement('div'); tooltip.className='chart-tooltip'; tooltip.style.cssText=`background:${isDark?'#1E1E1E':'#fff'};border:1px solid ${isDark?'#333':'#E8E4DC'};color:${isDark?'#fff':'#1A1A1A'}`; container.appendChild(tooltip);
-      const segs=svg.querySelectorAll('.donut-segment');
-      segs.forEach(seg=>{
-        seg.addEventListener('mouseenter',()=>{const idx=parseInt(seg.dataset.idx),src=allocData[idx]; segs.forEach((s,j)=>{s.classList.toggle('dimmed',j!==idx);s.classList.toggle('active',j===idx);}); cm.textContent=fmtL(src.value); cs.textContent=src.name; tooltip.innerHTML=`<div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:${src.color};"></span><span style="font-weight:600;">${src.name}</span></div><div style="margin-top:4px;">₹${src.value.toLocaleString('en-IN')} · ${Math.round(src.value/total*100)}%</div>`; tooltip.classList.add('visible');});
-        seg.addEventListener('mousemove',(e)=>{const r=container.getBoundingClientRect(); tooltip.style.left=(e.clientX-r.left+12)+'px'; tooltip.style.top=(e.clientY-r.top-20)+'px';});
-        seg.addEventListener('mouseleave',()=>{segs.forEach(s=>{s.classList.remove('dimmed','active');}); cm.textContent=fmtL(total); cs.textContent='Principal'; tooltip.classList.remove('visible');});
+      const tooltip = document.createElement('div'); tooltip.className = 'chart-tooltip'; tooltip.style.cssText = `background:${isDark ? '#1E1E1E' : '#fff'};border:1px solid ${isDark ? '#333' : '#E8E4DC'};color:${isDark ? '#fff' : '#1A1A1A'}`; container.appendChild(tooltip);
+      const segs = svg.querySelectorAll('.donut-segment');
+      segs.forEach(seg => {
+        seg.addEventListener('mouseenter', () => { const idx = parseInt(seg.dataset.idx), src = allocData[idx]; segs.forEach((s, j) => { s.classList.toggle('dimmed', j !== idx); s.classList.toggle('active', j === idx); }); cm.textContent = fmtL(src.value); cs.textContent = src.name; tooltip.innerHTML = `<div style="display:flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:${src.color};"></span><span style="font-weight:600;">${src.name}</span></div><div style="margin-top:4px;">₹${src.value.toLocaleString('en-IN')} · ${Math.round(src.value / total * 100)}%</div>`; tooltip.classList.add('visible'); });
+        seg.addEventListener('mousemove', (e) => { const r = container.getBoundingClientRect(); tooltip.style.left = (e.clientX - r.left + 12) + 'px'; tooltip.style.top = (e.clientY - r.top - 20) + 'px'; });
+        seg.addEventListener('mouseleave', () => { segs.forEach(s => { s.classList.remove('dimmed', 'active'); }); cm.textContent = fmtL(total); cs.textContent = 'Principal'; tooltip.classList.remove('visible'); });
       });
 
       // Update insight footer
@@ -1374,13 +2697,13 @@
       document.getElementById('detailInterest').textContent = '+' + fmtINR(fd.accruedInterest);
       document.getElementById('detailPrincipal').textContent = fmtINR(fd.principal);
       document.getElementById('detailRate').textContent = fd.rate + '%';
-      const tenureStr = fd.tenureMonths >= 12 ? Math.floor(fd.tenureMonths/12) + 'Y' + (fd.tenureMonths%12 ? ' ' + fd.tenureMonths%12 + 'M' : '') : fd.tenureMonths + 'M';
+      const tenureStr = fd.tenureMonths >= 12 ? Math.floor(fd.tenureMonths / 12) + 'Y' + (fd.tenureMonths % 12 ? ' ' + fd.tenureMonths % 12 + 'M' : '') : fd.tenureMonths + 'M';
       document.getElementById('detailTenure').textContent = tenureStr;
       document.getElementById('detailMaturityDate').textContent = fmtDate(new Date(fd.maturityDate));
       document.getElementById('detailDaysLeft').textContent = fd.daysRemaining + 'd';
 
       // Progress bar
-      const start = new Date(fd.startDate), mat = new Date(fd.maturityDate), today = new Date(2026,2,10);
+      const start = new Date(fd.startDate), mat = new Date(fd.maturityDate), today = new Date(2026, 2, 10);
       const totalDays = daysBetween(start, mat), elapsed = Math.max(0, daysBetween(start, today));
       const pct = Math.min(100, Math.round(elapsed / totalDays * 100));
       document.getElementById('detailStartLabel').textContent = fmtDate(start);
@@ -1709,7 +3032,7 @@
       }).join('');
 
       // Pagination — always render controls, disable nav when single page
-      document.getElementById('familyPagInfo').textContent = total > 0 ? `Showing ${start+1}–${Math.min(start+familyPerPage, total)} of ${total}` : 'No results';
+      document.getElementById('familyPagInfo').textContent = total > 0 ? `Showing ${start + 1}–${Math.min(start + familyPerPage, total)} of ${total}` : 'No results';
       const btns = document.getElementById('familyPagBtns'); btns.innerHTML = '';
       const navBtnClass = 'w-7 h-7 rounded-md text-xs font-medium dark:text-kosh-muted text-kosh-light-muted dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors disabled:opacity-30 disabled:cursor-not-allowed';
 
@@ -1750,15 +3073,15 @@
         if (!trigger || !popup) return;
         let cm = new Date().getMonth(), cy = new Date().getFullYear();
         function render() {
-          const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+          const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
           const dim = new Date(cy, cm + 1, 0).getDate(), fd = new Date(cy, cm, 1).getDay();
           let h = `<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><button type="button" class="kdp-nav prev" style="width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:transparent;">&lsaquo;</button><span style="font-size:13px;font-weight:600;">${months[cm]} ${cy}</span><button type="button" class="kdp-nav next" style="width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;background:transparent;">&rsaquo;</button></div>`;
-          h += '<div class="kdp-grid">'; ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d => h += `<span class="kdp-hdr">${d}</span>`);
+          h += '<div class="kdp-grid">';['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'].forEach(d => h += `<span class="kdp-hdr">${d}</span>`);
           for (let i = 0; i < fd; i++) h += '<span></span>';
           const today = new Date();
           for (let d = 1; d <= dim; d++) {
             const isToday = d === today.getDate() && cm === today.getMonth() && cy === today.getFullYear();
-            h += `<button type="button" class="kdp-day${isToday?' today':''}" data-day="${d}">${d}</button>`;
+            h += `<button type="button" class="kdp-day${isToday ? ' today' : ''}" data-day="${d}">${d}</button>`;
           }
           h += '</div>'; popup.innerHTML = h;
           popup.querySelector('.prev').addEventListener('click', (e) => { e.stopPropagation(); cm--; if (cm < 0) { cm = 11; cy--; } render(); });
@@ -1825,4 +3148,5 @@
     window.addEventListener('resize', () => { initMaturityChart(); initBankAllocChart(); });
   </script>
 </body>
+
 </html>

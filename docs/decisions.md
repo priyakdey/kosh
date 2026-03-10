@@ -244,3 +244,48 @@ const editSipSchema = z.object({ amount: z.number().positive(), recurringDay: z.
 **Date:** 10 Mar 2026
 **Decision:** FD Detail shown in a 720px max-width modal (wider than Add FD's 540px but narrower than MF's 820px). Contains: compact cyan summary banner, interest breakdown table (quarterly compounding schedule for cumulative; projected payout schedule for non-cumulative), tenure progress bar, and action buttons (Edit, Mark as Broken, Delete).
 **Rationale:** 720px accommodates the interest breakdown table comfortably. Wider than Add FD because the detail view has more data density. Narrower than MF detail because FDs have no transaction history or charts to display.
+
+## D042 — Mutual Funds: Portfolio X-Ray, Concentration Risk & Highlights Deferred to MVP1
+**Date:** 10 Mar 2026
+**Decision:** The following MF analytics features are deferred from MVP0 to MVP1 — they need deeper research before implementation:
+1. **Portfolio X-Ray** — Tabbed donut card showing Category, Sector, Market Cap, and Holdings (company overlap) breakdowns. Requires real aggregation logic across underlying fund portfolios, reliable data sources for scheme-level holdings, and sector/market-cap classification mapping.
+2. **Concentration Risk / Portfolio Health** — Warnings for unhealthy overlap in companies, sectors, or market-cap segments across MF holdings. Thresholds (e.g., single stock >5%, sector >30%, small-cap >30%) need validation against Indian market norms and user research.
+3. **Highlights card** — "Best Performer", "Portfolio XIRR", "Largest Holding" summary card. Straightforward to build but bundled with the analytics row redesign.
+**Rationale:** These features depend on scheme-level portfolio data (which stocks/sectors each fund holds) that isn't available from mfapi.in. Need to research data sources (AMFI, ValueResearch, Morningstar APIs), determine refresh cadence, and validate that aggregated overlap numbers are meaningful for Indian MF portfolios. Building this with mock data risks shipping misleading analytics. Better to ship MVP0 with the simple Category donut + Fund Weightage bars (which use user's own transaction data) and add the X-Ray suite in MVP1 with real data backing.
+**MVP0 keeps:** Category allocation donut (derived from user's holdings), Fund Weightage horizontal bars, simple Highlights card.
+**MVP1 adds:** Portfolio X-Ray (sector, market cap, company overlap), Portfolio Health card with concentration risk checks.
+
+## D043 — Recurring Deposits: Page Structure Mirrors FD
+**Date:** 10 Mar 2026
+**Decision:** RD page follows the same structure as FD: sky-blue gradient banner, analytics row (maturity timeline + bank-wise donut + highlights), data table, Add/Detail/Close modals. Personal/Family toggle with identical pattern.
+**Rationale:** RD and FD are structurally closest instruments (bank-based, tenure-based, maturity-based). Consistent page structure reduces cognitive load for users who manage both.
+
+## D044 — Recurring Deposits: Sky Blue Theme
+**Date:** 10 Mar 2026
+**Decision:** RD uses sky-blue color family (`#082f49` dark banner, `#0EA5E9` accents) to differentiate from FD's cyan/teal (`#0f2a2e` dark banner, `#06B6D4` accents). Nav dot is `bg-sky-500`.
+**Rationale:** Sky and cyan are visually distinct but both in the blue family, communicating that RD and FD are related but different instruments.
+
+## D045 — Recurring Deposits: No Type/Payout Variants
+**Date:** 10 Mar 2026
+**Decision:** RDs have no type variants (unlike FD's Regular/Tax-saving/Senior Citizen/Corporate/Flexi) and are always cumulative (no payout frequency options). No auto-renewal option.
+**Rationale:** In Indian banking, RDs are simpler than FDs — always cumulative, no tax-saving variant, no payout options. The Add RD modal is therefore simpler (9 fields vs FD's 13).
+
+## D046 — Recurring Deposits: Installment Tracking
+**Date:** 10 Mar 2026
+**Decision:** Table shows "X / Y" installments paid with a 4px micro-progress bar. "Missed" red badge appears when installmentsPaid < expected installments based on months elapsed. Detail modal shows "Installment Progress" section with next due date.
+**Rationale:** Monthly installment tracking is the key differentiator from FDs. Users need to see at a glance which RDs are on track and which have missed payments.
+
+## D047 — Recurring Deposits: Table 7 Columns
+**Date:** 10 Mar 2026
+**Decision:** Bank | Monthly Amt | Installments (X/Y + bar) | Rate | Tenure | Maturity Date | Projected Maturity. Only bank filter (no type filter). "Cumulative" tag shown below bank name.
+**Rationale:** Replaces FD's Principal and Type columns with Monthly Amt and Installments to reflect RD's deposit-over-time nature.
+
+## D048 — Recurring Deposits: Close RD Modal Simplified
+**Date:** 10 Mar 2026
+**Decision:** "Close RD" modal (480px) is simpler than FD's "Break FD" — no lock-in warning, no tax-saving check. Shows penalty rate (−1%), deposited total, amount received, and interest lost.
+**Rationale:** RDs have no lock-in period unlike tax-saving FDs, so the premature closure flow needs fewer warnings.
+
+## D049 — Recurring Deposits: RD Maturity Computation
+**Date:** 10 Mar 2026
+**Decision:** RD maturity computed using iterative quarterly compounding on monthly deposits: each month adds monthlyAmt to balance, every 3rd month the balance compounds at rate/400. "Invested" in banner = sum of (installmentsPaid × monthlyAmt), not committed total.
+**Rationale:** RD interest accrues on a growing principal (unlike FD's fixed principal), requiring iterative computation. Showing actual deposited amount (not committed) gives users an accurate picture of money at work.

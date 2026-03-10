@@ -61,7 +61,9 @@ Grid layout: `grid-cols-1 lg:grid-cols-5, gap-5`
 1. **Portfolio Value Trend** (spans 3 cols) - Line chart with smooth spline interpolation, crosshair cursor, vertical hover line, tooltip with date + value
 2. **Allocation by Category** (spans 2 cols) - Donut chart with hover expand/brighten, center text updates with category name + percentage
 3. **Fund Weightage** (spans 3 cols) - Horizontal bar chart showing top funds by current value as percentage of portfolio
-4. **Highlights** (spans 2 cols) - Card with key insights: top gainer, top loser, largest holding, newest addition
+4. **Highlights** (spans 2 cols) - Card with key insights: best performer, portfolio XIRR, largest holding
+
+> **MVP1 upgrades (D042):** Card #2 becomes Portfolio X-Ray (tabbed donut: Category, Sector, Market Cap, Company Overlap). Card #4 becomes Portfolio Health (5 concentration risk checks with thresholds). Requires scheme-level portfolio data source — see D042 for details.
 
 ### 3.5 Holdings Table
 
@@ -297,12 +299,29 @@ Response:
 | D026     | Personal/Family toggle always visible                                             |
 | D027     | Notification panel in topbar, self-contained per page                             |
 | D028     | Family invite: email + relationship, no name field                                |
+| D042     | Portfolio X-Ray, Concentration Risk & Highlights deferred to MVP1                 |
 
 Full decision details: [docs/decisions.md](decisions.md)
 
 ---
 
 ## 9. Open Questions / Future
+
+### MVP1 — Portfolio Analytics (D042)
+
+These features are deferred from MVP0 and need research before implementation:
+
+- **Portfolio X-Ray (tabbed donut):** Sector exposure, market-cap distribution, and company overlap views aggregated across all MF holdings. Requires a data source for scheme-level portfolios (which stocks/sectors each fund holds). Candidates to research: AMFI portfolio disclosures, ValueResearch API, Morningstar India API, scraping monthly AMC factsheets.
+- **Concentration Risk / Portfolio Health card:** 5 checks — stock concentration (single company >5% warn, >8% danger), top-5 overlap (>20% warn, >30% danger), sector balance (>30% warn, >40% danger), market-cap skew (small-cap >30% or large-cap >70% warn), fund concentration (single fund >25% of portfolio warn). Thresholds need validation against Indian market norms.
+- **Highlights card upgrade:** Current simple 3-box card (best performer, XIRR, largest holding) may evolve into a dynamic insights feed once analytics data is richer.
+- **Research TODOs:**
+  - [ ] Identify reliable API/data source for scheme-level holdings (sector, stock, market-cap breakdown)
+  - [ ] Determine data refresh cadence (monthly factsheet cycle vs. daily)
+  - [ ] Validate concentration risk thresholds with Indian market benchmarks (Nifty 50 sector weights, typical MF portfolio distributions)
+  - [ ] Design the X-Ray footer contextual risk styling (amber/red tints when a tab's data shows concentration issues)
+  - [ ] User research: do Indian retail MF investors understand/value "concentration risk" framing?
+
+### Other Future Items
 
 - **CAS auto-import:** Scheduled periodic import from MFCentral (post-MVP0)
 - **Regular vs Direct comparison:** Side-by-side view of expense ratios and returns (post-MVP0)

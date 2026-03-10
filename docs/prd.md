@@ -57,7 +57,7 @@ Kosh is a personal and household financial wealth tracking application purpose-b
 | **Expenses** | Yes | Yes | Categorized expenses, monthly trends, recurring expense tracking | Pending |
 | **Mutual Funds** | Yes | Yes | SIP tracking, portfolio allocation, fund-level detail, XIRR, CAS import | [mutual-funds.md](mutual-funds.md) |
 | **Stocks** | Yes | Yes | Holdings, P&L, sector allocation | Pending |
-| **Fixed Deposits** | Yes | Yes | Bank, tenure, rate, maturity tracking | Pending |
+| **Fixed Deposits** | Yes | Yes | Bank, tenure, rate, maturity tracking | [fixed-deposits.md](fixed-deposits.md) |
 | **Recurring Deposits** | Yes | Yes | Monthly RD tracking, maturity projection | Pending |
 | **Loans** | Yes | Yes | Home/personal/car loan EMI tracking, outstanding balance | Pending |
 | **Credit Cards** | Yes | Yes | Outstanding amount, due dates, utilization | Pending |
@@ -221,6 +221,7 @@ All product and UX decisions with rationale are tracked in `docs/decisions.md`. 
 - **D026:** Personal/Family toggle always visible, even for solo users
 - **D027:** Notification panel in topbar, self-contained per page
 - **D028:** Family invite flow - email + relationship, no name field
+- **D032–D041:** Fixed Deposits module decisions - see [docs/fixed-deposits.md](fixed-deposits.md) §7
 
 ---
 
@@ -233,7 +234,7 @@ All product and UX decisions with rationale are tracked in `docs/decisions.md`. 
 | OQ3 | Notification system - notification panel designed (D027), backend implementation pending | Open |
 | OQ4 | Data export / reporting | Deferred post-MVP0 |
 
-**Note:** Mutual Funds module PRD is complete - see [docs/mutual-funds.md](mutual-funds.md).
+**Note:** Mutual Funds module PRD is complete - see [docs/mutual-funds.md](mutual-funds.md). Fixed Deposits module PRD is complete - see [docs/fixed-deposits.md](fixed-deposits.md).
 
 ---
 
@@ -245,6 +246,7 @@ All product and UX decisions with rationale are tracked in `docs/decisions.md`. 
 | `docs/prd.md` | This document - product requirements |
 | `docs/decisions.md` | Decision log with rationale |
 | `docs/mutual-funds.md` | Mutual Funds module PRD |
+| `docs/fixed-deposits.md` | Fixed Deposits module PRD |
 | `designs/landing.html` | Landing page design |
 | `designs/` | All HTML design pages (CPO creates) |
 | `ui/` | React frontend (Engineer phase) |

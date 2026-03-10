@@ -192,3 +192,55 @@ const editSipSchema = z.object({ amount: z.number().positive(), recurringDay: z.
 - All animations are CSS-only (keyframes defined in component styles or Tailwind config) — no Framer Motion needed for this component
 - The "Try Again" button should call `onRetry()` which triggers `queryClient.refetchQueries()` or the specific query's `refetch()`. Show the spinner state while refetching (use query's `isFetching` state)
 - Dark/light theme support is built into the design — uses Tailwind dark: classes throughout
+
+---
+
+## D032 — Fixed Deposits: Single "Add FD" Button
+**Date:** 10 Mar 2026
+**Decision:** No import flow for FDs. Single "Add FD" button in page header. All FDs are manually entered.
+**Rationale:** Users typically have 3-10 FDs. No standardized import format exists for FDs (unlike CAS for MFs). Manual entry is acceptable for this volume.
+
+## D033 — Fixed Deposits: Quarterly Compounding Standard
+**Date:** 10 Mar 2026
+**Decision:** All FD maturity calculations use quarterly compounding: `P × (1 + r/400)^(4t)` where P=principal, r=annual rate, t=years.
+**Rationale:** Matches RBI guidelines for Indian bank term deposits. Most banks compound quarterly. This is the industry standard for FD maturity computation.
+
+## D034 — Fixed Deposits: Only Active FDs Shown
+**Date:** 10 Mar 2026
+**Decision:** The FD table only shows active FDs. Matured and broken FDs are removed from the view entirely. "Maturing Soon" badge (amber) shown on active FDs with ≤90 days to maturity. No Status column or filter needed.
+**Rationale:** Kosh is a wealth tracker — matured/broken FDs no longer represent held wealth. Showing them adds clutter without value. The "Maturing Soon" badge provides actionable urgency on the maturity date cell.
+
+## D035 — Fixed Deposits: Mark FD as Broken (Tracking Action)
+**Date:** 10 Mar 2026
+**Decision:** "Mark as Broken" is a Kosh tracking action — it removes the FD from the active portfolio view. It does NOT break the FD at the bank. The modal clearly states: "This only updates your Kosh records. To actually break this FD, visit your bank's net banking portal or branch." An estimated penalty display is shown (reduced rate = original − 1%, estimated amount received, interest lost) with a note that actual penalty terms may vary by bank. Tax-saving FDs cannot be marked as broken before 5-year lock-in — action is disabled with a warning. Confirm button reads "Remove from Portfolio."
+**Rationale:** Kosh is a tracker, not a transactional platform. Users must visit their bank to actually break an FD. The estimated penalty display provides useful context, but the disclaimer prevents users from relying on it as exact figures.
+
+## D036 — Fixed Deposits: No Interest Payout Tracking
+**Date:** 10 Mar 2026
+**Decision:** For non-cumulative FDs, Kosh does NOT track actual interest credits as transactions. However, the FD Detail modal shows a projected payout schedule table (dates + amounts). Actual income tracking is deferred to the Income module.
+**Rationale:** Tracking individual interest payouts as transactions adds data entry burden without meaningful insight at the FD module level. The projected schedule provides visibility; actual tracking belongs in Income.
+
+## D037 — Fixed Deposits: Banner Gradient Cyan
+**Date:** 10 Mar 2026
+**Decision:** Dark: `linear-gradient(135deg, #0f2a2e 0%, #0a1f24 50%, #0d1a1f 100%)`. Light: `linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 50%, #e0f7fa 100%)`.
+**Rationale:** Cyan differentiates FD from MF (indigo) and other modules. Consistent with the nav dot color (bg-cyan-500) for Fixed Deposits.
+
+## D038 — Fixed Deposits: 4 Stat Pills
+**Date:** 10 Mar 2026
+**Decision:** FDs (count) | Avg Rate (weighted average) | Invested (total principal) | Interest (total accrued). No XIRR pill.
+**Rationale:** FDs have fixed known returns — XIRR is unnecessary. Weighted avg rate is the most meaningful metric for comparing FD portfolio yield.
+
+## D039 — Fixed Deposits: 3 Charts
+**Date:** 10 Mar 2026
+**Decision:** Maturity Timeline stacked bar chart (3 cols, principal + interest segments with hover tooltips) + Bank-wise Allocation donut (2 cols) + Highlights card (full width below). No Interest Rate Distribution chart.
+**Rationale:** Maturity timeline is the primary decision-making visual for FDs (when do I get my money back?). Stacked bars show principal vs interest split at a glance. Hover tooltips show per-FD details (bank, dates, amounts). Bank-wise allocation shows concentration risk. Rate info is already in the table — a separate chart would be redundant. Three charts is the right density.
+
+## D040 — Fixed Deposits: Table 7 Columns
+**Date:** 10 Mar 2026
+**Decision:** Bank | FD Type | Principal | Rate | Tenure | Maturity Date | Maturity Amt. Interest payout type shown as small tag below bank name. No Status column (only active FDs shown; "Maturing Soon" amber badge on Maturity Date cell).
+**Rationale:** These 7 columns capture all decision-relevant FD information. Status would be redundant since only active FDs are displayed.
+
+## D041 — Fixed Deposits: FD Detail as 720px Modal
+**Date:** 10 Mar 2026
+**Decision:** FD Detail shown in a 720px max-width modal (wider than Add FD's 540px but narrower than MF's 820px). Contains: compact cyan summary banner, interest breakdown table (quarterly compounding schedule for cumulative; projected payout schedule for non-cumulative), tenure progress bar, and action buttons (Edit, Mark as Broken, Delete).
+**Rationale:** 720px accommodates the interest breakdown table comfortably. Wider than Add FD because the detail view has more data density. Narrower than MF detail because FDs have no transaction history or charts to display.

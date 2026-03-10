@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense - Kosh</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="shared/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="shared/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="shared/favicon/favicon-16x16.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Fraunces"', 'Georgia', 'serif'],
+            body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            kosh: {
+              gold: '#C9A84C', 'gold-light': '#E4CC7A', 'gold-dark': '#A68A3E',
+              cream: '#F5F0E8', charcoal: '#1A1A1A', slate: '#0F0F0F',
+              'dark-card': '#161616', 'dark-border': '#2A2A2A',
+              'light-bg': '#FAFAF7', 'light-card': '#FFFFFF',
+              'light-border': '#E8E4DC', 'light-muted': '#8A8578', muted: '#6B6B6B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    * { transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease; }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    .dark ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .light ::-webkit-scrollbar-thumb { background: #D4D0C8; border-radius: 3px; }
+
+    /* ====== Sidebar ====== */
+    .sidebar { width: 260px; transition: width 0.3s cubic-bezier(0.16,1,0.3,1), transform 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .sidebar.collapsed { width: 68px; }
+    .sidebar.collapsed .sb-hide { display: none; }
+    .sidebar.collapsed .sidebar-profile { justify-content: center; }
+    .sidebar.collapsed .nav-link { justify-content: center; padding-left: 0; padding-right: 0; }
+    .main-content { margin-left: 260px; transition: margin-left 0.3s cubic-bezier(0.16,1,0.3,1); }
+    .sidebar.collapsed ~ .main-content { margin-left: 68px; }
+    @media (max-width: 768px) {
+      .sidebar { position: fixed; transform: translateX(-100%); width: 280px; z-index: 40; }
+      .sidebar.mobile-open { transform: translateX(0); }
+      .main-content { margin-left: 0 !important; }
+      .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 35; }
+      .sidebar-overlay.active { display: block; }
+    }
+    .nav-link { display: flex; align-items: center; gap: 12px; padding: 8px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.15s ease; position: relative; }
+    .dark .nav-link { color: #6B6B6B; } .light .nav-link { color: #8A8578; }
+    .dark .nav-link:hover { color: #fff; background: rgba(201,168,76,0.06); }
+    .light .nav-link:hover { color: #1A1A1A; background: rgba(201,168,76,0.06); }
+    .nav-link.active { color: #C9A84C !important; background: rgba(201,168,76,0.08) !important; }
+    .nav-link.active::before { content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; border-radius: 0 3px 3px 0; background: #C9A84C; }
+    .topbar { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
+    .dark .topbar { background: rgba(15,15,15,0.85); border-bottom: 1px solid #2A2A2A; }
+    .light .topbar { background: rgba(250,250,247,0.9); border-bottom: 1px solid #E8E4DC; }
+
+    /* ====== Notification Panel ====== */
+    .notif-panel { opacity: 0; visibility: hidden; transform: translateY(-8px) scale(0.98); transition: opacity 0.2s, visibility 0.2s, transform 0.2s cubic-bezier(0.16,1,0.3,1); }
+    .notif-panel.open { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+    .notif-item { display: flex; gap: 12px; padding: 12px 16px; transition: background 0.1s; cursor: pointer; }
+    .dark .notif-item:hover { background: rgba(201,168,76,0.03); }
+    .light .notif-item:hover { background: rgba(201,168,76,0.03); }
+    .notif-item.unread { position: relative; }
+    .dark .notif-item.unread { background: rgba(201,168,76,0.04); }
+    .light .notif-item.unread { background: rgba(201,168,76,0.03); }
+    .notif-item.unread::before { content: ''; position: absolute; left: 6px; top: 50%; transform: translateY(-50%); width: 6px; height: 6px; border-radius: 50%; background: #C9A84C; }
+  </style>
+</head>
+
+<body class="dark:bg-kosh-slate dark:text-white bg-kosh-light-bg text-kosh-charcoal">
+  <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+  <!-- ====== SIDEBAR ====== -->
+  <aside id="sidebar" class="sidebar fixed left-0 top-0 h-full z-30 dark:bg-kosh-dark-card bg-white border-r dark:border-kosh-dark-border border-kosh-light-border flex flex-col">
+    <div class="flex items-center justify-between px-4 h-[60px] border-b dark:border-kosh-dark-border border-kosh-light-border flex-shrink-0">
+      <a href="dashboard.html" class="flex items-center gap-2.5">
+        <img src="shared/logo.png" width="30" height="30" alt="Kosh" class="flex-shrink-0">
+        <span class="sb-hide font-display text-lg tracking-tight" style="font-variation-settings:'opsz' 40;">Kosh</span>
+      </a>
+      <button id="sidebarToggle" class="w-7 h-7 rounded-md flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
+        <svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg>
+      </button>
+    </div>
+    <nav class="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+      <a href="dashboard.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z"/></svg><span class="sb-hide">Dashboard</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="income.html" class="nav-link"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg><span class="sb-hide">Income</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="expense.html" class="nav-link active"><svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg><span class="sb-hide">Expense</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Assets</p></div>
+      <a href="assets/mutual-funds.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span class="sb-hide">Mutual Funds</span></a>
+      <a href="assets/stocks.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span><span class="sb-hide">Stocks</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="assets/fixed-deposits.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></span><span class="sb-hide">Fixed Deposits</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="assets/recurring-deposits.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0"></span><span class="sb-hide">Recurring Deposits</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Liabilities</p></div>
+      <a href="liabilities/credit-cards.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span><span class="sb-hide">Credit Cards</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="liabilities/loans.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span><span class="sb-hide">Loans</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <div class="pt-5 pb-1"><p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Protection</p></div>
+      <a href="protection/term-insurance.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0"></span><span class="sb-hide">Term Insurance</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+      <a href="protection/health-insurance.html" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span><span class="sb-hide">Health Insurance</span><span class="sb-hide ml-auto text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted/50 text-kosh-light-muted/50">Soon</span></a>
+    </nav>
+    <div class="border-t dark:border-kosh-dark-border border-kosh-light-border p-3 flex-shrink-0">
+      <a href="settings/profile.html" class="sidebar-profile flex items-center gap-3 px-2 py-2 rounded-lg dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors">
+        <div class="w-8 h-8 rounded-full bg-kosh-gold/20 flex items-center justify-center text-xs font-bold text-kosh-gold flex-shrink-0">PD</div>
+        <div class="sb-hide flex-1 min-w-0"><p class="text-sm font-semibold truncate">Priyak Dey</p><p class="text-[11px] dark:text-kosh-muted text-kosh-light-muted truncate">Settings</p></div>
+        <svg class="sb-hide w-4 h-4 dark:text-kosh-muted text-kosh-light-muted flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+      </a>
+    </div>
+  </aside>
+
+  <!-- ====== MAIN ====== -->
+  <div class="main-content min-h-screen flex flex-col">
+    <header class="topbar sticky top-0 z-20 h-[60px] flex items-center justify-between px-6 gap-4 flex-shrink-0">
+      <button id="mobileMenuBtn" class="md:hidden w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/></svg></button>
+      <div class="flex-1 max-w-md"><div class="relative"><svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-kosh-muted text-kosh-light-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/></svg><input type="text" placeholder="Search..." class="w-full py-2 pl-10 pr-4 text-sm rounded-lg outline-none transition-all dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border dark:text-white text-kosh-charcoal focus:border-kosh-gold focus:ring-1 focus:ring-kosh-gold/20" /></div></div>
+      <div class="flex items-center gap-1.5">
+        <div class="relative">
+          <button id="notifBtn" class="relative w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-[18px] h-[18px] dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg><span id="notifBadge" class="absolute top-1 right-1 min-w-[16px] h-[16px] flex items-center justify-center rounded-full bg-red-500 text-white text-[9px] font-bold ring-2 dark:ring-kosh-slate ring-kosh-light-bg px-1">4</span></button>
+          <!-- Notification Panel -->
+          <div id="notifPanel" class="notif-panel absolute right-0 top-full mt-2 w-[380px] rounded-xl border shadow-2xl z-50 dark:bg-kosh-dark-card bg-white dark:border-kosh-dark-border border-kosh-light-border dark:shadow-[0_20px_60px_-10px_rgba(0,0,0,0.5)]">
+            <div class="flex items-center justify-between px-4 py-3 border-b dark:border-kosh-dark-border border-kosh-light-border">
+              <h3 class="text-sm font-semibold">Notifications</h3>
+              <button id="markAllReadBtn" class="text-[11px] text-kosh-gold hover:text-kosh-gold-light transition-colors font-medium">Mark all read</button>
+            </div>
+            <div id="notifList" class="max-h-[400px] overflow-y-auto divide-y dark:divide-kosh-dark-border/50 divide-kosh-light-border/50"></div>
+            <div id="notifEmpty" class="hidden px-4 py-10 text-center">
+              <svg class="w-8 h-8 mx-auto mb-2 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"/></svg>
+              <p class="text-xs dark:text-kosh-muted text-kosh-light-muted">All caught up!</p>
+            </div>
+          </div>
+        </div>
+        <button id="themeToggle" class="w-9 h-9 rounded-lg flex items-center justify-center dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border transition-colors"><svg class="w-[18px] h-[18px] dark:block hidden text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg><svg class="w-[18px] h-[18px] dark:hidden block text-kosh-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg></button>
+        <button class="ml-1 px-4 py-2 rounded-lg text-sm font-medium dark:text-red-400 text-red-600 dark:bg-red-500/8 bg-red-50 dark:hover:bg-red-500/15 hover:bg-red-100 transition-colors">Logout</button>
+      </div>
+    </header>
+
+    <main class="flex-1 flex items-center justify-center p-6" style="min-height: calc(100vh - 60px);">
+      <div class="text-center max-w-md mx-auto">
+        <!-- Module Icon -->
+        <div class="w-16 h-16 mx-auto mb-6 rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border flex items-center justify-center">
+          <svg class="w-8 h-8 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/></svg>
+        </div>
+
+        <!-- Module Name -->
+        <p class="text-sm font-semibold dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider mb-2">Expense</p>
+
+        <!-- Coming Soon -->
+        <h1 class="font-display text-4xl text-kosh-gold tracking-tight mb-4" style="font-variation-settings: 'opsz' 72;">Coming Soon</h1>
+
+        <!-- Description -->
+        <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-8 max-w-sm mx-auto">We're building a smart expense tracking experience. This module is being designed with care.</p>
+
+        <!-- Feature Preview Card -->
+        <div class="rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border p-5 max-w-sm mx-auto text-left mb-8">
+          <p class="text-[11px] font-semibold uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted mb-3">What to expect</p>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-sm dark:text-kosh-muted text-kosh-light-muted">
+              <span class="w-1 h-1 rounded-full bg-kosh-gold mt-2 flex-shrink-0"></span>
+              Categorized expense tracking
+            </li>
+            <li class="flex items-start gap-2.5 text-sm dark:text-kosh-muted text-kosh-light-muted">
+              <span class="w-1 h-1 rounded-full bg-kosh-gold mt-2 flex-shrink-0"></span>
+              Monthly trends & analysis
+            </li>
+            <li class="flex items-start gap-2.5 text-sm dark:text-kosh-muted text-kosh-light-muted">
+              <span class="w-1 h-1 rounded-full bg-kosh-gold mt-2 flex-shrink-0"></span>
+              Recurring expense management
+            </li>
+            <li class="flex items-start gap-2.5 text-sm dark:text-kosh-muted text-kosh-light-muted">
+              <span class="w-1 h-1 rounded-full bg-kosh-gold mt-2 flex-shrink-0"></span>
+              Family expense aggregation
+            </li>
+          </ul>
+        </div>
+
+        <!-- Back to Dashboard -->
+        <a href="dashboard.html" class="inline-flex items-center gap-2 text-sm font-medium text-kosh-gold hover:text-kosh-gold-light transition-colors">
+          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"/></svg>
+          Back to Dashboard
+        </a>
+      </div>
+    </main>
+  </div>
+
+  <!-- ====== SCRIPTS ====== -->
+  <script>
+    // ===== THEME =====
+    const html = document.documentElement;
+    const saved = localStorage.getItem('kosh-theme');
+    if (saved) { html.classList.remove('dark','light'); html.classList.add(saved); }
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      html.classList.toggle('dark'); html.classList.toggle('light');
+      localStorage.setItem('kosh-theme', html.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    // ===== SIDEBAR =====
+    const sidebar = document.getElementById('sidebar');
+    const sOverlay = document.getElementById('sidebarOverlay');
+    const isMobile = () => window.innerWidth < 768;
+    document.getElementById('sidebarToggle').addEventListener('click', () => {
+      if (isMobile()) { sidebar.classList.toggle('mobile-open'); sOverlay.classList.toggle('active'); }
+      else { sidebar.classList.toggle('collapsed'); }
+    });
+    document.getElementById('mobileMenuBtn')?.addEventListener('click', () => { sidebar.classList.add('mobile-open'); sOverlay.classList.add('active'); });
+    sOverlay.addEventListener('click', () => { sidebar.classList.remove('mobile-open'); sOverlay.classList.remove('active'); });
+
+    // ===== NOTIFICATIONS =====
+    const notifications = [
+      { id: 1, icon: 'sip', color: 'emerald', title: 'SIP Recorded', body: 'Nippon India Multi Cap Fund - ₹15,000 SIP for Mar 2026 auto-recorded.', time: '2 hours ago', read: false },
+      { id: 2, icon: 'nav', color: 'violet', title: 'NAV Updated', body: 'NAVs updated for 18 schemes as of 9 Mar 2026.', time: '5 hours ago', read: false },
+      { id: 3, icon: 'sip', color: 'emerald', title: 'SIP Recorded', body: 'Canara Robeco Flexi Cap Fund - ₹5,000 SIP for Mar 2026 auto-recorded.', time: '1 day ago', read: false },
+      { id: 4, icon: 'milestone', color: 'gold', title: 'Milestone Reached', body: 'Your MF portfolio crossed ₹34L! Up 17.8% overall.', time: '2 days ago', read: false },
+      { id: 5, icon: 'sip', color: 'amber', title: 'SIP Paused', body: 'Canara Robeco Large & Mid Cap SIP is paused. Resume from fund detail.', time: '5 days ago', read: true },
+      { id: 6, icon: 'import', color: 'blue', title: 'CAS Import Complete', body: '8 folios, 42 transactions imported successfully.', time: '1 week ago', read: true },
+    ];
+
+    const notifIconMap = {
+      sip: '<path d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182"/>',
+      nav: '<path d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z"/>',
+      milestone: '<path d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/>',
+      import: '<path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>',
+    };
+
+    const notifColorMap = {
+      emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-500' },
+      violet: { bg: 'bg-violet-500/10', text: 'text-violet-500' },
+      amber: { bg: 'bg-amber-500/10', text: 'text-amber-500' },
+      gold: { bg: 'bg-kosh-gold/10', text: 'text-kosh-gold' },
+      blue: { bg: 'bg-blue-500/10', text: 'text-blue-500' },
+    };
+
+    function renderNotifications() {
+      const list = document.getElementById('notifList');
+      const empty = document.getElementById('notifEmpty');
+      const badge = document.getElementById('notifBadge');
+      const unreadCount = notifications.filter(n => !n.read).length;
+
+      if (unreadCount > 0) {
+        badge.textContent = unreadCount;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+
+      document.getElementById('markAllReadBtn').classList.toggle('hidden', unreadCount === 0);
+
+      if (notifications.length === 0) {
+        list.classList.add('hidden');
+        empty.classList.remove('hidden');
+        return;
+      }
+      list.classList.remove('hidden');
+      empty.classList.add('hidden');
+
+      list.innerHTML = notifications.map(n => {
+        const cc = notifColorMap[n.color] || notifColorMap.blue;
+        const iconPath = notifIconMap[n.icon] || notifIconMap.sip;
+        return `<div class="notif-item ${n.read ? '' : 'unread'}" data-notif-id="${n.id}">
+          <div class="w-8 h-8 rounded-lg ${cc.bg} flex items-center justify-center flex-shrink-0 mt-0.5">
+            <svg class="w-4 h-4 ${cc.text}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">${iconPath}</svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-start justify-between gap-2">
+              <p class="text-sm font-semibold ${n.read ? 'dark:text-kosh-muted text-kosh-light-muted' : ''}">${n.title}</p>
+              ${n.read ? '' : '<button class="notif-mark-read text-[10px] text-kosh-gold hover:text-kosh-gold-light font-medium flex-shrink-0 mt-0.5" data-id="' + n.id + '">Mark read</button>'}
+            </div>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-0.5 leading-relaxed">${n.body}</p>
+            <p class="text-[11px] dark:text-kosh-muted/60 text-kosh-light-muted/60 mt-1">${n.time}</p>
+          </div>
+        </div>`;
+      }).join('');
+
+      list.querySelectorAll('.notif-mark-read').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const id = parseInt(btn.dataset.id);
+          const n = notifications.find(x => x.id === id);
+          if (n) { n.read = true; renderNotifications(); }
+        });
+      });
+    }
+
+    const notifPanel = document.getElementById('notifPanel');
+    document.getElementById('notifBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      notifPanel.classList.toggle('open');
+    });
+
+    document.getElementById('markAllReadBtn').addEventListener('click', () => {
+      notifications.forEach(n => n.read = true);
+      renderNotifications();
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!notifPanel.contains(e.target) && !e.target.closest('#notifBtn')) {
+        notifPanel.classList.remove('open');
+      }
+    });
+
+    renderNotifications();
+
+    // ===== ESCAPE KEY =====
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        notifPanel.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>

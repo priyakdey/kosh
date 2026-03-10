@@ -165,3 +165,30 @@ const editSipSchema = z.object({ amount: z.number().positive(), recurringDay: z.
 **Date:** 10 Mar 2026
 **Decision:** "Invite Family Member" button (in Family tab empty state) opens a modal with: Email (required), Relationship (required: Spouse/Partner, Parent, Sibling, Child, Other). No name field - picked from the invitee's profile on account creation. Confirmation step shows email sent + next steps. "Learn more" link points to `https://docs.kosh.app/family-portfolios` (external docs site, opens in new tab).
 **Rationale:** Minimal friction invite flow. Name comes from the invitee's own profile, not the inviter's assumption. Relationship is mandatory for family structure clarity.
+
+## D029 — Income & Expense: Deferred with Coming Soon Pages
+**Date:** 10 Mar 2026
+**Decision:** Income & Expense modules deferred — the cash inflow/outflow accounting model needs more thought (SIP is not an expense, account-level tracking, daily data entry burden). Pages show a polished "Coming Soon" state. Nav links remain clickable with a "Soon" badge.
+**Rationale:** Better to ship a deliberate "coming soon" than a half-baked design. The accounting model for income/expense in a wealth tracker (vs a budgeting app) is fundamentally different and deserves dedicated product thinking.
+
+## D030 — Service Unavailable Error State
+**Date:** 10 Mar 2026
+**Decision:** Designed a reusable "Service Unavailable" error state page (`assets/mutual-funds-service-not-available.html`). Full app shell remains functional (sidebar, topbar, notifications). Main content area replaced with a centered error state. Final animation chosen: **Server Rack** — a server rack with 5 slots, each with independently flickering red status lights (staggered CSS keyframes), a broken cable on the left with kosh-gold sparks, a warning triangle, and floating signal-lost dots. Also includes: signal-lost badge (top-right, fading red bars + X), staggered entrance animations (fadeSlideUp), "Try Again" button with loading spinner, subtle error code (`ERR_SERVICE_UNAVAILABLE · 503`), and "Back to Dashboard" fallback link. Tone is calm and reassuring — "your data is safe."
+**Explored alternatives:** Rotating vault clock, pulse flatline (ECG), broken chain, scattered coins, cloud disconnect, shattered shield, hourglass glitch. Server rack selected for its clear visual metaphor and premium feel.
+**Rationale:** In a wealth tracker, inability to see financial data triggers anxiety. The error state must reassure users their data is intact while providing a clear recovery path. The server rack metaphor is universally understood and the flickering lights convey "something is wrong but the system is still alive."
+
+**Engineer notes:**
+- Extract as a reusable `<ServiceError />` component (e.g., `src/components/shared/ServiceError.tsx`)
+- Props: `moduleName: string` (displayed as subtitle above heading), `onRetry: () => void` (wired to TanStack Query's `refetch`), `backTo?: { label: string; href: string }` (defaults to Dashboard)
+- Trigger this component when any API call returns a 5xx status code. Use TanStack Query's `isError` + `error.status >= 500` to conditionally render `<ServiceError />` in place of the page's main content area
+
+---
+
+## D031 — All Unbuilt Pages: Coming Soon Treatment
+**Date:** 10 Mar 2026
+**Decision:** Extended the Coming Soon pattern (D029) to all 9 unbuilt pages: Dashboard, Stocks, Fixed Deposits, Recurring Deposits, Credit Cards, Loans, Term Insurance, Health Insurance, Settings/Profile. Each gets a polished placeholder with module-specific icon, description, and feature preview. Nav sidebar on ALL existing pages updated with "Soon" badges for unbuilt modules.
+**Rationale:** Consistent UX — no dead links anywhere in the app. Every nav link leads to a real page. Users see the full product vision even during the design phase.
+- The app shell (sidebar, topbar, notifications) remains fully functional — only the `<main>` content swaps
+- All animations are CSS-only (keyframes defined in component styles or Tailwind config) — no Framer Motion needed for this component
+- The "Try Again" button should call `onRetry()` which triggers `queryClient.refetchQueries()` or the specific query's `refetch()`. Show the spinner state while refetching (use query's `isFetching` state)
+- Dark/light theme support is built into the design — uses Tailwind dark: classes throughout

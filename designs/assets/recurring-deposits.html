@@ -2587,7 +2587,7 @@
       const bankCount = allocData.length;
       const topBank = allocData[0];
       const topPct = Math.round(topBank.value / total * 100);
-      document.getElementById('bankAllocInsight').innerHTML = `<span>${bankCount} banks across ${rds.length} RDs</span>`;
+      document.getElementById('bankAllocInsight').innerHTML = `<span>${rds.length} RDs across ${bankCount} banks</span>`;
       document.getElementById('bankAllocSubInsight').textContent = `${topBank.name} leads at ${topPct}%` + (topPct > 40 ? ' — consider diversifying' : '');
     }
 

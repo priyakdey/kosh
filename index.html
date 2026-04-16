@@ -705,6 +705,130 @@
             </div>
           </div>
         </div>
+
+        <!-- ============ MOBILE PHONE MOCKUP ============ -->
+        <div class="mt-12 flex justify-center lg:mt-0 lg:justify-start lg:absolute lg:-bottom-16 lg:-right-4 xl:-right-12 lg:z-20 opacity-0 animate-[heroReveal_1s_1.8s_forwards]">
+          <!-- Phone bezel -->
+          <div class="relative w-[260px] h-[540px] lg:w-[280px] lg:h-[580px] rounded-[44px] lg:rounded-[48px] bg-black p-[10px] shadow-[0_40px_80px_-20px_rgba(0,0,0,0.6),0_0_0_2px_rgba(255,255,255,0.04)] lg:rotate-[4deg]">
+            <!-- Screen -->
+            <div class="relative w-full h-full rounded-[40px] overflow-hidden bg-kosh-app">
+
+              <!-- Dynamic Island -->
+              <div class="absolute top-1.5 left-1/2 -translate-x-1/2 w-20 h-5 rounded-full bg-black z-10"></div>
+
+              <!-- Status bar -->
+              <div class="relative pt-2 px-6 flex items-center justify-between text-[10px] font-semibold text-white">
+                <span>9:41</span>
+                <div class="flex items-center gap-1">
+                  <!-- Signal -->
+                  <svg class="w-3 h-3" viewBox="0 0 14 10" fill="currentColor"><rect x="0" y="7" width="2" height="3" rx="0.5"/><rect x="4" y="5" width="2" height="5" rx="0.5"/><rect x="8" y="3" width="2" height="7" rx="0.5"/><rect x="12" y="1" width="2" height="9" rx="0.5"/></svg>
+                  <!-- Wifi -->
+                  <svg class="w-3 h-3" viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 10h.01M3 7a7 7 0 0110 0M1 4a11 11 0 0114 0"/></svg>
+                  <!-- Battery -->
+                  <svg class="w-4 h-3" viewBox="0 0 20 10" fill="none"><rect x="0.5" y="0.5" width="16" height="9" rx="2" stroke="currentColor" stroke-width="0.8"/><rect x="17.5" y="3" width="1.5" height="4" rx="0.5" fill="currentColor"/><rect x="2" y="2" width="13" height="6" rx="1" fill="currentColor"/></svg>
+                </div>
+              </div>
+
+              <!-- App topbar -->
+              <div class="px-4 pt-4 pb-3 flex items-center justify-between">
+                <svg class="w-6 h-[26px]"><use href="#kosh-logo"/></svg>
+                <div class="flex items-center gap-2">
+                  <button class="relative w-8 h-8 flex items-center justify-center rounded-lg text-kosh-muted">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2a2 2 0 01-.6 1.4L4 17h5m6 0a3 3 0 11-6 0"/></svg>
+                    <span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-kosh-gold rounded-full"></span>
+                  </button>
+                  <div class="w-7 h-7 rounded-full bg-avatar-gold flex items-center justify-center font-display font-semibold text-[0.65rem] text-kosh-slate opsz-40">P</div>
+                </div>
+              </div>
+
+              <!-- Scope switcher -->
+              <div class="px-4 pb-3">
+                <div class="inline-flex bg-kosh-dark-card border border-kosh-dark-border rounded-lg p-[2px] w-full">
+                  <div class="flex-1 text-center py-1.5 text-[0.65rem] font-medium text-kosh-muted rounded-md">Personal</div>
+                  <div class="flex-1 text-center py-1.5 text-[0.65rem] font-semibold text-kosh-slate bg-kosh-gold rounded-md">Family</div>
+                </div>
+                <p class="text-[0.58rem] text-kosh-muted mt-1.5">Snapshot · November 2026</p>
+              </div>
+
+              <!-- Net worth card -->
+              <div class="mx-4 mb-3 relative overflow-hidden bg-nw-gradient border border-kosh-gold/15 rounded-2xl p-4 dot-texture">
+                <div class="relative flex items-center justify-between mb-1.5">
+                  <span class="text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-kosh-muted">Household net worth</span>
+                  <span class="font-display italic text-[0.55rem] text-kosh-muted opsz-40">30 Nov</span>
+                </div>
+                <div class="relative font-display text-[2rem] font-light leading-none tracking-tight tnum text-white opsz-144 mb-1.5 flex items-baseline gap-1.5">
+                  <span class="text-base font-normal text-kosh-gold">₹</span>
+                  <span>2.27</span>
+                  <span class="text-sm font-normal text-kosh-gold">Cr</span>
+                </div>
+                <div class="relative inline-flex items-center gap-1 px-1.5 py-0.5 bg-emerald-500/10 border border-emerald-500/20 rounded-full text-[0.55rem] font-medium text-kosh-pos">
+                  <svg class="w-1.5 h-1.5" viewBox="0 0 10 10" fill="none"><path d="M5 1L8.5 5.5H1.5L5 1Z" fill="currentColor"/></svg>
+                  + ₹9.14 L
+                </div>
+                <div class="relative w-full h-6 mt-2">
+                  <svg viewBox="0 0 520 54" preserveAspectRatio="none" class="w-full h-full">
+                    <path d="M0,46 Q35,44 65,40 T130,34 T195,28 T260,23 T325,17 T390,12 T455,8 L520,5 L520,54 L0,54 Z" fill="url(#nwGrad)"/>
+                    <path d="M0,46 Q35,44 65,40 T130,34 T195,28 T260,23 T325,17 T390,12 T455,8 L520,5" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                    <circle cx="520" cy="5" r="4" fill="#C9A84C"/>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- Mini stats row -->
+              <div class="mx-4 mb-3 grid grid-cols-2 gap-2">
+                <div class="relative bg-kosh-dark-card border border-kosh-dark-border rounded-xl p-2.5 overflow-hidden">
+                  <div class="accent-bar accent-gold"></div>
+                  <div class="text-[0.5rem] font-semibold uppercase tracking-[0.1em] text-kosh-muted mb-0.5">FIRE</div>
+                  <div class="font-display text-sm font-normal text-white opsz-72 flex items-baseline gap-0.5">
+                    <span>38</span><span class="text-[0.65rem] text-kosh-gold">%</span>
+                  </div>
+                  <div class="font-display italic text-[0.52rem] text-kosh-muted opsz-40 mt-0.5">target 2040</div>
+                </div>
+                <div class="relative bg-kosh-dark-card border border-kosh-dark-border rounded-xl p-2.5 overflow-hidden">
+                  <div class="accent-bar accent-green"></div>
+                  <div class="text-[0.5rem] font-semibold uppercase tracking-[0.1em] text-kosh-muted mb-0.5">Saved</div>
+                  <div class="font-display text-sm font-normal text-white opsz-72 flex items-baseline gap-0.5">
+                    <span>65</span><span class="text-[0.65rem] text-kosh-gold">%</span>
+                  </div>
+                  <div class="font-display italic text-[0.52rem] text-kosh-muted opsz-40 mt-0.5">of inflow</div>
+                </div>
+              </div>
+
+              <!-- Activity -->
+              <div class="mx-4">
+                <div class="text-[0.52rem] font-semibold uppercase tracking-[0.12em] text-kosh-muted mb-1.5">Recent activity</div>
+                <div class="flex flex-col">
+                  <div class="flex items-center justify-between py-1.5 border-b border-kosh-border-sb">
+                    <div class="flex items-center gap-2 min-w-0">
+                      <div class="w-5 h-5 rounded-md flex items-center justify-center font-display font-semibold text-[0.5rem] opsz-40 bg-icon-income text-emerald-300 shrink-0">In</div>
+                      <div class="text-[0.62rem] font-medium text-white truncate">Salary · Capital One</div>
+                    </div>
+                    <div class="font-display text-[0.62rem] font-medium opsz-40 tnum text-kosh-pos whitespace-nowrap">+ ₹2.84 L</div>
+                  </div>
+                  <div class="flex items-center justify-between py-1.5 border-b border-kosh-border-sb">
+                    <div class="flex items-center gap-2 min-w-0">
+                      <div class="w-5 h-5 rounded-md flex items-center justify-center font-display font-semibold text-[0.5rem] opsz-40 bg-icon-expense text-red-300 shrink-0">Ex</div>
+                      <div class="text-[0.62rem] font-medium text-white truncate">Rent · November</div>
+                    </div>
+                    <div class="font-display text-[0.62rem] font-medium opsz-40 tnum text-kosh-neg whitespace-nowrap">− ₹71 K</div>
+                  </div>
+                  <div class="flex items-center justify-between py-1.5">
+                    <div class="flex items-center gap-2 min-w-0">
+                      <div class="w-5 h-5 rounded-md flex items-center justify-center font-display font-semibold text-[0.5rem] opsz-40 bg-icon-invest text-violet-300 shrink-0">Mf</div>
+                      <div class="text-[0.62rem] font-medium text-white truncate">SIP · PPFAS</div>
+                    </div>
+                    <div class="font-display text-[0.62rem] font-medium opsz-40 tnum text-white whitespace-nowrap">₹30 K</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Home indicator -->
+              <div class="absolute bottom-1.5 left-1/2 -translate-x-1/2 w-24 h-1 rounded-full bg-white/30"></div>
+
+            </div>
+          </div>
+        </div>
+
         <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 bg-kosh-gold/10 rounded-full blur-3xl"></div>
       </div>
     </div>

@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kosh — Your household's complete financial picture</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,300;1,9..144,400;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Fraunces"', 'Georgia', 'serif'],
+            body: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            kosh: {
+              gold: '#C9A84C',
+              'gold-light': '#E4CC7A',
+              'gold-dark': '#A68A3E',
+              cream: '#F5F0E8',
+              charcoal: '#1A1A1A',
+              slate: '#0F0F0F',
+              'dark-card': '#161616',
+              'dark-border': '#2A2A2A',
+              'light-bg': '#FAFAF7',
+              'light-card': '#FFFFFF',
+              'light-border': '#E8E4DC',
+              'light-muted': '#8A8578',
+              muted: '#6B6B6B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    .dark ::-webkit-scrollbar-thumb { background: #2A2A2A; border-radius: 3px; }
+    .light ::-webkit-scrollbar-thumb { background: #D4D0C8; border-radius: 3px; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    .hero-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(60px) rotateX(-15deg);
+      animation: heroReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    @keyframes heroReveal {
+      to { opacity: 1; transform: translateY(0) rotateX(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+    .float { animation: float 6s ease-in-out infinite; }
+    .float-delay { animation: float 6s ease-in-out 2s infinite; }
+    .float-delay-2 { animation: float 6s ease-in-out 4s infinite; }
+
+    .gradient-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+    }
+    .dark .gradient-orb { opacity: 0.12; }
+    .light .gradient-orb { opacity: 0.08; }
+
+    .glow-line {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #C9A84C, transparent);
+      opacity: 0.3;
+    }
+
+    .nav-glass {
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+    .dark .nav-glass { background: rgba(15, 15, 15, 0.8); border-bottom: 1px solid rgba(42, 42, 42, 0.5); }
+    .light .nav-glass { background: rgba(250, 250, 247, 0.85); border-bottom: 1px solid rgba(232, 228, 220, 0.8); }
+
+    .feature-card {
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .dark .feature-card:hover {
+      box-shadow: 0 20px 60px -15px rgba(201, 168, 76, 0.12);
+      border-color: rgba(201, 168, 76, 0.25);
+    }
+    .light .feature-card:hover {
+      box-shadow: 0 20px 60px -15px rgba(0, 0, 0, 0.08);
+      border-color: rgba(201, 168, 76, 0.35);
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .marquee-track { animation: marquee 30s linear infinite; }
+
+    * { transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; }
+
+    .cta-shimmer { position: relative; overflow: hidden; }
+    .cta-shimmer::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0% { left: -100%; }
+      100% { left: 100%; }
+    }
+
+    .mobile-menu {
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .mobile-menu.open { transform: translateX(0); }
+
+    .mockup-shine { position: relative; overflow: hidden; }
+    .mockup-shine::after {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background: linear-gradient(to bottom right, transparent 40%, rgba(255,255,255,0.03) 50%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+    }
+    .faq-answer.open { max-height: 400px; }
+    .faq-icon { transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+    .faq-icon.open { transform: rotate(45deg); }
+
+    /* Auth Modal */
+    .auth-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s;
+    }
+    .auth-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .auth-backdrop {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(24px) saturate(120%);
+      -webkit-backdrop-filter: blur(24px) saturate(120%);
+    }
+    .dark .auth-backdrop { background: rgba(10, 10, 10, 0.75); }
+    .light .auth-backdrop { background: rgba(250, 250, 247, 0.8); }
+
+    .auth-modal {
+      position: relative;
+      z-index: 1;
+      transform: scale(0.92) translateY(20px);
+      opacity: 0;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    }
+    .auth-overlay.open .auth-modal {
+      transform: scale(1) translateY(0);
+      opacity: 1;
+    }
+
+    .google-btn {
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+    }
+    .google-btn:hover { transform: translateY(-1px); }
+    .dark .google-btn:hover {
+      box-shadow: 0 8px 30px -8px rgba(201, 168, 76, 0.15);
+      border-color: rgba(201, 168, 76, 0.3);
+    }
+    .light .google-btn:hover {
+      box-shadow: 0 8px 30px -8px rgba(0, 0, 0, 0.1);
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+    .google-btn:active { transform: translateY(0) scale(0.99); }
+
+    @keyframes logoPulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(201, 168, 76, 0.2); }
+      50% { box-shadow: 0 0 0 12px rgba(201, 168, 76, 0); }
+    }
+    .auth-logo-pulse { animation: logoPulse 3s ease-in-out infinite; }
+
+    .auth-close { transition: transform 0.2s ease, background-color 0.2s ease; }
+    .auth-close:hover { transform: rotate(90deg); }
+  </style>
+</head>
+
+<body class="dark:bg-kosh-slate dark:text-white bg-kosh-light-bg text-kosh-charcoal overflow-x-hidden">
+
+  <!-- Inline logo symbol -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <symbol id="kosh-logo" viewBox="0 0 500 540">
+      <path d="M 60 30 L 440 30 L 470 60 L 470 450 Q 470 475 445 475 L 55 475 Q 30 475 30 450 L 30 60 Z" fill="currentColor" class="dark:text-kosh-slate text-kosh-slate"/>
+      <rect x="55" y="80" width="390" height="28" fill="#C9A84C"/>
+      <path d="M 160 108 C 95 108, 55 165, 55 255 C 55 345, 100 400, 160 400 C 220 400, 265 345, 265 255 C 265 165, 225 108, 160 108 Z M 160 148 C 125 148, 95 185, 95 255 C 95 325, 125 360, 160 360 C 195 360, 225 325, 225 255 C 225 185, 195 148, 160 148 Z" fill="#C9A84C" fill-rule="evenodd"/>
+      <rect x="248" y="108" width="28" height="420" fill="#C9A84C"/>
+      <path d="M 276 140 C 350 140, 420 200, 420 290 C 420 370, 370 425, 320 425 C 295 425, 280 415, 276 410 L 276 378 C 285 384, 300 390, 315 390 C 360 390, 385 350, 385 290 C 385 215, 340 170, 276 170 Z" fill="#C9A84C"/>
+    </symbol>
+  </svg>
+
+  <!-- ======================== NAVBAR ======================== -->
+  <nav class="nav-glass fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 lg:h-18">
+        <a href="#" class="flex items-center gap-2.5 group">
+          <svg class="w-9 h-[38px] transition-transform duration-300 group-hover:scale-105"><use href="#kosh-logo"/></svg>
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+          <a href="#features" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">Features</a>
+          <a href="#how-it-works" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">How it works</a>
+          <a href="#family" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">Family</a>
+          <a href="#faq" class="text-sm dark:text-kosh-muted dark:hover:text-white text-kosh-light-muted hover:text-kosh-charcoal transition-colors duration-200">FAQ</a>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button id="themeToggle" class="relative w-10 h-10 rounded-full dark:bg-kosh-dark-card dark:hover:bg-kosh-dark-border bg-kosh-cream hover:bg-kosh-light-border flex items-center justify-center transition-all duration-300" aria-label="Toggle theme">
+            <svg class="w-[18px] h-[18px] dark:block hidden text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="5"/>
+              <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+            </svg>
+            <svg class="w-[18px] h-[18px] dark:hidden block text-kosh-charcoal" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            </svg>
+          </button>
+
+          <a href="#" data-auth-trigger class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-kosh-gold text-kosh-slate text-sm font-semibold hover:bg-kosh-gold-light transition-all duration-300 cta-shimmer">
+            Sign in
+          </a>
+
+          <button id="mobileMenuBtn" class="md:hidden w-10 h-10 flex items-center justify-center" aria-label="Menu">
+            <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 z-50 dark:bg-kosh-slate bg-kosh-light-bg">
+    <div class="flex items-center justify-between px-6 h-16">
+      <svg class="w-9 h-[38px]"><use href="#kosh-logo"/></svg>
+      <button id="mobileMenuClose" class="w-10 h-10 flex items-center justify-center">
+        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="flex flex-col items-center gap-8 mt-20">
+      <a href="#features" class="mobile-nav-link text-2xl font-display">Features</a>
+      <a href="#how-it-works" class="mobile-nav-link text-2xl font-display">How it works</a>
+      <a href="#family" class="mobile-nav-link text-2xl font-display">Family</a>
+      <a href="#faq" class="mobile-nav-link text-2xl font-display">FAQ</a>
+      <a href="#" data-auth-trigger class="mt-4 px-8 py-3 rounded-full bg-kosh-gold text-kosh-slate font-semibold">Sign in</a>
+    </div>
+  </div>
+
+
+  <!-- ======================== HERO ======================== -->
+  <section class="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
+    <div class="gradient-orb w-[600px] h-[600px] bg-kosh-gold top-[-200px] left-[-200px]"></div>
+    <div class="gradient-orb w-[500px] h-[500px] bg-kosh-gold bottom-[-100px] right-[-150px]"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 text-center">
+      <p class="text-xs font-medium tracking-[0.2em] uppercase text-kosh-gold mb-6 opacity-0 animate-[heroReveal_0.8s_forwards]">कोश · Financial OS for Indian households</p>
+      <h1 class="font-display text-5xl sm:text-6xl md:text-7xl lg:text-[5.5rem] leading-[1.05] tracking-tight mb-6" style="font-variation-settings: 'opsz' 144;">
+        <span class="hero-word" style="animation-delay: 0.15s">Your</span>
+        <span class="hero-word" style="animation-delay: 0.25s">household's</span><br class="hidden sm:block" />
+        <span class="hero-word" style="animation-delay: 0.35s">complete</span>
+        <span class="hero-word italic text-kosh-gold" style="animation-delay: 0.5s">financial</span><br class="hidden sm:block" />
+        <span class="hero-word italic text-kosh-gold" style="animation-delay: 0.6s">picture.</span>
+      </h1>
+
+      <p class="max-w-xl mx-auto text-base sm:text-lg dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-10 opacity-0 animate-[heroReveal_0.8s_0.8s_forwards]">
+        Income, expenses, investments, liabilities, insurance, net worth — every number that matters, tracked together. Start solo. Bring your people in when you're ready.
+      </p>
+
+      <div class="flex flex-col items-center justify-center gap-3 opacity-0 animate-[heroReveal_0.8s_1s_forwards]">
+        <a href="#" data-auth-trigger class="group inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-kosh-gold text-kosh-slate font-semibold text-base hover:bg-kosh-gold-light hover:shadow-[0_0_40px_rgba(201,168,76,0.25)] transition-all duration-400 cta-shimmer">
+          Sign in with Google
+          <svg class="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <p class="text-xs dark:text-kosh-muted/70 text-kosh-light-muted/70">Free during beta · No bank passwords required</p>
+      </div>
+
+      <!-- Dashboard Mockup -->
+      <div class="mt-16 sm:mt-20 relative max-w-5xl mx-auto opacity-0 animate-[heroReveal_1s_1.2s_forwards]">
+        <div class="mockup-shine rounded-xl sm:rounded-2xl overflow-hidden dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.5)]">
+          <div class="flex items-center gap-2 px-4 py-3 border-b dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex gap-1.5">
+              <div class="w-3 h-3 rounded-full bg-red-400/60"></div>
+              <div class="w-3 h-3 rounded-full bg-yellow-400/60"></div>
+              <div class="w-3 h-3 rounded-full bg-green-400/60"></div>
+            </div>
+            <div class="flex-1 mx-4">
+              <div class="max-w-sm mx-auto h-6 rounded-md dark:bg-kosh-slate bg-kosh-cream flex items-center px-3">
+                <span class="text-xs dark:text-kosh-muted text-kosh-light-muted">app.kosh.finance</span>
+              </div>
+            </div>
+            <span class="hidden sm:inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[10px] font-medium uppercase tracking-wider text-kosh-gold bg-kosh-gold/10 border border-kosh-gold/20">
+              <span class="w-1 h-1 rounded-full bg-kosh-gold"></span>
+              Preview
+            </span>
+          </div>
+          <div class="p-4 sm:p-6">
+            <div class="grid grid-cols-12 gap-4">
+              <div class="col-span-2 hidden sm:block">
+                <div class="space-y-3">
+                  <div class="flex items-center gap-2 px-3 py-2 rounded-lg dark:bg-kosh-gold/10 bg-kosh-gold/10">
+                    <div class="w-4 h-4 rounded bg-kosh-gold/30"></div>
+                    <div class="h-2.5 w-16 rounded dark:bg-kosh-gold/40 bg-kosh-gold/50"></div>
+                  </div>
+                  <div class="flex items-center gap-2 px-3 py-2"><div class="w-4 h-4 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div><div class="h-2.5 w-14 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div></div>
+                  <div class="flex items-center gap-2 px-3 py-2"><div class="w-4 h-4 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div><div class="h-2.5 w-12 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div></div>
+                  <div class="flex items-center gap-2 px-3 py-2"><div class="w-4 h-4 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div><div class="h-2.5 w-16 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div></div>
+                  <div class="flex items-center gap-2 px-3 py-2"><div class="w-4 h-4 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div><div class="h-2.5 w-10 rounded dark:bg-kosh-dark-border bg-kosh-light-border"></div></div>
+                </div>
+              </div>
+              <div class="col-span-12 sm:col-span-10 space-y-4">
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Net Worth</div>
+                    <div class="text-lg font-semibold dark:text-white text-kosh-charcoal">&#8377;2.27Cr</div>
+                    <div class="text-xs text-emerald-500 mt-1">+4.2% this month</div>
+                  </div>
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Inflow · Nov</div>
+                    <div class="text-lg font-semibold dark:text-white text-kosh-charcoal">&#8377;3.42L</div>
+                    <div class="text-xs text-emerald-500 mt-1">Salary + interest</div>
+                  </div>
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Outflow · Nov</div>
+                    <div class="text-lg font-semibold dark:text-white text-kosh-charcoal">&#8377;1.18L</div>
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-1">Rent · Food · Bills</div>
+                  </div>
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">FIRE Progress</div>
+                    <div class="text-lg font-semibold dark:text-white text-kosh-charcoal">38%</div>
+                    <div class="text-xs text-kosh-gold mt-1">On track</div>
+                  </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div class="sm:col-span-2 rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border h-48">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-3">Net Worth Trend · 12 months</div>
+                    <svg viewBox="0 0 400 120" class="w-full h-32">
+                      <defs>
+                        <linearGradient id="chartGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.3"/>
+                          <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
+                        </linearGradient>
+                      </defs>
+                      <path d="M0,100 Q30,95 60,85 T120,70 T180,60 T240,40 T300,35 T360,20 L400,15 L400,120 L0,120Z" fill="url(#chartGrad)"/>
+                      <path d="M0,100 Q30,95 60,85 T120,70 T180,60 T240,40 T300,35 T360,20 L400,15" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round"/>
+                      <circle cx="400" cy="15" r="4" fill="#C9A84C"/>
+                    </svg>
+                  </div>
+                  <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border h-48">
+                    <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-3">Asset Allocation</div>
+                    <div class="flex items-center justify-center h-28">
+                      <svg viewBox="0 0 100 100" class="w-28 h-28">
+                        <circle cx="50" cy="50" r="40" fill="none" stroke-width="12" class="dark:stroke-kosh-dark-border stroke-kosh-light-border"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#C9A84C" stroke-width="12" stroke-dasharray="100 151" stroke-dashoffset="0" transform="rotate(-90 50 50)"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#6B8E6B" stroke-width="12" stroke-dasharray="60 191" stroke-dashoffset="-100" transform="rotate(-90 50 50)"/>
+                        <circle cx="50" cy="50" r="40" fill="none" stroke="#7B8CDE" stroke-width="12" stroke-dasharray="50 201" stroke-dashoffset="-160" transform="rotate(-90 50 50)"/>
+                        <text x="50" y="47" text-anchor="middle" class="dark:fill-white fill-kosh-charcoal text-[10px] font-semibold" style="font-family:'Plus Jakarta Sans'">&#8377;2.27Cr</text>
+                        <text x="50" y="58" text-anchor="middle" class="dark:fill-[#6B6B6B] fill-kosh-light-muted text-[6px]" style="font-family:'Plus Jakarta Sans'">Household</text>
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 w-3/4 h-16 bg-kosh-gold/10 rounded-full blur-3xl"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== MARQUEE STRIP ======================== -->
+  <section class="py-6 border-y dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+    <div class="flex whitespace-nowrap">
+      <div class="marquee-track flex items-center gap-10 text-sm dark:text-kosh-muted/40 text-kosh-light-muted/50 font-medium uppercase tracking-widest">
+        <span>Income</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Expenses</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Mutual Funds</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Stocks &amp; ETFs</span><span class="text-kosh-gold">&#10022;</span>
+        <span>FD · RD</span><span class="text-kosh-gold">&#10022;</span>
+        <span>PPF · EPF · NPS</span><span class="text-kosh-gold">&#10022;</span>
+        <span>SGB · Gold</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Real Estate</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Insurance</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Liabilities</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Net Worth</span><span class="text-kosh-gold">&#10022;</span>
+        <span>FIRE Number</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Goals</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Family Tracking</span><span class="text-kosh-gold">&#10022;</span>
+        <!-- duplicate for seamless loop -->
+        <span>Income</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Expenses</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Mutual Funds</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Stocks &amp; ETFs</span><span class="text-kosh-gold">&#10022;</span>
+        <span>FD · RD</span><span class="text-kosh-gold">&#10022;</span>
+        <span>PPF · EPF · NPS</span><span class="text-kosh-gold">&#10022;</span>
+        <span>SGB · Gold</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Real Estate</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Insurance</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Liabilities</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Net Worth</span><span class="text-kosh-gold">&#10022;</span>
+        <span>FIRE Number</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Goals</span><span class="text-kosh-gold">&#10022;</span>
+        <span>Family Tracking</span><span class="text-kosh-gold">&#10022;</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== MANIFESTO ======================== -->
+  <section class="py-20 sm:py-28 relative">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8 text-center relative">
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 font-display italic text-[10rem] sm:text-[12rem] leading-none text-kosh-gold/10 select-none pointer-events-none" style="font-variation-settings: 'opsz' 144;">"</div>
+      <div class="relative">
+        <div class="w-10 h-px bg-kosh-gold/40 mx-auto mb-8"></div>
+        <blockquote class="reveal font-display italic text-2xl sm:text-[1.75rem] leading-[1.4] dark:text-kosh-muted text-kosh-light-muted" style="font-variation-settings: 'opsz' 72;">
+          Your bank app shows balance.<br/>
+          Splitwise shows who owes what.<br/>
+          INDmoney shows your portfolio.<br/>
+          <span class="not-italic font-medium dark:text-white text-kosh-charcoal"><span class="text-kosh-gold">Kosh</span> shows the whole picture</span> — as a household.
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FEATURES ======================== -->
+  <section id="features" class="py-24 sm:py-32 relative overflow-hidden">
+    <div class="gradient-orb w-[400px] h-[400px] bg-kosh-gold top-0 right-[-200px]"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">The complete picture</span>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-5" style="font-variation-settings: 'opsz' 144;">
+          Every number that shapes<br/><span class="italic text-kosh-gold">your financial life.</span>
+        </h2>
+        <p class="reveal reveal-delay-2 max-w-lg mx-auto dark:text-kosh-muted text-kosh-light-muted leading-relaxed">
+          Nine modules. One coherent view. Build the picture gradually — start with cashflow, add the rest as you go.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+
+        <!-- Income · LIVE -->
+        <div class="reveal feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #132a1c, #1a4a28);">
+              <span class="font-display font-semibold text-sm" style="color:#6EE7A7;">In</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">● Live</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">Income</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Salary, freelance, interest, rent, dividends — every inflow tagged. Month-over-month trends and source breakdowns.</p>
+        </div>
+
+        <!-- Expenses · LIVE -->
+        <div class="reveal reveal-delay-1 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #2a1518, #4a1a20);">
+              <span class="font-display font-semibold text-sm" style="color:#FCA5A5;">Ex</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">● Live</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">Expenses</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Categorized spending, month-over-month trends. Kosh knows SIPs aren't expenses and EMI interest is. The difference matters.</p>
+        </div>
+
+        <!-- Mutual Funds · COMING -->
+        <div class="reveal reveal-delay-2 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #1a1432, #2a2050);">
+              <span class="font-display font-semibold text-sm" style="color:#C4B5FD;">Mf</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted text-kosh-light-muted border dark:border-kosh-dark-border border-kosh-light-border">Coming</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">Mutual Funds</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">SIPs, lumpsums, XIRR, folio-level tracking. Import your CAS statement — document-based, not credential-based.</p>
+        </div>
+
+        <!-- Stocks · COMING -->
+        <div class="reveal feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #0f1a2e, #1a2b4a);">
+              <span class="font-display font-semibold text-sm" style="color:#93C5FD;">St</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted text-kosh-light-muted border dark:border-kosh-dark-border border-kosh-light-border">Coming</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">Stocks · ETFs</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Direct equity portfolio, broker-agnostic. RSUs and ESOPs tracked separately — because they vest differently.</p>
+        </div>
+
+        <!-- FD/PPF/EPF/NPS · COMING -->
+        <div class="reveal reveal-delay-1 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #0a2028, #12323f);">
+              <span class="font-display font-semibold text-sm" style="color:#67E8F9;">Fd</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted text-kosh-light-muted border dark:border-kosh-dark-border border-kosh-light-border">Coming</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">FD · RD · PPF · EPF · NPS</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Fixed income and retirement accounts. Maturity dates, interest accrual, contribution limits — tracked together.</p>
+        </div>
+
+        <!-- Liabilities · COMING -->
+        <div class="reveal reveal-delay-2 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #2a1818, #4a1f1f);">
+              <span class="font-display font-semibold text-sm" style="color:#FCA5A5;">Li</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted text-kosh-light-muted border dark:border-kosh-dark-border border-kosh-light-border">Coming</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">Liabilities</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Home loans, car loans, credit cards, personal loans. EMI schedules, principal vs. interest split, payoff projections.</p>
+        </div>
+
+        <!-- Insurance · COMING -->
+        <div class="reveal feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #1f1830, #302048);">
+              <span class="font-display font-semibold text-sm" style="color:#E9D5FF;">Is</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted text-kosh-light-muted border dark:border-kosh-dark-border border-kosh-light-border">Coming</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">Insurance</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Term, health, vehicle, property. Coverage, premiums, renewal alerts — so nothing lapses when you're not looking.</p>
+        </div>
+
+        <!-- Net Worth / FIRE · COMING -->
+        <div class="reveal reveal-delay-1 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #2a2210, #3a3018);">
+              <span class="font-display font-semibold text-sm text-kosh-gold-light">Nw</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted text-kosh-light-muted border dark:border-kosh-dark-border border-kosh-light-border">Coming</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">Net Worth · FIRE</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Assets minus liabilities. Monthly progression. Project financial independence based on your real numbers, not generic calculators.</p>
+        </div>
+
+        <!-- Goals · COMING -->
+        <div class="reveal reveal-delay-2 feature-card rounded-2xl p-6 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+          <div class="flex items-start justify-between mb-5">
+            <div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background: linear-gradient(135deg, #1a2220, #263532);">
+              <span class="font-display font-semibold text-sm" style="color:#86EFAC;">Go</span>
+            </div>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider dark:bg-kosh-dark-border/50 bg-kosh-light-border/80 dark:text-kosh-muted text-kosh-light-muted border dark:border-kosh-dark-border border-kosh-light-border">Coming</span>
+          </div>
+          <h3 class="font-display font-medium text-lg mb-2" style="font-variation-settings: 'opsz' 40;">Goals</h3>
+          <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Kids' education, parents' retirement, home purchase, that trip to Japan. Track progress toward what actually matters.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== HOW IT WORKS ======================== -->
+  <section id="how-it-works" class="py-24 sm:py-32 relative dark:bg-kosh-dark-card/30 bg-kosh-cream/30">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">How it works</span>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl lg:text-6xl tracking-tight mb-5" style="font-variation-settings: 'opsz' 144;">
+          Honest setup,<br/><span class="italic text-kosh-gold">honest tracking.</span>
+        </h2>
+        <p class="reveal reveal-delay-2 max-w-lg mx-auto dark:text-kosh-muted text-kosh-light-muted leading-relaxed">
+          No shortcuts, no pretending. The picture forms as you build it.
+        </p>
+      </div>
+
+      <div class="max-w-3xl mx-auto space-y-0">
+        <div class="reveal group flex gap-6 sm:gap-10 py-8 border-b dark:border-kosh-dark-border/50 border-kosh-light-border transition-all">
+          <div class="font-display text-5xl sm:text-6xl text-kosh-gold/30 group-hover:text-kosh-gold/60 transition-colors min-w-[3.5rem] sm:min-w-[4.5rem] leading-none" style="font-variation-settings: 'opsz' 144;">01</div>
+          <div class="pt-1">
+            <h3 class="font-display font-medium text-xl mb-2" style="font-variation-settings: 'opsz' 40;">Sign in with Google</h3>
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">One click. No passwords, no OTPs. We only ask for your email and name — never your bank password.</p>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-1 group flex gap-6 sm:gap-10 py-8 border-b dark:border-kosh-dark-border/50 border-kosh-light-border transition-all">
+          <div class="font-display text-5xl sm:text-6xl text-kosh-gold/30 group-hover:text-kosh-gold/60 transition-colors min-w-[3.5rem] sm:min-w-[4.5rem] leading-none" style="font-variation-settings: 'opsz' 144;">02</div>
+          <div class="pt-1">
+            <h3 class="font-display font-medium text-xl mb-2" style="font-variation-settings: 'opsz' 40;">Log what flows through your life</h3>
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Add income when it arrives. Add expenses when they happen. Or — when available — import from documents you already have: CAS statements, UAN passbooks, bank CSVs.</p>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-2 group flex gap-6 sm:gap-10 py-8 border-b dark:border-kosh-dark-border/50 border-kosh-light-border transition-all">
+          <div class="font-display text-5xl sm:text-6xl text-kosh-gold/30 group-hover:text-kosh-gold/60 transition-colors min-w-[3.5rem] sm:min-w-[4.5rem] leading-none" style="font-variation-settings: 'opsz' 144;">03</div>
+          <div class="pt-1">
+            <h3 class="font-display font-medium text-xl mb-2" style="font-variation-settings: 'opsz' 40;">Invite your family when ready</h3>
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">Send email invites. They sign in with Google. You all see the household view together.</p>
+          </div>
+        </div>
+        <div class="reveal reveal-delay-3 group flex gap-6 sm:gap-10 py-8 transition-all">
+          <div class="font-display text-5xl sm:text-6xl text-kosh-gold/30 group-hover:text-kosh-gold/60 transition-colors min-w-[3.5rem] sm:min-w-[4.5rem] leading-none" style="font-variation-settings: 'opsz' 144;">04</div>
+          <div class="pt-1">
+            <h3 class="font-display font-medium text-xl mb-2" style="font-variation-settings: 'opsz' 40;">Watch the picture form</h3>
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed">One week tells you nothing. Three months starts telling a story. A year in, you'll see patterns in your household's financial life you never noticed. <em class="not-italic text-kosh-gold font-medium">That's the whole point.</em></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== BUILT FOR INDIA ======================== -->
+  <section class="py-24 sm:py-32 relative overflow-hidden">
+    <div class="gradient-orb w-[500px] h-[500px] bg-kosh-gold bottom-[-200px] left-[-200px]"></div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">Built for India</span>
+          <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl tracking-tight mb-6" style="font-variation-settings: 'opsz' 144;">
+            Understands how<br/><span class="italic text-kosh-gold">India invests.</span>
+          </h2>
+          <p class="reveal reveal-delay-2 dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-8">Unlike generic finance apps, Kosh treats Indian financial products as first-class citizens — not afterthoughts bolted onto a US-first design.</p>
+          <div class="space-y-4">
+            <div class="reveal reveal-delay-2 flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><span class="text-sm font-medium">Indian investment products</span><p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-0.5">PPF, NPS, EPF, SGB, SCSS, FDs, RDs, ULIPs — all treated as real categories, not "other."</p></div>
+            </div>
+            <div class="reveal reveal-delay-3 flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><span class="text-sm font-medium">INR-native</span><p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-0.5">Amounts in lakhs and crores. Indian number formatting. Financial year April–March. Just right.</p></div>
+            </div>
+            <div class="reveal reveal-delay-4 flex items-start gap-3">
+              <div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div>
+              <div><span class="text-sm font-medium">Household-aware</span><p class="text-sm dark:text-kosh-muted text-kosh-light-muted mt-0.5">Joint accounts, family gold, property held by parents — the way Indian households actually own wealth.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="relative flex items-center justify-center min-h-[400px] overflow-hidden">
+          <div class="float absolute top-4 left-4 sm:left-8 w-52 rounded-2xl p-5 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-lg">
+            <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Mutual Funds</div>
+            <div class="text-xl font-semibold">&#8377;14.2L</div>
+            <div class="mt-3 h-1.5 rounded-full dark:bg-kosh-slate bg-kosh-cream overflow-hidden"><div class="h-full w-[65%] rounded-full bg-kosh-gold"></div></div>
+            <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mt-1">XIRR · 14.3%</div>
+          </div>
+          <div class="float-delay absolute top-1/3 right-4 sm:right-8 w-52 rounded-2xl p-5 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-lg">
+            <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">PPF Balance</div>
+            <div class="text-xl font-semibold">&#8377;8.4L</div>
+            <div class="text-xs text-emerald-500 mt-1">7.1% p.a.</div>
+            <div class="mt-2 flex items-center gap-1.5"><div class="w-2 h-2 rounded-full bg-emerald-500"></div><span class="text-xs dark:text-kosh-muted text-kosh-light-muted">Matures Apr 2035</span></div>
+          </div>
+          <div class="float-delay-2 absolute bottom-4 left-1/2 -translate-x-1/2 w-56 rounded-2xl p-5 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-lg">
+            <div class="text-xs dark:text-kosh-muted text-kosh-light-muted mb-1">Sovereign Gold Bond</div>
+            <div class="text-xl font-semibold text-kosh-gold">&#8377;3.6L</div>
+            <div class="flex items-center gap-2 mt-2">
+              <div class="flex -space-x-1">
+                <div class="w-5 h-5 rounded-full bg-kosh-gold/30 border dark:border-kosh-dark-card border-white"></div>
+                <div class="w-5 h-5 rounded-full bg-kosh-gold/50 border dark:border-kosh-dark-card border-white"></div>
+                <div class="w-5 h-5 rounded-full bg-kosh-gold/70 border dark:border-kosh-dark-card border-white"></div>
+              </div>
+              <span class="text-xs text-emerald-500">+147% unrealized</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FAMILY TRACKING ======================== -->
+  <section id="family" class="py-24 sm:py-32 relative dark:bg-kosh-dark-card/30 bg-kosh-cream/30">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div class="reveal order-2 lg:order-1 relative">
+          <div class="rounded-2xl p-6 sm:p-8 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border">
+            <div class="flex items-center justify-between mb-6">
+              <div>
+                <div class="text-xs dark:text-kosh-muted text-kosh-light-muted">Household</div>
+                <div class="text-lg font-semibold font-display" style="font-variation-settings: 'opsz' 40;">Your Family</div>
+              </div>
+              <div class="flex -space-x-2">
+                <div class="w-9 h-9 rounded-full bg-kosh-gold/20 border-2 dark:border-kosh-dark-card border-white flex items-center justify-center text-xs font-semibold text-kosh-gold">You</div>
+                <div class="w-9 h-9 rounded-full bg-purple-500/20 border-2 dark:border-kosh-dark-card border-white flex items-center justify-center text-xs font-semibold text-purple-400">+</div>
+              </div>
+            </div>
+
+            <!-- Portfolio Toggle -->
+            <div class="inline-flex p-1 rounded-xl dark:bg-kosh-slate bg-kosh-cream/60 border dark:border-kosh-dark-border border-kosh-light-border mb-6">
+              <button class="px-3 py-1.5 rounded-lg text-xs font-medium dark:text-kosh-muted text-kosh-light-muted">Personal</button>
+              <button class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-kosh-gold text-kosh-slate">Family</button>
+            </div>
+
+            <div class="glow-line mb-6"></div>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+              <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60"><div class="text-xs dark:text-kosh-muted text-kosh-light-muted">Combined Net Worth</div><div class="text-xl font-semibold mt-1 font-display" style="font-variation-settings: 'opsz' 40;">&#8377;2.27Cr</div></div>
+              <div class="rounded-xl p-4 dark:bg-kosh-slate bg-kosh-cream/60"><div class="text-xs dark:text-kosh-muted text-kosh-light-muted">Household Inflow · Nov</div><div class="text-xl font-semibold mt-1 font-display" style="font-variation-settings: 'opsz' 40;">&#8377;3.42L</div></div>
+            </div>
+            <div class="space-y-3">
+              <div class="flex items-center justify-between p-3 rounded-xl dark:bg-kosh-slate bg-kosh-cream/60">
+                <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-kosh-gold/20 flex items-center justify-center text-xs font-semibold text-kosh-gold">A</div><div class="text-sm font-medium">Member A</div></div>
+                <div class="text-sm font-semibold">&#8377;1.13Cr</div>
+              </div>
+              <div class="flex items-center justify-between p-3 rounded-xl dark:bg-kosh-slate bg-kosh-cream/60">
+                <div class="flex items-center gap-3"><div class="w-8 h-8 rounded-full bg-purple-500/20 flex items-center justify-center text-xs font-semibold text-purple-400">B</div><div class="text-sm font-medium">Member B</div></div>
+                <div class="text-sm font-semibold">&#8377;1.14Cr</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="order-1 lg:order-2">
+          <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">Together</span>
+          <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl tracking-tight mb-6" style="font-variation-settings: 'opsz' 144;">
+            Your household,<br/><span class="italic text-kosh-gold">one view.</span>
+          </h2>
+          <p class="reveal reveal-delay-2 dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-8">Indian families manage money together. Kosh lets you invite your partner, parents, or children — see combined net worth, household cashflow, and each member's contribution. No "who owes whom" nonsense.</p>
+          <div class="space-y-4">
+            <div class="reveal reveal-delay-2 flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><span class="text-sm dark:text-kosh-muted text-kosh-light-muted">Invite family members by email — they sign in with their own Google account</span></div>
+            <div class="reveal reveal-delay-3 flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><span class="text-sm dark:text-kosh-muted text-kosh-light-muted">Two portfolios — personal stays personal, household is shared</span></div>
+            <div class="reveal reveal-delay-4 flex items-start gap-3"><div class="w-6 h-6 rounded-full bg-kosh-gold/10 flex items-center justify-center flex-shrink-0 mt-0.5"><svg class="w-3 h-3 text-kosh-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><span class="text-sm dark:text-kosh-muted text-kosh-light-muted">Shared goals — kids' education, parents' retirement, that house you're saving for</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FAQ ======================== -->
+  <section id="faq" class="py-24 sm:py-32 relative dark:bg-kosh-dark-card/30 bg-kosh-cream/30">
+    <div class="max-w-3xl mx-auto px-6 lg:px-8">
+      <div class="text-center mb-16">
+        <span class="reveal text-xs font-medium tracking-widest uppercase text-kosh-gold mb-4 block">FAQ</span>
+        <h2 class="reveal reveal-delay-1 font-display text-4xl sm:text-5xl tracking-tight mb-5" style="font-variation-settings: 'opsz' 144;">
+          Got <span class="italic text-kosh-gold">questions?</span>
+        </h2>
+      </div>
+
+      <div class="space-y-3">
+        <div class="reveal faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">What is Kosh?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Kosh is a financial OS built for Indian households. It brings together income, expenses, investments (mutual funds, stocks, FDs, PPF, NPS, gold), liabilities, insurance, net worth, and goals — for you individually or with your family.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-1 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">What's actually live today?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Today: income and expense tracking, household mode with family invites. Coming: investments (MF, stocks, FDs, PPF/EPF/NPS, SGB), liabilities, insurance, net worth dashboard, FIRE calculator, and goals. Every feature is marked clearly on the features section — we don't hide the roadmap.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">What is Kosh <em class="not-italic text-kosh-gold font-medium">not</em>?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <div class="pb-5 sm:pb-6 space-y-2.5">
+              <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed"><strong class="dark:text-white text-kosh-charcoal font-semibold">Not a broker.</strong> We don't let you buy or sell anything. Use your broker for that; bring the data here.</p>
+              <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed"><strong class="dark:text-white text-kosh-charcoal font-semibold">Not an advisor.</strong> No one at Kosh recommends investments. We show you the numbers; you decide.</p>
+              <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed"><strong class="dark:text-white text-kosh-charcoal font-semibold">Not a Splitwise for roommates.</strong> No "who owes whom" logic. This is for families sharing a life, not a rent.</p>
+              <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed"><strong class="dark:text-white text-kosh-charcoal font-semibold">Not instant gratification.</strong> Tracking takes effort. Insight compounds over months. We won't pretend otherwise.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-2 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">How is Kosh different from INDmoney, Zerodha Console, or a spreadsheet?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">INDmoney and most aggregators focus on investments. Zerodha Console only shows your Zerodha holdings. Spreadsheets don't know PPF from NPS and certainly don't handle your spouse's data. Kosh is the whole household picture — not just one slice, not just your data, and designed specifically for Indian financial instruments.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-3 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">Is my financial data secure?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Encrypted in transit and at rest. Google sign-in only — we never see a password. We don't sell, share, or monetize your financial data. Your data is yours; you can export or delete it at any time.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-4 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">Does Kosh connect to my bank?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Not currently — Kosh is manual-entry today. You can import from documents you already own (CAS statements, UAN passbooks, bank CSVs) as those features roll out. We're evaluating India's Account Aggregator framework for the future, but we'll never ask you for bank passwords directly.</p>
+          </div>
+        </div>
+
+        <div class="reveal reveal-delay-5 faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">How does family tracking work?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">You invite family members by email. They sign in with their own Google account and get their own personal portfolio. The household portfolio combines everyone's shared data. Personal stays personal; household is shared. Each member tracks their own numbers; the household view sums the picture.</p>
+          </div>
+        </div>
+
+        <div class="reveal faq-item rounded-xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between p-5 sm:p-6 text-left" onclick="toggleFaq(this)">
+            <span class="text-[15px] font-medium pr-4">Is Kosh free? Will it stay that way?</span>
+            <svg class="faq-icon w-5 h-5 flex-shrink-0 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+          <div class="faq-answer px-5 sm:px-6">
+            <p class="text-sm dark:text-kosh-muted text-kosh-light-muted leading-relaxed pb-5 sm:pb-6">Free during beta. Eventually there will be paid plans for advanced features — but the core tracking will always have a free tier. Beta users will get pricing that reflects their early support. We'll communicate well in advance of any changes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FINAL CTA ======================== -->
+  <section class="py-24 sm:py-32 relative overflow-hidden">
+    <div class="gradient-orb w-[600px] h-[600px] bg-kosh-gold top-[-100px] left-[50%] -translate-x-1/2"></div>
+    <div class="max-w-4xl mx-auto px-6 lg:px-8 text-center relative z-10">
+      <div class="w-10 h-px bg-kosh-gold/40 mx-auto mb-8"></div>
+      <h2 class="reveal font-display text-4xl sm:text-5xl lg:text-7xl tracking-tight mb-6" style="font-variation-settings: 'opsz' 144;">
+        Start with what you have.<br/><span class="italic text-kosh-gold">Grow from there.</span>
+      </h2>
+      <p class="reveal reveal-delay-1 max-w-lg mx-auto dark:text-kosh-muted text-kosh-light-muted leading-relaxed mb-10">
+        Log a month of income and expenses. See what you learn about your own household. The rest of the picture fills in as Kosh grows.
+      </p>
+      <div class="reveal reveal-delay-2">
+        <a href="#" data-auth-trigger class="group inline-flex items-center gap-3 px-10 py-4 rounded-full bg-kosh-gold text-kosh-slate font-semibold text-lg hover:bg-kosh-gold-light hover:shadow-[0_0_60px_rgba(201,168,76,0.3)] transition-all duration-400 cta-shimmer">
+          Sign in with Google
+          <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="border-t dark:border-kosh-dark-border border-kosh-light-border py-12">
+    <div class="max-w-7xl mx-auto px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div class="flex items-center gap-3">
+          <svg class="w-8 h-[34px]"><use href="#kosh-logo"/></svg>
+          <div>
+            <p class="text-sm font-display" style="font-variation-settings: 'opsz' 40;">Kosh</p>
+            <p class="text-xs dark:text-kosh-muted text-kosh-light-muted">Built with care in Bangalore</p>
+          </div>
+        </div>
+        <div class="flex items-center gap-6 text-xs dark:text-kosh-muted text-kosh-light-muted">
+          <a href="#" class="hover:text-kosh-gold transition-colors">Privacy</a>
+          <a href="#" class="hover:text-kosh-gold transition-colors">Terms</a>
+          <a href="#" class="hover:text-kosh-gold transition-colors">Security</a>
+          <a href="#" class="hover:text-kosh-gold transition-colors">Contact</a>
+        </div>
+        <p class="text-xs dark:text-kosh-muted text-kosh-light-muted">© 2026 Kosh</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- ======================== AUTH MODAL ======================== -->
+  <div id="authOverlay" class="auth-overlay">
+    <div class="auth-backdrop" id="authBackdrop"></div>
+    <div class="auth-modal w-[90vw] max-w-[420px]">
+      <div class="rounded-2xl dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border shadow-2xl dark:shadow-[0_40px_100px_-20px_rgba(0,0,0,0.6)] overflow-hidden">
+
+        <div class="flex justify-end p-4 pb-0">
+          <button id="authClose" class="auth-close w-8 h-8 rounded-full dark:bg-kosh-slate bg-kosh-cream/80 dark:hover:bg-kosh-dark-border hover:bg-kosh-light-border flex items-center justify-center" aria-label="Close">
+            <svg class="w-4 h-4 dark:text-kosh-muted text-kosh-light-muted" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+
+        <div class="px-8 sm:px-10 pb-8 sm:pb-10 pt-2">
+          <div class="flex justify-center mb-6">
+            <div class="auth-logo-pulse rounded-2xl">
+              <svg class="w-14 h-[60px]"><use href="#kosh-logo"/></svg>
+            </div>
+          </div>
+
+          <h3 class="font-display text-2xl sm:text-[26px] text-center tracking-tight mb-2" style="font-variation-settings: 'opsz' 40;">
+            Welcome to <span class="text-kosh-gold">Kosh</span>
+          </h3>
+          <p class="text-sm text-center dark:text-kosh-muted text-kosh-light-muted mb-8">
+            Sign in to start tracking your household finances.
+          </p>
+
+          <button class="google-btn w-full flex items-center justify-center gap-3 px-5 py-3.5 rounded-xl border dark:border-kosh-dark-border border-kosh-light-border dark:bg-kosh-slate bg-kosh-light-bg font-medium text-[15px]">
+            <svg width="20" height="20" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+            <span class="dark:text-white text-kosh-charcoal">Continue with Google</span>
+          </button>
+
+          <div class="flex items-center gap-4 my-6">
+            <div class="flex-1 h-px dark:bg-kosh-dark-border bg-kosh-light-border"></div>
+            <span class="text-xs dark:text-kosh-muted/60 text-kosh-light-muted/60 uppercase tracking-widest">or</span>
+            <div class="flex-1 h-px dark:bg-kosh-dark-border bg-kosh-light-border"></div>
+          </div>
+
+          <div class="relative mb-4">
+            <input type="email" placeholder="name@email.com" disabled class="w-full px-4 py-3.5 rounded-xl border dark:border-kosh-dark-border border-kosh-light-border dark:bg-kosh-slate bg-kosh-light-bg text-sm dark:text-kosh-muted text-kosh-light-muted placeholder:dark:text-kosh-muted/40 placeholder:text-kosh-light-muted/40 opacity-50 cursor-not-allowed" />
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-medium dark:text-kosh-muted/50 text-kosh-light-muted/50 uppercase tracking-wider px-2 py-0.5 rounded dark:bg-kosh-dark-border/50 bg-kosh-light-border/80">Soon</span>
+          </div>
+
+          <p class="text-[11px] text-center dark:text-kosh-muted/50 text-kosh-light-muted/50 leading-relaxed mt-6">
+            By continuing, you agree to Kosh's <a href="#" class="underline hover:text-kosh-gold transition-colors">Terms</a> and <a href="#" class="underline hover:text-kosh-gold transition-colors">Privacy Policy</a>. We only access your email and name — never your bank password.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // AUTH MODAL
+    const authOverlay = document.getElementById('authOverlay');
+    const authBackdrop = document.getElementById('authBackdrop');
+    const authCloseBtn = document.getElementById('authClose');
+
+    function openAuth() {
+      authOverlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeAuth() {
+      authOverlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.querySelectorAll('[data-auth-trigger]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const mm = document.getElementById('mobileMenu');
+        if (mm.classList.contains('open')) mm.classList.remove('open');
+        openAuth();
+      });
+    });
+
+    authBackdrop.addEventListener('click', closeAuth);
+    authCloseBtn.addEventListener('click', closeAuth);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && authOverlay.classList.contains('open')) closeAuth();
+    });
+
+    // THEME
+    const themeToggle = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const savedTheme = localStorage.getItem('kosh-theme');
+    if (savedTheme) { html.classList.remove('dark', 'light'); html.classList.add(savedTheme); }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = html.classList.contains('dark');
+      html.classList.remove('dark', 'light');
+      html.classList.add(isDark ? 'light' : 'dark');
+      localStorage.setItem('kosh-theme', isDark ? 'light' : 'dark');
+    });
+
+    // MOBILE MENU
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileMenuClose = document.getElementById('mobileMenuClose');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+    mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.add('open'));
+    mobileMenuClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    mobileNavLinks.forEach(link => link.addEventListener('click', () => mobileMenu.classList.remove('open')));
+
+    // REVEAL
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // SMOOTH SCROLL
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        if (this.hasAttribute('data-auth-trigger')) return;
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    // FAQ
+    function toggleFaq(btn) {
+      const item = btn.closest('.faq-item');
+      const answer = item.querySelector('.faq-answer');
+      const icon = item.querySelector('.faq-icon');
+      const isOpen = answer.classList.contains('open');
+
+      document.querySelectorAll('.faq-answer.open').forEach(a => {
+        a.classList.remove('open');
+        a.closest('.faq-item').querySelector('.faq-icon').classList.remove('open');
+      });
+
+      if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
+    }
+  </script>
+</body>
+</html>

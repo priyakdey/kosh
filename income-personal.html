@@ -1,4 +1,4 @@
-<!-- INCOME PAGE -->
+<!-- This is the Personal Portfolio Income View -->
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -81,6 +81,17 @@
       content: ''; position: absolute; left: -12px; top: 50%; transform: translateY(-50%);
       width: 3px; height: 20px; border-radius: 0 3px 3px 0; background: #C9A84C;
     }
+    .nav-link.is-soon { cursor: not-allowed; opacity: 0.5; }
+    .nav-link.is-soon:hover { background: transparent !important; color: #6B6B6B !important; }
+    .light .nav-link.is-soon:hover { color: #8A8578 !important; }
+    .soon-badge {
+      margin-left: auto; font-size: 9px; font-weight: 600;
+      padding: 1px 5px; border-radius: 4px;
+      background: rgba(107,107,107,0.18); color: #6B6B6B;
+      text-transform: uppercase; letter-spacing: 0.08em;
+      line-height: 1.3; flex-shrink: 0;
+    }
+    .light .soon-badge { background: rgba(138,133,120,0.15); color: #8A8578; }
 
     .topbar { backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
     .dark .topbar { background: rgba(15,15,15,0.85); border-bottom: 1px solid #2A2A2A; }
@@ -218,13 +229,13 @@
         </svg>
         <span class="sb-hide">Dashboard</span>
       </a>
-      <a href="#income" class="nav-link active">
+      <a href="income.html" class="nav-link">
         <svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
           <path d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/>
         </svg>
         <span class="sb-hide">Income</span>
       </a>
-      <a href="#expense" class="nav-link">
+      <a href="#expense" class="nav-link active">
         <svg class="w-[18px] h-[18px] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
           <path d="M2.25 8.25h19.5M2.25 9h19.5m-16.5 5.25h6m-6 2.25h3m-3.75 3h15a2.25 2.25 0 002.25-2.25V6.75A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25v10.5A2.25 2.25 0 004.5 19.5z"/>
         </svg>
@@ -234,22 +245,22 @@
       <div class="pt-5 pb-1">
         <p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Assets</p>
       </div>
-      <a href="#mf" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span class="sb-hide">Mutual Funds</span></a>
-      <a href="#stocks" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span><span class="sb-hide">Stocks</span></a>
-      <a href="#fd" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></span><span class="sb-hide">Fixed Deposits</span></a>
-      <a href="#rd" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0"></span><span class="sb-hide">Recurring Deposits</span></a>
+      <a href="#mf" class="nav-link is-soon"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0"></span><span class="sb-hide">Mutual Funds</span><span class="sb-hide soon-badge">Soon</span></a>
+      <a href="#stocks" class="nav-link is-soon"><span class="w-1.5 h-1.5 rounded-full bg-blue-500 flex-shrink-0"></span><span class="sb-hide">Stocks</span><span class="sb-hide soon-badge">Soon</span></a>
+      <a href="#fd" class="nav-link is-soon"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 flex-shrink-0"></span><span class="sb-hide">Fixed Deposits</span><span class="sb-hide soon-badge">Soon</span></a>
+      <a href="#rd" class="nav-link is-soon"><span class="w-1.5 h-1.5 rounded-full bg-sky-500 flex-shrink-0"></span><span class="sb-hide">Recurring Deposits</span><span class="sb-hide soon-badge">Soon</span></a>
 
       <div class="pt-5 pb-1">
         <p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Liabilities</p>
       </div>
-      <a href="#cc" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span><span class="sb-hide">Credit Cards</span></a>
-      <a href="#loans" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span><span class="sb-hide">Loans</span></a>
+      <a href="#cc" class="nav-link is-soon"><span class="w-1.5 h-1.5 rounded-full bg-orange-500 flex-shrink-0"></span><span class="sb-hide">Credit Cards</span><span class="sb-hide soon-badge">Soon</span></a>
+      <a href="#loans" class="nav-link is-soon"><span class="w-1.5 h-1.5 rounded-full bg-red-500 flex-shrink-0"></span><span class="sb-hide">Loans</span><span class="sb-hide soon-badge">Soon</span></a>
 
       <div class="pt-5 pb-1">
         <p class="sb-hide text-[10px] font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted/40 text-kosh-light-muted/40 px-3">Protection</p>
       </div>
-      <a href="#term" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0"></span><span class="sb-hide">Term Insurance</span></a>
-      <a href="#health" class="nav-link"><span class="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span><span class="sb-hide">Health Insurance</span></a>
+      <a href="#term" class="nav-link is-soon"><span class="w-1.5 h-1.5 rounded-full bg-violet-500 flex-shrink-0"></span><span class="sb-hide">Term Insurance</span><span class="sb-hide soon-badge">Soon</span></a>
+      <a href="#health" class="nav-link is-soon"><span class="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span><span class="sb-hide">Health Insurance</span><span class="sb-hide soon-badge">Soon</span></a>
     </nav>
 
     <div class="border-t dark:border-kosh-dark-border border-kosh-light-border p-3 flex-shrink-0">
@@ -280,7 +291,7 @@
           <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 dark:text-kosh-muted text-kosh-light-muted pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
             <path d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
           </svg>
-          <input type="text" placeholder="Search income · source · category…"
+          <input type="text" placeholder="Search expenses · merchant · category…"
             class="w-full py-2 pl-10 pr-4 text-sm rounded-lg outline-none transition-all dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border dark:text-white text-kosh-charcoal focus:border-kosh-gold focus:ring-1 focus:ring-kosh-gold/20"/>
         </div>
       </div>
@@ -325,98 +336,63 @@
 
     <main class="flex-1 p-6 flex flex-col gap-4">
 
-      <div class="flex items-start justify-between flex-wrap gap-4">
-        <div>
-          <div class="inline-flex dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-xl p-[3px] mb-3">
-            <button class="flex items-center gap-2 px-4 py-1.5 text-[0.82rem] font-medium dark:text-kosh-muted text-kosh-light-muted rounded-[9px] dark:hover:text-white hover:text-kosh-charcoal transition-colors">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2"/></svg>
-              Personal
+      <div class="flex items-center justify-between flex-wrap gap-4">
+        <h1 class="font-display text-3xl font-normal tracking-tight opsz-72">Income</h1>
+        <div class="flex items-center gap-2">
+          <div class="relative">
+            <button id="monthPickerBtn" class="inline-flex items-center gap-1.5 px-3 h-9 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-lg text-[0.82rem] font-medium dark:hover:border-kosh-gold/30 hover:border-kosh-gold/30 transition-colors">
+              <svg class="w-3.5 h-3.5 dark:text-kosh-muted text-kosh-light-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              <span id="selectedMonthLabel">Nov 2026</span>
+              <svg class="w-3 h-3 dark:text-kosh-muted text-kosh-light-muted ml-0.5 transition-transform" id="monthChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 9l6 6 6-6"/></svg>
             </button>
-            <button class="flex items-center gap-2 px-4 py-1.5 text-[0.82rem] font-semibold text-kosh-slate bg-kosh-gold rounded-[9px]">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><circle cx="17" cy="9" r="2"/><path d="M3 20v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1"/><path d="M15 20v-1a3 3 0 0 1 3-3h1a3 3 0 0 1 3 3v1"/></svg>
-              Family
-            </button>
-          </div>
-          <h1 class="font-display text-3xl font-normal tracking-tight opsz-72">Income</h1>
-        </div>
-
-        <div class="flex flex-col items-end gap-3">
-          <div class="flex items-center gap-2">
-            <!-- Month selector (dropdown) -->
-            <div class="relative">
-              <button id="monthPickerBtn" class="inline-flex items-center gap-1.5 px-3 h-9 dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-lg text-[0.82rem] font-medium dark:hover:border-kosh-gold/30 hover:border-kosh-gold/30 transition-colors">
-                <svg class="w-3.5 h-3.5 dark:text-kosh-muted text-kosh-light-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                <span id="selectedMonthLabel">Nov 2026</span>
-                <svg class="w-3 h-3 dark:text-kosh-muted text-kosh-light-muted ml-0.5 transition-transform" id="monthChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 9l6 6 6-6"/></svg>
-              </button>
-
-              <!-- Dropdown panel -->
-              <div id="monthPicker" class="absolute top-full right-0 mt-2 w-[280px] rounded-xl border shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] z-40 dark:bg-kosh-dark-card bg-white dark:border-kosh-dark-border border-kosh-light-border opacity-0 invisible -translate-y-1 transition-all duration-150 origin-top-right">
-                <div class="flex items-center justify-between px-3 py-2.5 border-b dark:border-kosh-dark-border border-kosh-light-border">
-                  <button id="prevYear" class="w-7 h-7 rounded-md flex items-center justify-center dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 18l-6-6 6-6"/></svg>
-                  </button>
-                  <span id="pickerYear" class="font-display text-sm font-medium opsz-40 tnum">2026</span>
-                  <button id="nextYear" class="w-7 h-7 rounded-md flex items-center justify-center dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 18l6-6-6-6"/></svg>
-                  </button>
-                </div>
-                <div id="monthGrid" class="grid grid-cols-3 gap-1 p-3"></div>
+            <div id="monthPicker" class="absolute top-full right-0 mt-2 w-[280px] rounded-xl border shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] z-40 dark:bg-kosh-dark-card bg-white dark:border-kosh-dark-border border-kosh-light-border opacity-0 invisible -translate-y-1 transition-all duration-150 origin-top-right">
+              <div class="flex items-center justify-between px-3 py-2.5 border-b dark:border-kosh-dark-border border-kosh-light-border">
+                <button id="prevYear" class="w-7 h-7 rounded-md flex items-center justify-center dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M15 18l-6-6 6-6"/></svg>
+                </button>
+                <span id="pickerYear" class="font-display text-sm font-medium opsz-40 tnum">2026</span>
+                <button id="nextYear" class="w-7 h-7 rounded-md flex items-center justify-center dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors">
+                  <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M9 18l6-6-6-6"/></svg>
+                </button>
               </div>
-            </div>
-
-            <button id="addIncomeBtn" class="inline-flex items-center gap-1.5 px-4 py-2 bg-kosh-gold hover:bg-kosh-gold-light text-kosh-slate font-semibold text-[0.82rem] rounded-lg transition-all hover:shadow-[0_4px_16px_rgba(201,168,76,0.25)]">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
-              Add income
-            </button>
-          </div>
-
-          <!-- Overlapping member avatars -->
-          <div class="flex items-center gap-2">
-            <span class="text-[0.68rem] font-display italic dark:text-kosh-muted text-kosh-light-muted opsz-40">2 members</span>
-            <div class="flex -space-x-2">
-              <div class="w-7 h-7 rounded-full bg-avatar-gold flex items-center justify-center font-display font-bold text-[0.7rem] text-kosh-slate opsz-40 ring-[2.5px] dark:ring-kosh-slate ring-kosh-light-bg relative z-10" title="Priyak">P</div>
-              <div class="w-7 h-7 rounded-full bg-avatar-violet flex items-center justify-center font-display font-bold text-[0.7rem] text-white opsz-40 ring-[2.5px] dark:ring-kosh-slate ring-kosh-light-bg" title="Divya">D</div>
+              <div id="monthGrid" class="grid grid-cols-3 gap-1 p-3"></div>
             </div>
           </div>
+          <button id="addIncomeBtn" class="inline-flex items-center gap-1.5 px-4 py-2 bg-kosh-gold hover:bg-kosh-gold-light text-kosh-slate font-semibold text-[0.82rem] rounded-lg transition-all hover:shadow-[0_4px_16px_rgba(201,168,76,0.25)]">
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            Add income
+          </button>
         </div>
       </div>
 
       <div class="grid grid-cols-3 gap-4 max-md:grid-cols-1">
-        <!-- Card 1: Total Income -->
+        <!-- Card 1: Total Expenses (Personal) -->
         <div class="relative overflow-hidden dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-xl p-5 flex flex-col">
           <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #22C55E, transparent); opacity: 0.5;"></div>
-          <div class="flex items-center justify-between mb-3">
-            <span class="text-tiny font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted">Total Income</span>
-            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6rem] font-semibold bg-emerald-500/10 text-kosh-pos">
-              <svg class="w-2 h-2" viewBox="0 0 10 10" fill="currentColor"><path d="M5 1L8.5 5.5H1.5L5 1Z"/></svg>
-              +3%
-            </span>
+          <div class="mb-2">
+            <div class="text-tiny font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted">Total Income</div>
           </div>
-          <div class="font-display text-3xl font-normal tracking-tight tnum opsz-72 mb-1.5 flex items-baseline gap-1.5">
-            <span class="text-lg font-normal text-kosh-gold">₹</span>
-            <span>3.42</span>
-            <span class="text-base font-normal text-kosh-gold">L</span>
-          </div>
-          <div class="text-[0.72rem] dark:text-kosh-muted text-kosh-light-muted font-display italic opsz-40 mb-4">vs last month ₹3.33 L</div>
-
-          <!-- Member split -->
-          <div class="mt-auto">
-            <div class="h-1.5 rounded-full overflow-hidden flex dark:bg-kosh-slate/60 bg-kosh-cream/60 mb-2">
-              <div class="h-full bg-gradient-to-r from-kosh-gold to-kosh-gold-dark" style="width: 86%"></div>
-              <div class="h-full bg-gradient-to-r from-violet-500 to-violet-700" style="width: 14%"></div>
+          <div class="flex-1 flex items-center justify-center">
+            <div class="font-display text-4xl font-normal tracking-tight tnum opsz-72 flex items-baseline gap-1.5">
+              <span class="text-xl font-normal text-kosh-gold">₹</span>
+              <span>2.95</span>
+              <span class="text-lg font-normal text-kosh-gold">L</span>
             </div>
-            <div class="flex items-center justify-between text-[0.68rem]">
-              <div class="flex items-center gap-1.5">
-                <div class="w-4 h-4 rounded-full bg-avatar-gold flex items-center justify-center font-display font-semibold text-[0.5rem] text-kosh-slate opsz-40">P</div>
-                <span class="font-display tnum opsz-40 dark:text-white text-kosh-charcoal">₹2.95 L</span>
-                <span class="dark:text-kosh-muted text-kosh-light-muted tnum">86%</span>
+          </div>
+          <div class="flex items-center justify-between mt-auto pt-3 border-t dark:border-kosh-dark-border/40 border-kosh-light-border/40">
+            <div class="text-center">
+              <div class="inline-flex items-center gap-1 text-[0.65rem] font-semibold text-kosh-pos">
+                <svg class="w-2 h-2" viewBox="0 0 10 10" fill="currentColor"><path d="M5 1L8.5 5.5H1.5L5 1Z"/></svg>
+                +3.0%
               </div>
-              <div class="flex items-center gap-1.5">
-                <span class="dark:text-kosh-muted text-kosh-light-muted tnum">14%</span>
-                <span class="font-display tnum opsz-40 dark:text-white text-kosh-charcoal">₹48 K</span>
-                <div class="w-4 h-4 rounded-full bg-avatar-violet flex items-center justify-center font-display font-semibold text-[0.5rem] text-white opsz-40">D</div>
+              <div class="text-[0.55rem] dark:text-kosh-muted/60 text-kosh-light-muted/60 mt-0.5">vs last month</div>
+            </div>
+            <div class="text-center">
+              <div class="inline-flex items-center gap-1 text-[0.65rem] font-semibold text-kosh-pos">
+                <svg class="w-2 h-2" viewBox="0 0 10 10" fill="currentColor"><path d="M5 1L8.5 5.5H1.5L5 1Z"/></svg>
+                +2.1%
               </div>
+              <div class="text-[0.55rem] dark:text-kosh-muted/60 text-kosh-light-muted/60 mt-0.5">vs 6-mo avg</div>
             </div>
           </div>
         </div>
@@ -424,114 +400,71 @@
         <!-- Card 2: Interactive breakdown donut -->
         <div id="incomePieCard" class="relative dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-xl p-5">
           <div class="absolute top-0 left-0 right-0 h-[2px] rounded-t-xl" style="background: linear-gradient(90deg, transparent, #C9A84C, transparent); opacity: 0.7;"></div>
-          <div class="flex items-center justify-between mb-3">
-            <div class="flex items-center gap-1.5">
-              <span class="text-tiny font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted">Breakdown</span>
-              <div class="relative group flex items-center">
-                <svg class="w-3 h-3 dark:text-kosh-muted text-kosh-light-muted cursor-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <circle cx="12" cy="12" r="10"/>
-                  <line x1="12" y1="16" x2="12" y2="12"/>
-                  <circle cx="12" cy="8" r="0.5" fill="currentColor"/>
-                </svg>
-                <div class="absolute bottom-full left-0 mb-2 opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 whitespace-nowrap">
-                  <div class="dark:bg-kosh-slate bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-lg px-3 py-2 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] text-[0.68rem] dark:text-white/90 text-kosh-charcoal/90 leading-relaxed">
-                    To manage categories, go to<br/>
-                    <span class="font-medium text-kosh-gold">Settings → Manage Categories</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <span class="font-display italic text-[0.68rem] dark:text-kosh-muted text-kosh-light-muted opsz-40">3 categories</span>
-          </div>
-
-          <div class="flex items-center gap-4">
-            <!-- Donut -->
-            <div class="relative w-[82px] h-[82px] shrink-0">
-              <svg viewBox="0 0 100 100" class="w-full h-full -rotate-90">
-                <circle cx="50" cy="50" r="42" fill="none" class="dark:stroke-kosh-slate stroke-kosh-cream" stroke-width="12"/>
-                <circle class="pie-seg transition-all duration-200" data-cat="salary"
-                        cx="50" cy="50" r="42" fill="none" stroke="#22C55E" stroke-width="12"
-                        pathLength="100" stroke-dasharray="97 3" stroke-dashoffset="0" stroke-linecap="butt"/>
-                <circle class="pie-seg transition-all duration-200" data-cat="dividend"
-                        cx="50" cy="50" r="42" fill="none" stroke="#06B6D4" stroke-width="12"
-                        pathLength="100" stroke-dasharray="2.5 97.5" stroke-dashoffset="-97" stroke-linecap="butt"/>
-                <circle class="pie-seg transition-all duration-200" data-cat="interest"
-                        cx="50" cy="50" r="42" fill="none" stroke="#3B82F6" stroke-width="12"
-                        pathLength="100" stroke-dasharray="0.5 99.5" stroke-dashoffset="-99.5" stroke-linecap="butt"/>
+          <div class="flex items-center gap-1.5 mb-3">
+            <span class="text-tiny font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted">Breakdown</span>
+            <div class="relative group flex items-center">
+              <svg class="w-3 h-3 dark:text-kosh-muted text-kosh-light-muted cursor-help" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"/>
+                <line x1="12" y1="16" x2="12" y2="12"/>
+                <circle cx="12" cy="8" r="0.5" fill="currentColor"/>
               </svg>
-              <div id="pieCenter" class="absolute inset-0 flex flex-col items-center justify-center text-center">
-                <div id="pieCenterLabel" class="text-[0.5rem] uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted">Total</div>
-                <div id="pieCenterValue" class="font-display text-[0.82rem] font-medium opsz-40 tnum">₹3.42L</div>
-              </div>
-            </div>
-
-            <!-- Legend -->
-            <div class="flex-1 min-w-0 flex flex-col gap-1.5">
-              <div class="pie-legend flex items-center justify-between gap-2 cursor-default transition-all duration-200" data-cat="salary">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span>
-                  <span class="text-[0.78rem] font-medium truncate">Salary</span>
-                </div>
-                <div class="flex items-baseline gap-1.5 shrink-0">
-                  <span class="font-display text-[0.75rem] font-medium opsz-40 tnum">₹3.32L</span>
-                  <span class="text-[0.65rem] dark:text-kosh-muted text-kosh-light-muted tnum">97%</span>
-                </div>
-              </div>
-              <div class="pie-legend flex items-center justify-between gap-2 cursor-default transition-all duration-200" data-cat="dividend">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="w-2 h-2 rounded-full bg-cyan-500 shrink-0"></span>
-                  <span class="text-[0.78rem] font-medium truncate">Dividend</span>
-                </div>
-                <div class="flex items-baseline gap-1.5 shrink-0">
-                  <span class="font-display text-[0.75rem] font-medium opsz-40 tnum">₹8.4K</span>
-                  <span class="text-[0.65rem] dark:text-kosh-muted text-kosh-light-muted tnum">2.5%</span>
-                </div>
-              </div>
-              <div class="pie-legend flex items-center justify-between gap-2 cursor-default transition-all duration-200" data-cat="interest">
-                <div class="flex items-center gap-2 min-w-0">
-                  <span class="w-2 h-2 rounded-full bg-blue-500 shrink-0"></span>
-                  <span class="text-[0.78rem] font-medium truncate">Interest</span>
-                </div>
-                <div class="flex items-baseline gap-1.5 shrink-0">
-                  <span class="font-display text-[0.75rem] font-medium opsz-40 tnum">₹2.1K</span>
-                  <span class="text-[0.65rem] dark:text-kosh-muted text-kosh-light-muted tnum">0.6%</span>
+              <div class="absolute bottom-full left-0 mb-2 opacity-0 group-hover:opacity-100 transition-all pointer-events-none z-50 whitespace-nowrap">
+                <div class="dark:bg-kosh-slate bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-lg px-3 py-2 shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] text-[0.68rem] dark:text-white/90 text-kosh-charcoal/90 leading-relaxed normal-case tracking-normal font-normal">
+                  To manage categories, go to<br/>
+                  <span class="font-medium text-kosh-gold">Settings → Manage Categories</span>
                 </div>
               </div>
             </div>
           </div>
+
+          <!-- Donut chart -->
+          <div class="flex justify-center mb-4">
+            <div class="relative" style="width: 130px; height: 130px;">
+              <svg id="pieDonut" viewBox="0 0 100 100" class="w-full h-full" style="transform: rotate(-90deg);"></svg>
+              <div id="pieCenter" class="absolute inset-0 flex flex-col items-center justify-center text-center pointer-events-none">
+                <div id="pieCenterLabel" class="text-[0.45rem] uppercase tracking-wider dark:text-kosh-muted text-kosh-light-muted leading-none mb-0.5">Total</div>
+                <div id="pieCenterValue" class="font-display text-[0.85rem] font-medium opsz-40 tnum leading-none">₹2.95L</div>
+                <div id="pieCenterSub" class="text-[0.42rem] dark:text-kosh-muted text-kosh-light-muted mt-0.5 leading-none hidden"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Legend grid (4×2) -->
+          <div id="pieLegend" class="grid grid-cols-2 gap-x-4 gap-y-1.5"></div>
         </div>
 
         <!-- Card 3: Projected Income FY 26-27 -->
         <div class="relative overflow-hidden dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-xl p-5 flex flex-col">
-          <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #C9A84C, transparent); opacity: 0.4;"></div>
-          <div class="flex items-center justify-between mb-3">
+          <div class="absolute top-0 left-0 right-0 h-[2px]" style="background: linear-gradient(90deg, transparent, #22C55E, transparent); opacity: 0.4;"></div>
+          <div class="flex items-center justify-between mb-2">
             <span class="text-tiny font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted">Projected Income · FY 26-27</span>
             <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[0.6rem] font-semibold bg-emerald-500/10 text-kosh-pos">
               <svg class="w-2 h-2" viewBox="0 0 10 10" fill="currentColor"><path d="M5 1L8.5 5.5H1.5L5 1Z"/></svg>
               +9% YoY
             </span>
           </div>
-          <div class="font-display text-3xl font-normal tracking-tight tnum opsz-72 mb-1.5 flex items-baseline gap-1.5">
-            <span class="text-lg font-normal text-kosh-gold">₹</span>
-            <span>40</span>
-            <span class="text-base font-normal text-kosh-gold">L</span>
+          <div class="flex-1 flex items-center justify-center">
+            <div class="font-display text-4xl font-normal tracking-tight tnum opsz-72 flex items-baseline gap-1.5">
+              <span class="text-xl font-normal text-kosh-gold">₹</span>
+              <span>35.4</span>
+              <span class="text-lg font-normal text-kosh-gold">L</span>
+            </div>
           </div>
-          <div class="text-[0.72rem] dark:text-kosh-muted text-kosh-light-muted font-display italic opsz-40 mb-4">at current pace · by Mar 2027</div>
-
           <!-- Progress bar -->
           <div class="mt-auto">
-            <div class="h-1.5 rounded-full overflow-hidden flex dark:bg-kosh-slate/60 bg-kosh-cream/60 mb-2">
-              <div class="h-full bg-gradient-to-r from-kosh-gold to-kosh-gold-dark" style="width: 67%"></div>
+            <div class="h-1.5 rounded-full overflow-hidden dark:bg-kosh-slate/60 bg-kosh-cream/60 mb-2">
+              <div class="h-full rounded-full bg-gradient-to-r from-emerald-500 to-emerald-400" style="width: 67%"></div>
             </div>
             <div class="flex items-center justify-between text-[0.68rem]">
               <div class="flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-kosh-gold"></span>
-                <span class="font-display tnum opsz-40 dark:text-white text-kosh-charcoal">₹26.8 L</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                <span class="font-display tnum opsz-40 dark:text-white text-kosh-charcoal">₹23.6L</span>
                 <span class="dark:text-kosh-muted text-kosh-light-muted">earned</span>
               </div>
               <div class="flex items-center gap-1.5">
                 <span class="dark:text-kosh-muted text-kosh-light-muted">to go</span>
-                <span class="font-display tnum opsz-40 dark:text-white text-kosh-charcoal">₹13.2 L</span>
+                <span class="font-display tnum opsz-40 dark:text-white text-kosh-charcoal">₹11.8L</span>
+                <span class="w-2 h-2 rounded-full dark:bg-kosh-slate/60 bg-kosh-cream/80"></span>
               </div>
             </div>
           </div>
@@ -540,19 +473,21 @@
 
       <!-- 6-month trend chart (interactive line chart) -->
       <div class="dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-xl p-5">
-        <div class="flex items-center justify-between mb-6 flex-wrap gap-3">
-          <span class="text-tiny font-semibold uppercase tracking-[0.15em] dark:text-kosh-muted text-kosh-light-muted">6-month trend</span>
-          <div class="flex items-center gap-3 text-[0.68rem] dark:text-kosh-muted text-kosh-light-muted">
-            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-500"></span>Salary</span>
-            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-cyan-500"></span>Dividend</span>
-            <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-blue-500"></span>Interest</span>
-          </div>
+        <div class="flex items-center justify-between mb-4 flex-wrap gap-3">
+          <span class="text-tiny font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted">Last 6 Month's Trend</span>
+          <span class="font-display italic text-[0.72rem] dark:text-kosh-muted text-kosh-light-muted opsz-40" id="avgDisplay"></span>
         </div>
-        <div id="trendChart" class="h-44"></div>
+        <div id="trendChart" class="h-48"></div>
+
+        <!-- Top categories by 6-month spend -->
+        <div class="mt-5 pt-4 border-t dark:border-kosh-dark-border/50 border-kosh-light-border/50">
+          <div class="text-[0.58rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted mb-3">Top 3 Categories · 6-month total</div>
+          <div id="topCategories" class="space-y-2.5"></div>
+        </div>
       </div>
 
       <!-- Entries table -->
-      <div class="dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-xl overflow-hidden">
+      <div class="dark:bg-kosh-dark-card bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-xl overflow-visible">
         <!-- Table header -->
         <div class="flex items-center justify-between px-5 py-4 border-b dark:border-kosh-dark-border border-kosh-light-border">
           <div class="flex items-center gap-2">
@@ -560,40 +495,68 @@
             <span id="entryCount" class="text-tiny dark:text-kosh-muted text-kosh-light-muted"></span>
           </div>
           <div class="flex items-center gap-1">
-            <button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[0.75rem] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M7 12h10M10 18h4"/></svg>
-              Filter
-            </button>
-            <button class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[0.75rem] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-              Export
+            <!-- Filter button + dropdown -->
+            <div class="relative">
+              <button id="filterBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[0.75rem] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 6h18M7 12h10M10 18h4"/></svg>
+                Filter
+                <span id="filterBadge" class="hidden min-w-[16px] h-[16px] flex items-center justify-center rounded-full bg-kosh-gold text-kosh-slate text-[9px] font-bold px-1"></span>
+              </button>
+
+              <!-- Filter dropdown panel -->
+              <div id="filterPanel" class="absolute right-0 top-full mt-2 w-[260px] rounded-xl border shadow-[0_20px_60px_-10px_rgba(0,0,0,0.3)] z-40 dark:bg-kosh-dark-card bg-white dark:border-kosh-dark-border border-kosh-light-border opacity-0 invisible -translate-y-1 transition-all duration-150 origin-top-right">
+                <!-- Category filters -->
+                <div class="px-4 pt-3.5 pb-2">
+                  <div class="flex items-center justify-between mb-2.5">
+                    <span class="text-[0.58rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted">Category</span>
+                    <button id="toggleAllCats" class="text-[0.62rem] text-kosh-gold hover:text-kosh-gold-light font-medium transition-colors">Deselect all</button>
+                  </div>
+                  <div id="filterCatList" class="space-y-1"></div>
+                </div>
+
+                <!-- Footer -->
+                <div class="border-t dark:border-kosh-dark-border/50 border-kosh-light-border/50 px-4 py-2.5 flex justify-end">
+                  <button id="clearFilters" class="text-[0.68rem] dark:text-kosh-muted text-kosh-light-muted hover:text-kosh-gold font-medium transition-colors">Clear all filters</button>
+                </div>
+              </div>
+            </div>
+
+            <button id="exportBtn" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-md text-[0.75rem] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+              Export CSV
             </button>
           </div>
+        </div>
+
+        <!-- Active filter chips (hidden when no filters) -->
+        <div id="filterChips" class="hidden px-5 py-2.5 border-b dark:border-kosh-dark-border/50 border-kosh-light-border/50 flex items-center gap-2 flex-wrap">
+          <span class="text-[0.6rem] dark:text-kosh-muted text-kosh-light-muted uppercase tracking-wider shrink-0">Filtered by:</span>
+          <div id="filterChipsList" class="flex items-center gap-1.5 flex-wrap"></div>
         </div>
 
         <!-- Table -->
         <div class="overflow-x-auto">
           <table class="w-full text-left table-fixed">
             <colgroup>
+              <col style="width: 130px;" />
               <col />
-              <col style="width: 140px;" />
               <col style="width: 120px;" />
-              <col style="width: 140px;" />
+              <col style="width: 130px;" />
             </colgroup>
             <thead>
               <tr class="dark:bg-kosh-slate/40 bg-kosh-cream/30 border-b dark:border-kosh-dark-border border-kosh-light-border">
                 <th class="px-5 py-2.5 text-left">
-                  <button class="sort-btn inline-flex items-center gap-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal transition-colors" data-sort="description">
-                    Description
+                  <button class="sort-btn inline-flex items-center gap-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal transition-colors" data-sort="date">
+                    Date
                     <span class="sort-icons flex flex-col gap-px ml-0.5">
                       <svg class="w-1.5 h-1 sort-up opacity-30 transition-opacity" viewBox="0 0 8 6" fill="currentColor"><polygon points="4,0 8,6 0,6"/></svg>
                       <svg class="w-1.5 h-1 sort-down opacity-30 transition-opacity" viewBox="0 0 8 6" fill="currentColor"><polygon points="4,6 8,0 0,0"/></svg>
                     </span>
                   </button>
                 </th>
-                <th class="px-5 py-2.5 text-right">
-                  <button class="sort-btn inline-flex items-center gap-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal transition-colors" data-sort="amount">
-                    Actual Value
+                <th class="px-5 py-2.5 text-left">
+                  <button class="sort-btn inline-flex items-center gap-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal transition-colors" data-sort="description">
+                    Description
                     <span class="sort-icons flex flex-col gap-px ml-0.5">
                       <svg class="w-1.5 h-1 sort-up opacity-30 transition-opacity" viewBox="0 0 8 6" fill="currentColor"><polygon points="4,0 8,6 0,6"/></svg>
                       <svg class="w-1.5 h-1 sort-down opacity-30 transition-opacity" viewBox="0 0 8 6" fill="currentColor"><polygon points="4,6 8,0 0,0"/></svg>
@@ -610,8 +573,8 @@
                   </button>
                 </th>
                 <th class="px-5 py-2.5 text-right">
-                  <button class="sort-btn inline-flex items-center gap-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal transition-colors" data-sort="date">
-                    Date
+                  <button class="sort-btn inline-flex items-center gap-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal transition-colors" data-sort="amount">
+                    Value
                     <span class="sort-icons flex flex-col gap-px ml-0.5">
                       <svg class="w-1.5 h-1 sort-up opacity-30 transition-opacity" viewBox="0 0 8 6" fill="currentColor"><polygon points="4,0 8,6 0,6"/></svg>
                       <svg class="w-1.5 h-1 sort-down opacity-30 transition-opacity" viewBox="0 0 8 6" fill="currentColor"><polygon points="4,6 8,0 0,0"/></svg>
@@ -660,8 +623,8 @@
         <!-- Header -->
         <div class="flex items-center justify-between px-6 py-5 border-b dark:border-kosh-dark-border border-kosh-light-border shrink-0">
           <div>
-            <h2 class="font-display text-xl font-medium tracking-tight opsz-72">Add Income</h2>
-            <p class="text-[0.7rem] dark:text-kosh-muted text-kosh-light-muted mt-0.5">Record a new income entry</p>
+            <h2 class="font-display text-xl font-medium tracking-tight opsz-72">Add Expense</h2>
+            <p class="text-[0.7rem] dark:text-kosh-muted text-kosh-light-muted mt-0.5">Record a new expense</p>
           </div>
           <button id="closeModalBtn" class="w-8 h-8 rounded-md flex items-center justify-center dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.05] hover:bg-black/[0.05] transition-colors">
             <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
@@ -689,10 +652,10 @@
           <!-- Description -->
           <div>
             <label for="descInput" class="block text-[0.65rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted mb-2">Description <span class="text-kosh-gold">*</span></label>
-            <input type="text" id="descInput" placeholder="e.g., Capital One · Salary" class="form-input" required>
+            <input type="text" id="descInput" placeholder="e.g., BigBasket grocery order" class="form-input" required>
           </div>
 
-          <!-- Category with info tooltip -->
+          <!-- Category -->
           <div>
             <label for="categorySelect" class="flex items-center gap-1.5 text-[0.65rem] font-semibold uppercase tracking-[0.12em] dark:text-kosh-muted text-kosh-light-muted mb-2">
               <span>Category <span class="text-kosh-gold">*</span></span>
@@ -715,6 +678,7 @@
                 <option value="salary">Salary</option>
                 <option value="dividend">Dividend</option>
                 <option value="interest">Interest</option>
+                <option value="rental">Rental Income</option>
                 <option value="refund">Refund</option>
               </select>
               <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-3 h-3 dark:text-kosh-muted text-kosh-light-muted pointer-events-none" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M6 9l6 6 6-6"/></svg>
@@ -742,7 +706,7 @@
           <button type="button" id="cancelBtn" class="px-4 py-2 text-[0.82rem] font-medium rounded-lg dark:text-kosh-muted text-kosh-light-muted dark:hover:text-white hover:text-kosh-charcoal dark:hover:bg-white/[0.04] hover:bg-black/[0.04] transition-colors">Cancel</button>
           <button type="submit" form="addIncomeForm" class="inline-flex items-center gap-1.5 px-5 py-2 bg-kosh-gold hover:bg-kosh-gold-light text-kosh-slate font-semibold text-[0.82rem] rounded-lg transition-all">
             <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
-            Save entry
+            Save income
           </button>
         </div>
       </div>
@@ -782,21 +746,27 @@
       sidebar.classList.remove('mobile-open'); sOverlay.classList.remove('active');
     });
 
+    // Prevent clicks on "Soon" nav links
+    document.querySelectorAll('.nav-link.is-soon').forEach(link => {
+      link.addEventListener('click', e => e.preventDefault());
+    });
+
     const notifications = [
-      { id: 1, icon: 'credit', color: 'emerald', title: 'Salary credited', body: 'Capital One salary of ₹2.84 L received in HDFC *1234.', time: '2 days ago', read: false },
-      { id: 2, icon: 'credit', color: 'emerald', title: 'Salary credited', body: 'JP Morgan salary of ₹48,200 received for Divya.', time: '2 days ago', read: false },
-      { id: 3, icon: 'dividend', color: 'cyan', title: 'Dividend received', body: 'HDFC Bank quarterly dividend of ₹8,420 credited.', time: '2 weeks ago', read: false },
-      { id: 4, icon: 'import', color: 'gold', title: 'CAS import ready', body: 'Upload your CAMS/KFintech CAS statement to auto-import investment income.', time: '1 month ago', read: true },
+      { id: 1, icon: 'bill', color: 'green', title: 'Salary credited', body: 'Capital One salary of ₹2,84,000 credited to HDFC account.', time: '1 day ago', read: false },
+      { id: 2, icon: 'subscription', color: 'cyan', title: 'Dividend received', body: 'HDFC Bank quarterly dividend of ₹8,420 credited.', time: '2 weeks ago', read: false },
+      { id: 3, icon: 'import', color: 'gold', title: 'CAS import ready', body: 'Upload your CAMS/KFintech CAS to auto-import mutual fund data.', time: '1 month ago', read: true },
     ];
     const notifIconMap = {
-      credit: '<path d="M12 5v14M5 12l7 7 7-7"/>',
-      dividend: '<path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/>',
+      bill: '<path d="M9 12l2 2 4-4M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>',
+      subscription: '<path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.49 9A9 9 0 005.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 013.51 15"/>',
+      spike: '<path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/>',
       import: '<path d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>',
     };
     const notifColorMap = {
-      emerald: { bg: 'bg-emerald-500/10', text: 'text-emerald-500' },
-      cyan: { bg: 'bg-cyan-500/10', text: 'text-cyan-500' },
-      gold: { bg: 'bg-kosh-gold/10', text: 'text-kosh-gold' },
+      yellow: { bg: 'bg-yellow-500/10', text: 'text-yellow-500' },
+      violet: { bg: 'bg-violet-500/10', text: 'text-violet-500' },
+      red:    { bg: 'bg-red-500/10',    text: 'text-red-500' },
+      gold:   { bg: 'bg-kosh-gold/10',  text: 'text-kosh-gold' },
     };
 
     function renderNotifications() {
@@ -844,67 +814,99 @@
 
     renderNotifications();
 
-    // ===== INTERACTIVE PIE CHART =====
+    // ===== INTERACTIVE PIE CHART (8 expense categories) =====
     const pieData = {
-      salary:   { label: 'Salary',   amount: '₹3.32L', pct: '97%',   color: '#22C55E' },
-      dividend: { label: 'Dividend', amount: '₹8.4K',  pct: '2.5%',  color: '#06B6D4' },
-      interest: { label: 'Interest', amount: '₹2.1K',  pct: '0.6%',  color: '#3B82F6' },
+      salary:   { label: 'Salary',   amount: '₹2.84L', pct: '96%',  pctNum: 96.4, color: '#22C55E' },
+      dividend: { label: 'Dividend', amount: '₹8.4K',  pct: '3%',   pctNum: 2.9,  color: '#06B6D4' },
+      interest: { label: 'Interest', amount: '₹2.1K',  pct: '1%',   pctNum: 0.7,  color: '#3B82F6' },
     };
-    const pieTotals = { label: 'Total', value: '₹3.42L' };
+    const pieTotals = { label: 'Total', value: '₹2.95L' };
 
-    const pieSegments = document.querySelectorAll('.pie-seg');
-    const pieLegends = document.querySelectorAll('.pie-legend');
+    // Build donut (stroke-based ring)
+    function buildDonut() {
+      const svg = document.getElementById('pieDonut');
+      let markup = `<circle cx="50" cy="50" r="40" fill="none" class="dark:stroke-kosh-slate stroke-kosh-cream" stroke-width="14"/>`;
+      let offset = 0;
+      Object.entries(pieData).forEach(([key, d]) => {
+        markup += `<circle class="pie-seg transition-all duration-200 cursor-pointer" data-cat="${key}"
+          cx="50" cy="50" r="40" fill="none" stroke="${d.color}" stroke-width="14"
+          pathLength="100" stroke-dasharray="${d.pctNum} ${100 - d.pctNum}" stroke-dashoffset="${-offset}" stroke-linecap="butt"/>`;
+        offset += d.pctNum;
+      });
+      svg.innerHTML = markup;
+    }
+
+    // Build legend (2-column grid)
+    function buildLegend() {
+      const legend = document.getElementById('pieLegend');
+      legend.innerHTML = Object.entries(pieData).map(([key, d]) => `
+        <div class="pie-legend flex items-center gap-2 py-0.5 cursor-pointer transition-all duration-200 rounded-md px-1.5 -mx-1.5 dark:hover:bg-white/[0.03] hover:bg-black/[0.03]" data-cat="${key}">
+          <span class="w-2 h-2 rounded-full shrink-0" style="background: ${d.color}"></span>
+          <span class="text-[0.72rem] font-medium truncate flex-1">${d.label}</span>
+          <span class="text-[0.62rem] dark:text-kosh-muted text-kosh-light-muted tnum shrink-0">${d.pct}</span>
+        </div>
+      `).join('');
+    }
+
+    buildDonut();
+    buildLegend();
+
     const pieCenterLabel = document.getElementById('pieCenterLabel');
     const pieCenterValue = document.getElementById('pieCenterValue');
+    const pieCenterSub = document.getElementById('pieCenterSub');
 
     function highlightCategory(cat) {
-      pieSegments.forEach(seg => {
+      document.querySelectorAll('.pie-seg').forEach(seg => {
         if (seg.dataset.cat === cat) {
-          seg.setAttribute('stroke-width', '16');
+          seg.setAttribute('stroke-width', '18');
           seg.style.opacity = '1';
         } else {
-          seg.setAttribute('stroke-width', '12');
-          seg.style.opacity = '0.25';
+          seg.setAttribute('stroke-width', '14');
+          seg.style.opacity = '0.2';
         }
       });
-      pieLegends.forEach(l => {
-        l.style.opacity = l.dataset.cat === cat ? '1' : '0.4';
+      document.querySelectorAll('.pie-legend').forEach(l => {
+        l.style.opacity = l.dataset.cat === cat ? '1' : '0.35';
       });
       const d = pieData[cat];
       if (d) {
-        pieCenterLabel.textContent = d.pct;
+        pieCenterLabel.textContent = d.label;
         pieCenterLabel.style.color = d.color;
         pieCenterValue.textContent = d.amount;
+        pieCenterSub.textContent = `${d.pct} of total`;
+        pieCenterSub.classList.remove('hidden');
       }
     }
 
     function resetPie() {
-      pieSegments.forEach(seg => {
-        seg.setAttribute('stroke-width', '12');
+      document.querySelectorAll('.pie-seg').forEach(seg => {
+        seg.setAttribute('stroke-width', '14');
         seg.style.opacity = '1';
       });
-      pieLegends.forEach(l => { l.style.opacity = '1'; });
+      document.querySelectorAll('.pie-legend').forEach(l => { l.style.opacity = '1'; });
       pieCenterLabel.textContent = pieTotals.label;
       pieCenterLabel.style.color = '';
       pieCenterValue.textContent = pieTotals.value;
+      pieCenterSub.classList.add('hidden');
     }
 
-    [...pieSegments, ...pieLegends].forEach(el => {
-      el.addEventListener('mouseenter', () => highlightCategory(el.dataset.cat));
-      el.addEventListener('mouseleave', resetPie);
-    });
+    // Attach listeners AFTER donut + legend are built
+    function attachPieListeners() {
+      document.querySelectorAll('.pie-seg, .pie-legend').forEach(el => {
+        el.addEventListener('mouseenter', () => highlightCategory(el.dataset.cat));
+        el.addEventListener('mouseleave', resetPie);
+      });
+    }
+    attachPieListeners();
 
-    // ===== 6-MONTH TREND CHART =====
-    // Data shape mirrors what we'd query from the backend:
-    //   GET /income/trend?months=6&groupBy=category
-    // Each row = one month, with category breakdown.
+    // Personal income trend: Priyak only. Salary dominates with small dividend/interest.
     const trendData = [
-      { month: 'Jun', year: 2026, salary: 2.95, dividend: 0.07, interest: 0.03 },
-      { month: 'Jul', year: 2026, salary: 3.10, dividend: 0.05, interest: 0.03 },
-      { month: 'Aug', year: 2026, salary: 3.05, dividend: 0.04, interest: 0.03 },
-      { month: 'Sep', year: 2026, salary: 3.32, dividend: 0.12, interest: 0.04 }, // Q2 bonus
-      { month: 'Oct', year: 2026, salary: 3.21, dividend: 0.09, interest: 0.03 },
-      { month: 'Nov', year: 2026, salary: 3.32, dividend: 0.08, interest: 0.02 }, // current
+      { month: 'Jun', year: 2026, salary: 2.84, dividend: 0, interest: 0.021 },
+      { month: 'Jul', year: 2026, salary: 2.84, dividend: 0, interest: 0.021 },
+      { month: 'Aug', year: 2026, salary: 2.84, dividend: 0.076, interest: 0.021 },
+      { month: 'Sep', year: 2026, salary: 2.84, dividend: 0, interest: 0.021 },
+      { month: 'Oct', year: 2026, salary: 2.84, dividend: 0, interest: 0.021 },
+      { month: 'Nov', year: 2026, salary: 2.84, dividend: 0.084, interest: 0.021 },
     ];
 
     const CATEGORY_META = {
@@ -929,11 +931,15 @@
       const totals = trendData.map(d => d.salary + d.dividend + d.interest);
       const minTotal = Math.min(...totals);
       const maxTotal = Math.max(...totals);
+      const avgTotal = totals.reduce((a, b) => a + b, 0) / totals.length;
       // Pad the range for visual breathing room
       const yMin = minTotal - (maxTotal - minTotal) * 0.35;
       const yMax = maxTotal + (maxTotal - minTotal) * 0.25;
       const range = yMax - yMin;
       const latestIdx = trendData.length - 1;
+
+      // Average line Y position
+      const avgY = 100 - ((avgTotal - yMin) / range) * 100;
 
       // Compute points (x, y as percentages of chart area)
       const points = trendData.map((d, i) => {
@@ -943,41 +949,87 @@
         return { ...d, total, x, y, isLatest: i === latestIdx };
       });
 
-      // SVG paths
-      const linePath = points.map((p, i) =>
-        (i === 0 ? 'M' : 'L') + ` ${p.x} ${p.y}`
+      // Generate Y-axis ticks
+      function niceStep(range) {
+        const rough = range / 4;
+        const mag = Math.pow(10, Math.floor(Math.log10(rough)));
+        const options = [1, 2, 2.5, 5, 10];
+        for (const m of options) { if (m * mag >= rough) return m * mag; }
+        return mag * 10;
+      }
+      const step = niceStep(maxTotal - minTotal);
+      const tickMin = Math.floor(yMin / step) * step;
+      const tickMax = Math.ceil(yMax / step) * step;
+      const ticks = [];
+      for (let v = tickMin; v <= tickMax; v += step) { ticks.push(v); }
+
+      // Inset x so first/last dots + labels don't clip
+      const xPad = 6; // percent inset from edges
+      const xRange = 100 - xPad * 2;
+      const pts = points.map((p, i) => ({
+        ...p,
+        cx: xPad + (i / (points.length - 1)) * xRange,
+      }));
+
+      const linePath = pts.map((p, i) =>
+        (i === 0 ? 'M' : 'L') + ` ${p.cx} ${p.y}`
       ).join(' ');
-      const areaPath = `${linePath} L 100 100 L 0 100 Z`;
+      const areaPath = `${linePath} L ${pts[pts.length-1].cx} 100 L ${pts[0].cx} 100 Z`;
+
+      // Set avg in header
+      document.getElementById('avgDisplay').textContent = `Avg ${formatMoney(avgTotal)} / month for last 6 months`;
 
       chart.innerHTML = `
         <div class="relative w-full h-full">
-          <!-- Chart area (line + area fill + dots) -->
-          <div class="absolute inset-x-0 top-0 bottom-6">
-            <!-- SVG line + area -->
+          <!-- Y-axis labels -->
+          <div class="absolute left-0 top-0 bottom-[22px] w-[42px]">
+            ${ticks.map(v => {
+              const yPct = 100 - ((v - yMin) / range) * 100;
+              if (yPct < -2 || yPct > 102) return '';
+              // Skip if too close to avg (within 6% vertical)
+              if (Math.abs(yPct - avgY) < 6) return '';
+              return `<div class="absolute right-0 text-[0.58rem] font-display tnum opsz-40 dark:text-kosh-muted/50 text-kosh-light-muted/50 pointer-events-none" style="top: ${yPct}%; transform: translateY(-50%);">${formatMoney(v)}</div>`;
+            }).join('')}
+            <!-- Avg on y-axis (gold) -->
+            <div class="absolute right-0 text-[0.58rem] font-display tnum opsz-40 text-kosh-gold font-medium pointer-events-none" style="top: ${avgY}%; transform: translateY(-50%);">${formatMoney(avgTotal)}</div>
+          </div>
+
+          <!-- Chart area -->
+          <div class="absolute left-[50px] right-[8px] top-0 bottom-[22px]">
             <svg class="absolute inset-0 w-full h-full overflow-visible" viewBox="0 0 100 100" preserveAspectRatio="none">
               <defs>
                 <linearGradient id="trendAreaGrad" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.25"/>
+                  <stop offset="0%" stop-color="#C9A84C" stop-opacity="0.15"/>
                   <stop offset="100%" stop-color="#C9A84C" stop-opacity="0"/>
                 </linearGradient>
               </defs>
+              <!-- Grid lines (clipped to data range) -->
+              ${ticks.map(v => {
+                const yPct = 100 - ((v - yMin) / range) * 100;
+                if (yPct < -2 || yPct > 102) return '';
+                return `<line x1="${pts[0].cx}" y1="${yPct}" x2="${pts[pts.length-1].cx}" y2="${yPct}" stroke="currentColor" stroke-width="1" vector-effect="non-scaling-stroke" class="dark:text-white/[0.06] text-black/[0.08]"/>`;
+              }).join('')}
+              <!-- Average line (clipped to data range) -->
+              <line x1="${pts[0].cx}" y1="${avgY}" x2="${pts[pts.length-1].cx}" y2="${avgY}" stroke="#C9A84C" stroke-width="1.5" stroke-dasharray="6,4" vector-effect="non-scaling-stroke" opacity="0.4"/>
+              <!-- Area fill -->
               <path d="${areaPath}" fill="url(#trendAreaGrad)"/>
+              <!-- Trend line -->
               <path d="${linePath}" fill="none" stroke="#C9A84C" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
 
-            <!-- Dots + hover zones (HTML for non-distorted circles) -->
-            ${points.map((p, i) => `
+            <!-- Dots + hover zones -->
+            ${pts.map((p, i) => `
               <div class="trend-point absolute group cursor-default"
                    data-idx="${i}"
-                   style="left: ${p.x}%; top: ${p.y}%; transform: translate(-50%, -50%); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
-                <!-- Vertical guide line (appears on hover) -->
-                <div class="absolute w-px opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none dark:bg-white/15 bg-black/15"
+                   style="left: ${p.cx}%; top: ${p.y}%; transform: translate(-50%, -50%); width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;">
+                <div class="absolute w-px opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none dark:bg-kosh-gold/20 bg-kosh-gold/20"
                      style="left: 50%; top: 20px; height: 200px; transform: translateX(-50%);"></div>
 
-                <!-- Visible dot -->
-                <div class="relative ${p.isLatest ? 'w-2.5 h-2.5 bg-kosh-gold ring-4 ring-kosh-gold/20' : 'w-2 h-2 bg-emerald-500 ring-2 ring-emerald-500/20'} rounded-full transition-all duration-200 group-hover:scale-150 group-hover:ring-4"></div>
+                <div class="relative ${p.isLatest
+                  ? 'w-3 h-3 bg-kosh-gold ring-4 ring-kosh-gold/15'
+                  : 'w-2 h-2 bg-kosh-gold/60 ring-2 ring-kosh-gold/10'
+                } rounded-full transition-all duration-200 group-hover:scale-150 group-hover:ring-4 group-hover:ring-kosh-gold/25 group-hover:bg-kosh-gold"></div>
 
-                <!-- Tooltip -->
                 <div class="trend-tip absolute ${p.y < 40 ? 'top-[calc(100%+8px)]' : 'bottom-[calc(100%+8px)]'} left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-all duration-200 pointer-events-none z-20 whitespace-nowrap">
                   <div class="dark:bg-kosh-slate bg-white border dark:border-kosh-dark-border border-kosh-light-border rounded-lg shadow-[0_8px_24px_-4px_rgba(0,0,0,0.3)] px-3 py-2.5">
                     <div class="flex items-baseline justify-between gap-4 mb-1.5">
@@ -1004,10 +1056,10 @@
             `).join('')}
           </div>
 
-          <!-- Month labels -->
-          <div class="absolute bottom-0 inset-x-0 flex justify-between">
-            ${points.map(p => `
-              <div class="text-[0.62rem] uppercase tracking-wider ${p.isLatest ? 'font-semibold text-kosh-gold' : 'dark:text-kosh-muted text-kosh-light-muted'}" style="transform: translateX(-50%); margin-left: ${p.x}%;">${p.month}</div>
+          <!-- X-axis labels -->
+          <div class="absolute bottom-0 left-[50px] right-[8px] h-[18px]">
+            ${pts.map(p => `
+              <div class="absolute text-[0.58rem] uppercase tracking-wider ${p.isLatest ? 'font-semibold text-kosh-gold' : 'dark:text-kosh-muted/70 text-kosh-light-muted/70'}" style="left: ${p.cx}%; transform: translateX(-50%);">${p.month} '${String(p.year).slice(2)}</div>
             `).join('')}
           </div>
         </div>
@@ -1016,47 +1068,54 @@
 
     renderTrendChart();
 
+    // ===== TOP CATEGORIES (6-month aggregated) =====
+    // In real app: GET /expenses/categories/summary?months=6
+    const topCatsData = [
+      { label: 'Salary',   color: '#22C55E', total: 17.04 },
+      { label: 'Dividend', color: '#06B6D4', total: 0.16  },
+      { label: 'Interest', color: '#3B82F6', total: 0.13  },
+    ];
+    const maxCatTotal = topCatsData[0].total;
+
+    document.getElementById('topCategories').innerHTML = topCatsData.map(c => {
+      const barPct = (c.total / maxCatTotal) * 100;
+      return `
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 w-[80px] shrink-0">
+            <span class="w-1.5 h-1.5 rounded-full shrink-0" style="background: ${c.color}"></span>
+            <span class="text-[0.72rem] font-medium truncate">${c.label}</span>
+          </div>
+          <div class="flex-1 h-1.5 rounded-full overflow-hidden dark:bg-kosh-slate/60 bg-kosh-cream/60">
+            <div class="h-full rounded-full transition-all" style="width: ${barPct}%; background: ${c.color}; opacity: 0.7;"></div>
+          </div>
+          <span class="font-display text-[0.72rem] font-medium opsz-40 tnum w-[52px] text-right shrink-0">${formatMoney(c.total)}</span>
+        </div>
+      `;
+    }).join('');
+
     // ===== ENTRIES TABLE =====
-    // Mirrors API response: GET /income/entries?sort=...&page=...&pageSize=...
     const entries = [
       // November 2026
-      { id: 1,  description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-11-28', member: 'P' },
-      { id: 2,  description: 'JP Morgan · Salary',            amount: 48200,  category: 'salary',   date: '2026-11-28', member: 'D' },
-      { id: 3,  description: 'HDFC Bank · Quarterly dividend', amount: 8420,   category: 'dividend', date: '2026-11-15', member: 'P' },
-      { id: 4,  description: 'SBI · FD interest credited',    amount: 2145,   category: 'interest', date: '2026-11-10', member: 'P' },
-      // October
-      { id: 5,  description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-10-28', member: 'P' },
-      { id: 6,  description: 'JP Morgan · Salary',            amount: 46800,  category: 'salary',   date: '2026-10-28', member: 'D' },
-      { id: 7,  description: 'Amazon · Return refund',        amount: 2140,   category: 'refund',   date: '2026-10-12', member: 'P' },
-      { id: 8,  description: 'SBI · FD interest credited',    amount: 2145,   category: 'interest', date: '2026-10-10', member: 'P' },
-      // September (bonus month)
-      { id: 9,  description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-09-28', member: 'P' },
-      { id: 10, description: 'Capital One · Q2 Bonus',        amount: 48000,  category: 'salary',   date: '2026-09-28', member: 'P' },
-      { id: 11, description: 'JP Morgan · Salary',            amount: 45200,  category: 'salary',   date: '2026-09-28', member: 'D' },
-      { id: 12, description: 'HDFC Bank · Quarterly dividend', amount: 12000,  category: 'dividend', date: '2026-09-15', member: 'P' },
-      { id: 13, description: 'Kotak · Dividend',              amount: 4500,   category: 'dividend', date: '2026-09-12', member: 'D' },
-      { id: 14, description: 'SBI · FD interest credited',    amount: 2100,   category: 'interest', date: '2026-09-10', member: 'P' },
-      // August
-      { id: 15, description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-08-28', member: 'P' },
-      { id: 16, description: 'JP Morgan · Salary',            amount: 45200,  category: 'salary',   date: '2026-08-28', member: 'D' },
-      { id: 17, description: 'Swiggy · Instamart refund',     amount: 850,    category: 'refund',   date: '2026-08-18', member: 'D' },
-      { id: 18, description: 'SBI · FD interest credited',    amount: 2100,   category: 'interest', date: '2026-08-10', member: 'P' },
-      // July
-      { id: 19, description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-07-28', member: 'P' },
-      { id: 20, description: 'JP Morgan · Salary',            amount: 45200,  category: 'salary',   date: '2026-07-28', member: 'D' },
-      { id: 21, description: 'HDFC Bank · Dividend',          amount: 5200,   category: 'dividend', date: '2026-07-20', member: 'P' },
-      { id: 22, description: 'SBI · FD interest credited',    amount: 2100,   category: 'interest', date: '2026-07-10', member: 'P' },
-      // June
-      { id: 23, description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-06-28', member: 'P' },
-      { id: 24, description: 'JP Morgan · Salary',            amount: 45000,  category: 'salary',   date: '2026-06-28', member: 'D' },
-      { id: 25, description: 'HDFC Bank · Dividend',          amount: 7300,   category: 'dividend', date: '2026-06-15', member: 'P' },
-      { id: 26, description: 'SBI · FD interest credited',    amount: 2500,   category: 'interest', date: '2026-06-10', member: 'P' },
+      { id: 1, description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-11-28' },
+      { id: 2, description: 'HDFC Bank · Quarterly dividend', amount: 8420,   category: 'dividend', date: '2026-11-15' },
+      { id: 3, description: 'SBI · FD interest credited',    amount: 2145,   category: 'interest', date: '2026-11-10' },
+      // October 2026
+      { id: 4, description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-10-28' },
+      { id: 5, description: 'SBI · FD interest credited',    amount: 2145,   category: 'interest', date: '2026-10-10' },
+      // September 2026
+      { id: 6, description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-09-28' },
+      { id: 7, description: 'SBI · FD interest credited',    amount: 2145,   category: 'interest', date: '2026-09-10' },
+      // August 2026
+      { id: 8, description: 'Capital One · Salary',          amount: 284000, category: 'salary',   date: '2026-08-28' },
+      { id: 9, description: 'HDFC Bank · Quarterly dividend', amount: 7600,   category: 'dividend', date: '2026-08-15' },
+      { id: 10, description: 'SBI · FD interest credited',   amount: 2145,   category: 'interest', date: '2026-08-10' },
     ];
 
     const CATEGORY_PILL = {
       salary:   { label: 'Salary',   bg: 'bg-emerald-500/10', text: 'text-emerald-500' },
       dividend: { label: 'Dividend', bg: 'bg-cyan-500/10',    text: 'text-cyan-500' },
       interest: { label: 'Interest', bg: 'bg-blue-500/10',    text: 'text-blue-500' },
+      rental:   { label: 'Rental',   bg: 'bg-orange-500/10',  text: 'text-orange-500' },
       refund:   { label: 'Refund',   bg: 'bg-violet-500/10',  text: 'text-violet-500' },
     };
 
@@ -1074,11 +1133,15 @@
     }
 
     // Table state (what a React useState or server-state store would hold)
+    // All unique categories from entries
+    const ALL_CATEGORIES = [...new Set(entries.map(e => e.category))];
+
     let tableState = {
       sortColumn: 'date',
       sortDir: 'desc',
       page: 1,
       pageSize: 10,
+      filterCategories: new Set(ALL_CATEGORIES),
     };
 
     function sortEntries(data, col, dir) {
@@ -1094,13 +1157,101 @@
       return sorted;
     }
 
+    function getFilteredEntries() {
+      return entries.filter(e => tableState.filterCategories.has(e.category));
+    }
+
+    function getActiveFilterCount() {
+      return tableState.filterCategories.size < ALL_CATEGORIES.length ? 1 : 0;
+    }
+
+    function renderFilterChips() {
+      const chipsContainer = document.getElementById('filterChips');
+      const chipsList = document.getElementById('filterChipsList');
+      const activeCount = getActiveFilterCount();
+
+      if (activeCount === 0) {
+        chipsContainer.classList.add('hidden');
+        return;
+      }
+      chipsContainer.classList.remove('hidden');
+
+      chipsList.innerHTML = `<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[0.62rem] font-medium dark:bg-kosh-gold/10 bg-kosh-gold/10 text-kosh-gold">
+        ${tableState.filterCategories.size} of ${ALL_CATEGORIES.length} categories
+        <button class="chip-remove hover:text-kosh-gold-light" data-type="categories">
+          <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </span>`;
+
+      chipsList.querySelectorAll('.chip-remove').forEach(btn => {
+        btn.addEventListener('click', () => {
+          tableState.filterCategories = new Set(ALL_CATEGORIES);
+          tableState.page = 1;
+          renderTable();
+          renderFilterPanel();
+          renderFilterChips();
+          updateFilterBadge();
+        });
+      });
+    }
+
+    function updateFilterBadge() {
+      const badge = document.getElementById('filterBadge');
+      const count = getActiveFilterCount();
+      if (count > 0) {
+        badge.textContent = count;
+        badge.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+      }
+      document.getElementById('filterBtn').classList.toggle('text-kosh-gold', count > 0);
+    }
+
+    function renderFilterPanel() {
+      const catList = document.getElementById('filterCatList');
+      const toggleBtn = document.getElementById('toggleAllCats');
+
+      const allCatsSelected = tableState.filterCategories.size === ALL_CATEGORIES.length;
+      toggleBtn.textContent = allCatsSelected ? 'Deselect all' : 'Select all';
+
+      catList.innerHTML = ALL_CATEGORIES.map(cat => {
+        const pill = CATEGORY_PILL[cat] || {};
+        const checked = tableState.filterCategories.has(cat);
+        return `<label class="flex items-center gap-2.5 px-2 py-1.5 rounded-md cursor-pointer dark:hover:bg-white/[0.03] hover:bg-black/[0.03] transition-colors" data-filter-cat="${cat}">
+          <div class="w-4 h-4 rounded border flex items-center justify-center shrink-0 transition-all ${checked ? 'bg-kosh-gold border-kosh-gold' : 'dark:border-kosh-dark-border border-kosh-light-border'}">
+            ${checked ? '<svg class="w-2.5 h-2.5 text-kosh-slate" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>' : ''}
+          </div>
+          <span class="w-2 h-2 rounded-full shrink-0" style="background: ${pieData[cat]?.color || '#6B6B6B'}"></span>
+          <span class="text-[0.75rem] font-medium">${pill.label || cat}</span>
+        </label>`;
+      }).join('');
+
+      catList.querySelectorAll('[data-filter-cat]').forEach(label => {
+        label.addEventListener('click', (e) => {
+          e.preventDefault();
+          const cat = label.dataset.filterCat;
+          if (tableState.filterCategories.has(cat)) {
+            if (tableState.filterCategories.size > 1) tableState.filterCategories.delete(cat);
+          } else {
+            tableState.filterCategories.add(cat);
+          }
+          tableState.page = 1;
+          renderTable();
+          renderFilterPanel();
+          renderFilterChips();
+          updateFilterBadge();
+        });
+      });
+    }
+
     function renderTable() {
       const tbody = document.getElementById('entriesTbody');
       const countEl = document.getElementById('entryCount');
       const rowRangeEl = document.getElementById('rowRange');
       const pageNavEl = document.getElementById('pageNav');
 
-      const sorted = sortEntries(entries, tableState.sortColumn, tableState.sortDir);
+      const filtered = getFilteredEntries();
+      const sorted = sortEntries(filtered, tableState.sortColumn, tableState.sortDir);
       const total = sorted.length;
       const totalPages = Math.max(1, Math.ceil(total / tableState.pageSize));
       if (tableState.page > totalPages) tableState.page = totalPages;
@@ -1108,7 +1259,8 @@
       const end = Math.min(start + tableState.pageSize, total);
       const pageData = sorted.slice(start, start + tableState.pageSize);
 
-      countEl.textContent = `· ${total} total`;
+      const isFiltered = getActiveFilterCount() > 0;
+      countEl.textContent = isFiltered ? `· ${total} of ${entries.length}` : `· ${total} total`;
       rowRangeEl.textContent = `${start + 1}–${end} of ${total}`;
 
       // Render rows
@@ -1116,24 +1268,23 @@
         tbody.innerHTML = `<tr><td colspan="4" class="px-5 py-12 text-center text-[0.75rem] dark:text-kosh-muted text-kosh-light-muted">No entries found.</td></tr>`;
       } else {
         tbody.innerHTML = pageData.map(e => {
-          const cat = CATEGORY_PILL[e.category] || CATEGORY_PILL.salary;
-          const avatarCls = e.member === 'P' ? 'bg-avatar-gold text-kosh-slate' : 'bg-avatar-violet text-white';
+          const cat = CATEGORY_PILL[e.category] || CATEGORY_PILL.housing;
           return `
             <tr class="border-b dark:border-kosh-dark-border/40 border-kosh-light-border/40 dark:hover:bg-white/[0.015] hover:bg-black/[0.015] transition-colors last:border-b-0">
               <td class="px-5 py-3">
-                <div class="flex items-center gap-2.5 min-w-0">
-                  <div class="w-5 h-5 rounded-full ${avatarCls} flex items-center justify-center font-display font-semibold text-[0.55rem] opsz-40 shrink-0">${e.member}</div>
-                  <span class="text-[0.82rem] font-medium truncate">${e.description}</span>
-                </div>
-              </td>
-              <td class="px-5 py-3 text-right">
-                <span class="font-display text-[0.88rem] font-medium opsz-40 tnum text-kosh-pos whitespace-nowrap">+ ${formatINR(e.amount)}</span>
+                <span class="text-[0.78rem] dark:text-kosh-muted text-kosh-light-muted tnum whitespace-nowrap">${formatDate(e.date)}</span>
               </td>
               <td class="px-5 py-3">
-                <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-[0.58rem] font-semibold ${cat.bg} ${cat.text} uppercase tracking-wider min-w-[72px]">${cat.label}</span>
+                <div class="min-w-0">
+                  <span class="text-[0.82rem] font-medium truncate block">${e.description}</span>
+
+                </div>
+              </td>
+              <td class="px-5 py-3">
+                <span class="inline-flex items-center justify-center px-2 py-0.5 rounded text-[0.58rem] font-semibold ${cat.bg} ${cat.text} uppercase tracking-wider min-w-[80px]">${cat.label}</span>
               </td>
               <td class="px-5 py-3 text-right">
-                <span class="text-[0.78rem] dark:text-kosh-muted text-kosh-light-muted tnum whitespace-nowrap">${formatDate(e.date)}</span>
+                <span class="font-display text-[0.88rem] font-medium opsz-40 tnum text-kosh-pos whitespace-nowrap">₹${formatINR(e.amount)}</span>
               </td>
             </tr>
           `;
@@ -1224,6 +1375,77 @@
     });
 
     renderTable();
+    renderFilterPanel();
+    updateFilterBadge();
+
+    // ===== FILTER PANEL OPEN/CLOSE =====
+    const filterPanel = document.getElementById('filterPanel');
+    document.getElementById('filterBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = !filterPanel.classList.contains('invisible');
+      if (isOpen) {
+        filterPanel.classList.add('invisible', 'opacity-0', '-translate-y-1');
+        filterPanel.classList.remove('visible', 'opacity-100', 'translate-y-0');
+      } else {
+        filterPanel.classList.remove('invisible', 'opacity-0', '-translate-y-1');
+        filterPanel.classList.add('visible', 'opacity-100', 'translate-y-0');
+      }
+    });
+    document.addEventListener('click', (e) => {
+      if (!filterPanel.contains(e.target) && !e.target.closest('#filterBtn')) {
+        filterPanel.classList.add('invisible', 'opacity-0', '-translate-y-1');
+        filterPanel.classList.remove('visible', 'opacity-100', 'translate-y-0');
+      }
+    });
+
+    // Toggle all categories
+    document.getElementById('toggleAllCats').addEventListener('click', () => {
+      const allSelected = tableState.filterCategories.size === ALL_CATEGORIES.length;
+      if (allSelected) {
+        tableState.filterCategories = new Set([ALL_CATEGORIES[0]]);
+      } else {
+        tableState.filterCategories = new Set(ALL_CATEGORIES);
+      }
+      tableState.page = 1;
+      renderTable();
+      renderFilterPanel();
+      renderFilterChips();
+      updateFilterBadge();
+    });
+
+    // Clear all filters
+    document.getElementById('clearFilters').addEventListener('click', () => {
+      tableState.filterCategories = new Set(ALL_CATEGORIES);
+      tableState.page = 1;
+      renderTable();
+      renderFilterPanel();
+      renderFilterChips();
+      updateFilterBadge();
+    });
+
+    // ===== EXPORT CSV =====
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const filtered = getFilteredEntries();
+      const sorted = sortEntries(filtered, tableState.sortColumn, tableState.sortDir);
+
+      // CSV header
+      const headers = ['Date', 'Description', 'Category', 'Payment Method', 'Amount (₹)'];
+      const rows = sorted.map(e => [
+        e.date,
+        `"${e.description}"`,
+        (CATEGORY_PILL[e.category] || {}).label || e.category,
+        e.amount,
+      ]);
+
+      const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `kosh-income-${selectedMonth + 1}-${selectedYear}.csv`;
+      link.click();
+      URL.revokeObjectURL(url);
+    });
 
     // ===== MONTH PICKER DROPDOWN =====
     let selectedMonth = 10; // 0-indexed: Nov

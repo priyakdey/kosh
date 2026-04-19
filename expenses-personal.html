@@ -1,4 +1,4 @@
-<!-- This view is for Personal Portfolio Expenses, whether user has family enabled or not -->
+<!-- This view is for Personal Portfolio Expenses, when user has not Family enabled, or family enabled and Personal Tab active -->
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -1232,7 +1232,7 @@
     function formatINR(amount) {
       // Detailed view: exact values with Indian number grouping (2,84,000 not 284,000)
       // For compact widget display, use formatMoney (above) which gives Cr/L/K notation
-      return `₹${amount.toLocaleString('en-IN')}`;
+      return amount.toLocaleString('en-IN');
     }
 
     function formatDate(dateStr) {

@@ -1,4 +1,4 @@
-<!-- This is the Personal Portfolio Income View -->
+<!-- This is the Personal Portfolio Income View when family is not enabled or family is enabled and Personal Portfolio is enabled -->
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
@@ -1124,7 +1124,7 @@
     function formatINR(amount) {
       // Detailed view: exact values with Indian number grouping (2,84,000 not 284,000)
       // For compact widget display, use formatMoney (above) which gives Cr/L/K notation
-      return `₹${amount.toLocaleString('en-IN')}`;
+      return amount.toLocaleString('en-IN');
     }
 
     function formatDate(dateStr) {
